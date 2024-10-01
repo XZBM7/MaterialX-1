@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialx | Level 3</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background-color: #186762;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header img {
+            width: 20%;
+            height: auto;
+            max-height: 150px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            header img {
+                width: 30%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header img {
+                width: 40%;
+            }
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #0d1f22;
+        }
+
+        nav ul li {
+            margin: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            display: block;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            background-color: #003d7a;
+            border-radius: 5px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 15px;
+            color: white;
+            background-color: #0d1f22;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            nav ul li {
+                margin-bottom: 10px;
+            }
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .available-properties {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .available-properties h2 {
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .properties-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .properties-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .properties-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .property img {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: cover;
+        }
+
+        @media (min-width: 1200px) {
+            .properties-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .property img {
+                max-height: 200px;
+            }
+        }
+
+
+
+        .property {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .property:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .property a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        
+
+        .property-info {
+            padding: 15px;
+        }
+
+        .property-info h2 {
+            margin-top: 0;
+            color: #007BFF;
+            font-size: 18px;
+        }
+
+        .property-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .property-info hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        .details {
+            margin-top: 10px;
+        }
+
+        .details p {
+            margin: 5px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .details .icon {
+            font-size: 18px;
+        }
+
+        .contact-buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .contact-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .contact-buttons a.whatsapp {
+            background-color: #ee0808;
+        }
+
+        .contact-buttons a.whatsapp:hover {
+            background-color: #991a1a;
+        }
+
+        .contact-buttons a.favorite {
+            background-color: #0bd60f;
+        }
+
+        .contact-buttons a.favorite:hover {
+            background-color: #2db412;
+        }
+
+        footer {
+            background-color: #0f2f2d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-media {
+            margin-bottom: 10px;
+        }
+
+        .social-icon {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-link {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            margin-top: 10px;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #0056b3;
+        }
+
+        .scroll-to-top i {
+            font-size: 24px;
+        }
+
+        .favorite.liked i {
+            color: rgb(11, 46, 204);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        li:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            padding: 10px;
+        }
+
+        .dropdown-menu li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #0d1f22;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            nav ul li a {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .property-info h2 {
+                font-size: 16px;
+            }
+
+            .property-info .price {
+                font-size: 18px;
+            }
+
+            .scroll-to-top {
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                font-size: 20px;
+            }
+        }
+
+       
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="img/photo_2024-10-01_00-48-56.png" alt="Logo">
+    </header>
+
+    
+    <nav>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <ul id="nav-menu">
+            <li><a href="time.html" target="_blank"><i class="fas fa-clock"></i> Time</a></li>
+            <li><a href="draw.html"><i class="fas fa-pencil-alt"></i> Draw Notes</a></li>
+            <li><a href="Learning_Progress.html" target="_blank"><i class="fas fa-book-open"></i> Learning Progress</a></li>
+            <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+            <li>
+                <a href="#" class="dropdown-toggle"><i class="fas fa-chart-line"></i> Level</a>
+                <ul class="dropdown-menu">
+                  <li><a href="courses_level_1.html">Level 1</a></li>
+                    <li><a href="courses_level_2.html">Level 2</a></li>
+                </ul>
+            </li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="available-properties">
+        <h2>Level 3 Department</h2>
+        <div class="properties-grid" id="latest-properties">
+            <div class="property">
+                <a href="Is.html">
+                    <img src="img/Is.png" alt="information Systems">
+                    <div class="property-info">
+                        <h2>IS</h2>
+                        <hr>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="property">
+                <a href="Cs_de.html">
+                    <img src="img/cs1.png" alt="Computer Science">
+                    <div class="property-info">
+                        <h2>CS</h2>
+                        <hr>
+                    </div>
+                </a>
+            </div>
+    
+            <div class="property">
+                <a href="it.html">
+                    <img src="img/IT.avif" alt="IT">
+                    <div class="property-info">
+                        <h2>IT</h2>
+                        <hr>
+                    </div>
+                </a>
+            </div>
+    
+            <div class="property">
+                <a href="Ai.html">
+                    <img src="img/AI.jpg" alt="AI">
+                    <div class="property-info">
+                        <h2>AI</h2>
+                        <hr>
+                    </div>
+                </a>
+            </div>
+    
+    
+        </div>
+    </div>
+
+    <header>
+        <img src="img/photo_2024-10-01_00-48-56.png" alt="Logo">
+    </header>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 Materialx. All rights reserved</p>
+            <hr>
+            <div class="footer-links">
+                <a href="contact.html" class="footer-link">Contact Us</a>
+                <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+                <a href="terms.html" class="footer-link">Terms </a>
+            </div>
+            <hr>
+        </div>
+    </footer>
+
+
+    <div class="scroll-to-top" onclick="scrollToTop()" style="display:none;">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+
+    <script>
+    function updateLikeButton(button, countSpan, id) {
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 0);
+    const diff = today - startOfYear;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+
+    let likeCount = parseInt(localStorage.getItem(`likeCount-${id}`) || '0', 10);
+
+    if (localStorage.getItem(`lastUpdated-${id}`) !== dayOfYear.toString()) {
+        const randomIncrement = Math.floor(Math.random() * 10) + 1; 
+        likeCount += randomIncrement;
+        localStorage.setItem(`likeCount-${id}`, likeCount.toString());
+        localStorage.setItem(`lastUpdated-${id}`, dayOfYear.toString());
+    }
+
+    countSpan.textContent = likeCount;
+
+    if (localStorage.getItem(`liked-${id}`) === 'true') {
+        button.classList.add('liked');
+    } else {
+        button.classList.remove('liked');
+    }
+
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
+        button.classList.toggle('liked');
+
+        if (button.classList.contains('liked')) {
+            likeCount++;
+        } else {
+            likeCount--;
+        }
+
+        countSpan.textContent = likeCount;
+        localStorage.setItem(`likeCount-${id}`, likeCount.toString());
+        localStorage.setItem(`liked-${id}`, button.classList.contains('liked').toString());
+    });
+}
+
+document.querySelectorAll('.favorite').forEach(button => {
+    const id = button.dataset.id;
+    const countSpan = document.getElementById(`like-count-${id}`);
+
+    if (countSpan) {
+        updateLikeButton(button, countSpan, id);
+    }
+});
+
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+        function toggleMenu() {
+            var menu = document.getElementById("nav-menu");
+            menu.classList.toggle("active");
+        }
+    </script>
+</body>
+
+</html>

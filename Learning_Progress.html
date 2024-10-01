@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialx | Learning Progress</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1,
+        h2 {
+            color: #4A90E2;
+            text-align: center;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        ul li:hover {
+            background-color: #e6f0fa;
+        }
+
+        label {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress {
+            height: 20px;
+            background-color: #4A90E2;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-percentage {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .complete-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #4caf50;
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .success-effect {
+            background-color: #4caf50 !important;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .home-button {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4A90E2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .home-button:hover {
+            background-color: #357ABD;
+        }
+
+        .note-input {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .note-input input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .note-input button {
+            padding: 10px;
+            margin-left: 10px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .note-input button:hover {
+            background-color: #357ABD;
+        }
+
+        .notes-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .notes-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notes-list button {
+            background: none;
+            color: #d9534f;
+            border: none;
+            cursor: pointer;
+        }
+
+        .notes-list button:hover {
+            text-decoration: underline;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #0056b3;
+        }
+
+        .scroll-to-top i {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Select Your Level</h1>
+        <div class="stage-selection">
+            <select id="stageSelect">
+                <option value="" disabled selected>Select Level</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option> 
+            </select>
+        </div>
+
+        <div class="section-selection" style="display: none;">
+            <h2>Select Section</h2>
+            <select id="sectionSelect">
+                <option value="" disabled selected>Select Department</option>
+            </select>
+        </div>
+
+        <div class="subject-selection" style="display: none;">
+            <h2>Select Subject</h2>
+            <select id="subjectSelect">
+                <option value="" disabled selected>Select Subject</option>
+            </select>
+        </div>
+
+        <div class="lesson-container" style="display: none;">
+            <h2>Lessons</h2>
+            <ul id="lessonList"></ul>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="progress-percentage" id="progressPercentage">0%</div>
+            <div class="complete-message" id="completeMessage">Congratulations! You have completed all lessons. Best of
+                luck!</div>
+
+            <div class="note-input">
+                <input type="text" id="noteInput" placeholder="Write a note...">
+                <button id="addNoteButton">Add Note</button>
+            </div>
+            <ul id="notesList" class="notes-list"></ul>
+        </div>
+
+        <a href="home.html" class="home-button">Back to Home</a>
+
+        <div class="scroll-to-top" onclick="scrollToTop()" style="display:none;">
+            <i class="fas fa-chevron-up"></i>
+        </div>
+    </div>
+
+    <script>
+        const stageSelect = document.getElementById('stageSelect');
+        const sectionSelect = document.getElementById('sectionSelect'); 
+        const subjectSelect = document.getElementById('subjectSelect');
+        const subjectSelectionDiv = document.querySelector('.subject-selection');
+        const lessonContainerDiv = document.querySelector('.lesson-container');
+        const lessonList = document.getElementById('lessonList');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercentage = document.getElementById('progressPercentage');
+        const completeMessage = document.getElementById('completeMessage');
+        const noteInput = document.getElementById('noteInput');
+        const addNoteButton = document.getElementById('addNoteButton');
+        const notesList = document.getElementById('notesList');
+
+        const data = {
+            1: ['Math-1', 'Computer Science', 'English-1', 'Physics', 'Statistics-1'],
+            2: ['PL-2', 'Database', 'SA-1', 'Logic', 'Data structure', 'DC'],
+            3: ['IS', 'CS', 'IT', 'AI']
+        };
+
+        const sections = {
+            'IS': ['Data Mining', 'Database-2', 'AI', 'Big Data', 'Data Storage', 'Data Analytical'],
+            'CS': [],
+            'IT': [],
+            'AI': []
+        };
+
+        const lessons = {
+            'Math-1': ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4'],
+            'Computer Science': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'English-1': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Physics': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Statistics-1': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'PL-2': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Database': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'SA-1': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Logic': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Data structure': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'DC': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Data Mining': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Database-2': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'AI': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Big Data': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Data Storage': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
+            'Data Analytical': ['Lesson 1', 'Lesson 2', 'Lesson 3']
+        };
+
+        const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
+        const notesData = JSON.parse(localStorage.getItem('notesData')) || {};
+
+        stageSelect.addEventListener('change', () => {
+            const selectedStage = stageSelect.value;
+
+            if (selectedStage === '3') {
+                populateSections();
+            } else {
+                populateSubjects(selectedStage);
+            }
+
+            subjectSelectionDiv.style.display = 'none';
+        });
+
+        function populateSections() {
+            sectionSelect.innerHTML = '<option value="" disabled selected>Select Section</option>';
+            data[3].forEach(section => {
+                const option = document.createElement('option');
+                option.value = section;
+                option.textContent = section;
+                sectionSelect.appendChild(option);
+            });
+            document.querySelector('.section-selection').style.display = 'block'; // عرض قائمة الأقسام
+        }
+
+        sectionSelect.addEventListener('change', () => {
+            const selectedSection = sectionSelect.value;
+            populateSubjects(selectedSection);
+            subjectSelectionDiv.style.display = 'block';
+        });
+
+        function populateSubjects(stageOrSection) {
+            subjectSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
+            const subjects = data[stageOrSection] || sections[stageOrSection]; // تحقق مما إذا كانت مواد أو أقسام
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectSelect.appendChild(option);
+            });
+        }
+
+        subjectSelect.addEventListener('change', () => {
+            const selectedSubject = subjectSelect.value;
+            populateLessons(selectedSubject);
+            lessonContainerDiv.style.display = 'block';
+            completeMessage.style.display = 'none';
+            loadNotes(selectedSubject);
+        });
+
+        function populateLessons(subject) {
+            lessonList.innerHTML = '';
+            const lessonProgress = progressData[subject] || [];
+            lessons[subject].forEach((lesson, index) => {
+                const li = document.createElement('li');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `lesson-${index}`;
+                checkbox.checked = lessonProgress.includes(lesson);
+                checkbox.addEventListener('change', () => handleProgress(subject, lesson));
+
+                const label = document.createElement('label');
+                label.htmlFor = `lesson-${index}`;
+                label.textContent = lesson;
+
+                li.appendChild(checkbox);
+                li.appendChild(label);
+                lessonList.appendChild(li);
+            });
+
+            updateProgressBar(subject);
+        }
+
+        function handleProgress(subject, lesson) {
+            if (!progressData[subject]) {
+                progressData[subject] = [];
+            }
+
+            const lessonIndex = progressData[subject].indexOf(lesson);
+            if (lessonIndex > -1) {
+                progressData[subject].splice(lessonIndex, 1);
+            } else {
+                progressData[subject].push(lesson);
+            }
+
+            localStorage.setItem('progressData', JSON.stringify(progressData));
+
+            updateProgressBar(subject);
+        }
+
+        function updateProgressBar(subject) {
+            const completedLessons = progressData[subject] ? progressData[subject].length : 0;
+            const totalLessons = lessons[subject].length;
+            const progressPercentageValue = (completedLessons / totalLessons) * 100;
+
+            progressBar.style.width = `${progressPercentageValue}%`;
+            progressPercentage.textContent = `${progressPercentageValue.toFixed(0)}%`;
+
+            if (progressPercentageValue === 100) {
+                progressBar.classList.add('success-effect');
+                completeMessage.style.display = 'block';
+            } else {
+                progressBar.classList.remove('success-effect');
+                completeMessage.style.display = 'none';
+            }
+        }
+
+        addNoteButton.addEventListener('click', () => {
+            const selectedSubject = subjectSelect.value;
+            const note = noteInput.value.trim();
+            if (note && selectedSubject) {
+                if (!notesData[selectedSubject]) {
+                    notesData[selectedSubject] = [];
+                }
+                notesData[selectedSubject].push(note);
+                localStorage.setItem('notesData', JSON.stringify(notesData));
+                noteInput.value = '';
+                loadNotes(selectedSubject);
+            }
+        });
+
+        function loadNotes(subject) {
+            notesList.innerHTML = '';
+            const notes = notesData[subject] || [];
+            notes.forEach((note, index) => {
+                const li = document.createElement('li');
+                li.textContent = note;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => {
+                    notes.splice(index, 1);
+                    notesData[subject] = notes;
+                    localStorage.setItem('notesData', JSON.stringify(notesData));
+                    loadNotes(subject);
+                });
+
+                li.appendChild(deleteButton);
+                notesList.appendChild(li);
+            });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

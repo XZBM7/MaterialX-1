@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaterialX | AI Department</title>
+  <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    body,
+    html,
+    #app {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #app {
+      overflow: hidden;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      text-shadow: 0 0 5px #ffffff, 0 0 20px #000, 0 0 30px #000;
+    }
+
+    #app h1 {
+      --fontSize: 60px;
+      --lineHeight: 80px;
+      width: auto;
+      height: calc(2 * var(--lineHeight));
+      line-height: var(--lineHeight);
+      margin: calc(50vh - var(--lineHeight)) auto 0;
+      font-size: var(--fontSize);
+    }
+
+    #app a {
+      margin-top: 10px;
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    #app canvas {
+      display: block;
+      position: fixed;
+      z-index: -1;
+      top: 0;
+    }
+
+    #home-link {
+      top: 120px;
+    }
+
+    #home-link>i {
+      color: rgb(94, 106, 210);
+    }
+
+    #relax-link {
+      top: 65px;
+    }
+
+    #relax-link>i {
+      color: rgb(219, 31, 106);
+    }
+
+    .meta-link {
+      align-items: center;
+      backdrop-filter: blur(3px);
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      display: inline-flex;
+      gap: 5px;
+      left: 10px;
+      padding: 10px 20px;
+      position: fixed;
+      text-decoration: none;
+      transition: background-color 600ms, border-color 600ms;
+      z-index: 10000;
+    }
+
+    .meta-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .meta-link>i,
+    .meta-link>span {
+      height: 20px;
+      line-height: 20px;
+    }
+
+    .meta-link>span {
+      color: white;
+      font-family: "Rubik", sans-serif;
+      transition: color 600ms;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="hero">
+      <h1>Coming soon........</h1>
+
+      <a id="home-link" class="meta-link" href="index.html">
+        <i class="fas fa-home"></i>
+        <span class="roboto-mono">Home</span>
+      </a>
+
+      <a id="relax-link" class="meta-link" href="relax.html" target="_blank">
+        <i class="fas fa-coffee"></i>
+        <span>Relax</span>
+      </a>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { particlesCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
+
+    const pc = particlesCursor({
+      el: document.getElementById('app'),
+      gpgpuSize: 512,
+      colors: [0x00fffc, 0x00fffc],
+      color: 0x1d9ae8,
+      coordScale: 0.5,
+      noiseIntensity: 0.005,
+      noiseTimeCoef: 0.0001,
+      pointSize: 2,
+      pointDecay: 0.0025,
+      sleepRadiusX: 250,
+      sleepRadiusY: 250,
+      sleepTimeCoefX: 0.001,
+      sleepTimeCoefY: 0.002
+    });
+
+    function updateCursor(event) {
+      const mouseX = event.clientX / window.innerWidth;
+      const mouseY = 1 - event.clientY / window.innerHeight;
+      pc.uniforms.uMousePos.value.set(mouseX, mouseY);
+    }
+
+    function randomizeParticles() {
+      pc.uniforms.uColor.value.set(Math.random() * 0xffffff);
+      pc.uniforms.uCoordScale.value = 0.001 + Math.random() * 2;
+      pc.uniforms.uNoiseIntensity.value = 0.0001 + Math.random() * 0.001;
+      pc.uniforms.uPointSize.value = 1 + Math.random() * 10;
+
+      setTimeout(() => {
+        pc.uniforms.uColor.value.set(0x000000);
+        pc.uniforms.uCoordScale.value = 0.001;
+        pc.uniforms.uNoiseIntensity.value = 0.0001;
+        pc.uniforms.uPointSize.value = 0;
+      }, 2000);
+    }
+
+    document.addEventListener('mousemove', updateCursor);
+    document.addEventListener('touchmove', (event) => {
+      const touch = event.touches[0];
+      const mouseX = touch.clientX / window.innerWidth;
+      const mouseY = 1 - touch.clientY / window.innerHeight;
+      pc.uniforms.uMousePos.value.set(mouseX, mouseY);
+    });
+
+    document.body.addEventListener('click', randomizeParticles);
+    document.body.addEventListener('touchstart', randomizeParticles);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialx | Home</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        #logo {
+            display: none; 
+            position: absolute;
+            z-index: 10;
+            width: 40vw; 
+            max-width: 400px; 
+            height: auto; 
+            animation: fadeIn 1s forwards, moveRight 1s forwards;
+        }
+
+        #text {
+            display: none; 
+            position: absolute;
+            z-index: 10;
+            font-size: 5vw; 
+            font-weight: bold;
+            top: 15%; 
+            transform: translate(-50%, -50%); 
+            animation: fadeInText 1s forwards; 
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes moveRight {
+            from { transform: translateX(-50%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            #text {
+                font-size: 10vw; 
+                top: 40%; 
+            }
+            #logo {
+                top: 55%; 
+            }
+        }
+
+        @media (max-width: 400px) {
+            #text {
+                font-size: 12vw; 
+            }
+            #logo {
+                top: 65%; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="text"></div>
+    <img id="logo" src="img/photo_2024-10-01_00-48-56.png" alt="Materialx Logo">
+
+    <script>
+        const textElement = document.getElementById('text');
+        const logoElement = document.getElementById('logo');
+        const text = "MaterialX";
+        let index = 0;
+
+        if (!sessionStorage.getItem('firstVisit')) {
+            sessionStorage.setItem('firstVisit', 'true');
+            showLogo();
+        } else {
+            window.location.href = 'home.html';
+        }
+
+        function showLogo() {
+            logoElement.style.display = 'block';
+            setTimeout(showText, 500);
+        }
+
+        function showText() {
+            textElement.style.display = 'block';
+            if (index < text.length) {
+                textElement.innerHTML += text[index];
+                index++;
+                setTimeout(showText, 200);
+            } else {
+                setTimeout(function() {
+                    logoElement.style.display = 'none'; 
+                    textElement.style.display = 'none';
+                    window.location.href = 'home.html';
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
