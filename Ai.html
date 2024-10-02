@@ -420,7 +420,7 @@
                 <a href="#" class="favorite" title="like" data-id="18">
                     <i class="fas fa-thumbs-up"></i>
                 </a>
-                <span id="like-count-12">0</span>
+                <span id="like-count-18">0</span>
             </div>
         </div>
         </a>
@@ -438,7 +438,7 @@
         <a href="#" class="favorite" title="like" data-id="19">
             <i class="fas fa-thumbs-up"></i>
         </a>
-        <span id="like-count-13">0</span>
+        <span id="like-count-19">0</span>
     </div>
     </div>
     </a>
@@ -456,7 +456,7 @@
         <a href="#" class="favorite" title="like" data-id="20">
             <i class="fas fa-thumbs-up"></i>
         </a>
-        <span id="like-count-14">0</span>
+        <span id="like-count-20">0</span>
     </div>
     </div>
     </a>
@@ -474,7 +474,7 @@
         <a href="#" class="favorite" title="like" data-id="21">
             <i class="fas fa-thumbs-up"></i>
         </a>
-        <span id="like-count-15">0</span>
+        <span id="like-count-21">0</span>
     </div>
     </div>
     </a>
@@ -492,7 +492,7 @@
         <a href="#" class="favorite" title="like" data-id="22">
             <i class="fas fa-thumbs-up"></i>
         </a>
-        <span id="like-count-16">0</span>
+        <span id="like-count-22">0</span>
     </div>
     </div>
     </a>
@@ -510,7 +510,7 @@
         <a href="#" class="favorite" title="like" data-id="23">
             <i class="fas fa-thumbs-up"></i>
         </a>
-        <span id="like-count-17">0</span>
+        <span id="like-count-23">0</span>
     </div>
     </div>
     </a>
@@ -546,78 +546,71 @@
     <script>
 
 
-        function updateLikeButton(button, countSpan, id) {
-            const today = new Date();
-            const startOfYear = new Date(today.getFullYear(), 0, 0);
-            const diff = today - startOfYear;
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
+function updateLikeButton(button, countSpan, id) {
+        const today = new Date();
+        const startOfYear = new Date(today.getFullYear(), 0, 0);
+        const diff = today - startOfYear;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
 
-            let likeCount = parseInt(localStorage.getItem(`likeCount-${id}`) || '0', 10);
+        let likeCount = parseInt(localStorage.getItem(`likeCount-${id}`) || '0', 10);
 
-            if (localStorage.getItem(`lastUpdated-${id}`) !== dayOfYear.toString()) {
-                const randomIncrement = Math.floor(Math.random() * 10) + 1;
-                likeCount += randomIncrement;
-                localStorage.setItem(`likeCount-${id}`, likeCount.toString());
-                localStorage.setItem(`lastUpdated-${id}`, dayOfYear.toString());
+        if (localStorage.getItem(`lastUpdated-${id}`) !== dayOfYear.toString()) {
+            const randomIncrement = Math.floor(Math.random() * 10) + 1;
+            likeCount += randomIncrement;
+            localStorage.setItem(`likeCount-${id}`, likeCount.toString());
+            localStorage.setItem(`lastUpdated-${id}`, dayOfYear.toString());
+        }
+
+        countSpan.textContent = likeCount;
+
+        if (localStorage.getItem(`liked-${id}`) === 'true') {
+            button.classList.add('liked');
+        } else {
+            button.classList.remove('liked');
+        }
+
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            button.classList.toggle('liked');
+
+            if (button.classList.contains('liked')) {
+                likeCount++;
+            } else {
+                likeCount--;
             }
 
             countSpan.textContent = likeCount;
 
-            if (localStorage.getItem(`liked-${id}`) === 'true') {
-                button.classList.add('liked');
-            } else {
-                button.classList.remove('liked');
-            }
-
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-                button.classList.toggle('liked');
-
-                if (button.classList.contains('liked')) {
-                    likeCount++;
-                } else {
-                    likeCount--;
-                }
-
-                countSpan.textContent = likeCount;
-
-                localStorage.setItem(`likeCount-${id}`, likeCount.toString());
-                localStorage.setItem(`liked-${id}`, button.classList.contains('liked').toString());
-            });
-        }
-
-        document.querySelectorAll('.favorite').forEach(button => {
-            const id = button.dataset.id;
-            const countSpan = document.getElementById(`like-count-${id}`);
-
-            if (countSpan) {
-                updateLikeButton(button, countSpan, id);
-            }
+            localStorage.setItem(`likeCount-${id}`, likeCount.toString());
+            localStorage.setItem(`liked-${id}`, button.classList.contains('liked').toString());
         });
+    }
 
+    document.querySelectorAll('.favorite').forEach(button => {
+        const id = button.dataset.id;
+        const countSpan = document.getElementById(`like-count-${id}`);
 
-
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        if (countSpan) {
+            updateLikeButton(button, countSpan, id);
         }
+    });
 
-        window.addEventListener('scroll', function () {
-            const scrollToTopBtn = document.querySelector('.scroll-to-top');
-            if (window.scrollY > 300) {
-                scrollToTopBtn.style.display = 'block';
-            } else {
-                scrollToTopBtn.style.display = 'none';
-            }
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
-        function toggleMenu() {
-            var menu = document.getElementById("nav-menu");
-            menu.classList.toggle("active");
+    }
+
+    window.addEventListener('scroll', function () {
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
+        if (window.scrollY > 300) {
+            scrollToTopBtn.style.display = 'block';
+        } else {
+            scrollToTopBtn.style.display = 'none';
         }
+    });
     </script>
 </body>
 
