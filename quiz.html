@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .quiz-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+            transition: transform 0.2s;
+        }
+
+        .quiz-container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .option:hover {
+            background-color: #0056b3;
+        }
+
+        .correct {
+            background-color: green !important;
+            color: white;
+        }
+
+        .wrong {
+            background-color: red !important; 
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #next-btn {
+            display: none;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #next-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1> Quiz Demo</h1>
+        <div id="question-box">
+            <p id="question"></p>
+            <div class="options">
+                <button class="option" onclick="checkAnswer(this, false)"></button>
+                <button class="option" onclick="checkAnswer(this, false)"></button>
+                <button class="option" onclick="checkAnswer(this, false)"></button>
+                <button class="option" onclick="checkAnswer(this, false)"></button>
+            </div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+        <div id="result" class="hidden"></div>
+    </div>
+
+    <script>
+        let score = 0;
+        let totalQuestions = 5;
+        let currentQuestionIndex = 0;
+        let startTime;
+
+        const questions = [
+            {
+                question: "Which country won the FIFA World Cup in 2018?",
+                options: ["Germany", "Brazil", "France", "Argentina"],
+                answer: 2 
+            },
+            {
+                question: "Who is known as the 'King of Football'?",
+                options: ["Lionel Messi", "Cristiano Ronaldo", "Pele", "Diego Maradona"],
+                answer: 1
+            },
+            {
+                question: "Which club has won the most UEFA Champions League titles?",
+                options: ["Barcelona", "Liverpool", "Real Madrid", "AC Milan"],
+                answer: 2
+            },
+            {
+                question: "Who holds the record for the most goals in a calendar year?",
+                options: ["Lionel Messi", "Cristiano Ronaldo", "Gerd Muller", "Pelé"],
+                answer: 0
+            },
+            {
+                question: "Which player has the most international caps?",
+                options: ["Cristiano Ronaldo", "Lionel Messi", "Gianluigi Buffon", "Khalid Al-Muwallad"],
+                answer: 0
+            }
+        ];
+
+        function displayQuestion() {
+            const questionElement = document.getElementById('question');
+            const optionsButtons = document.querySelectorAll('.option');
+            const currentQuestion = questions[currentQuestionIndex];
+
+            questionElement.textContent = currentQuestion.question;
+            optionsButtons.forEach((button, index) => {
+                button.textContent = currentQuestion.options[index];
+                button.classList.remove('correct', 'wrong');
+                button.disabled = false;
+            });
+
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function checkAnswer(button, isCorrect) {
+            const options = document.querySelectorAll('.option');
+            const correctAnswerIndex = questions[currentQuestionIndex].answer;
+
+            options.forEach(opt => {
+                opt.disabled = true;
+                if (opt.textContent === questions[currentQuestionIndex].options[correctAnswerIndex]) {
+                    opt.classList.add('correct'); 
+                }
+                else if (opt === button && !isCorrect) {
+                    opt.classList.add('wrong');d
+                }
+            });
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                score++;
+            } 
+
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < totalQuestions) {
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            const endTime = new Date();
+            const timeTaken = (endTime - startTime) / 1000;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `You have completed the quiz!<br>Your score: ${score} out of ${totalQuestions}<br>Time taken: ${timeTaken} seconds`;
+            resultDiv.classList.remove('hidden');
+            document.getElementById('question-box').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function startQuiz() {
+            startTime = new Date();
+            displayQuestion();
+        }
+
+        window.onload = startQuiz;
+    </script>
+</body>
+</html>

@@ -232,7 +232,7 @@
         </div>
 
         <div class="section-selection" style="display: none;">
-            <h2>Select Section</h2>
+            <h2>Select Department</h2>
             <select id="sectionSelect">
                 <option value="" disabled selected>Select Department</option>
             </select>
@@ -252,8 +252,7 @@
                 <div class="progress" id="progressBar"></div>
             </div>
             <div class="progress-percentage" id="progressPercentage">0%</div>
-            <div class="complete-message" id="completeMessage">Congratulations! You have completed all lessons. Best of
-                luck!</div>
+            <div class="complete-message" id="completeMessage">Congratulations! You have completed all lessons. Best of luck!</div>
 
             <div class="note-input">
                 <input type="text" id="noteInput" placeholder="Write a note...">
@@ -297,23 +296,23 @@
         };
 
         const lessons = {
-            'Math-1': ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4'],
-            'Computer Science': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'English-1': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Physics': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Statistics-1': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'PL-2': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Database': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'SA-1': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Logic': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Data structure': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'DC': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Data Mining': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Database-2': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'AI': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Big Data': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Data Storage': ['Lesson 1', 'Lesson 2', 'Lesson 3'],
-            'Data Analytical': ['Lesson 1', 'Lesson 2', 'Lesson 3']
+            'Math-1': ['Lec0'],
+            'Computer Science': ['Lec0'],
+            'English-1': ['Lec0'],
+            'Physics': ['Lec0'],
+            'Statistics-1': ['Lec0'],
+            'PL-2': ['Lec0'],
+            'Database': ['Lec0'],
+            'SA-1': ['Lec0'],
+            'Logic': ['Lec0'],
+            'Data structure': ['Lec0'],
+            'DC': ['Lec0'],
+            'Data Mining': ['Lec0'],
+            'Database-2': ['Lec0'],
+            'AI': ['Lec0'],
+            'Big Data': ['Lec0'],
+            'Data Storage': ['Lec0'],
+            'Data Analytical': ['Lec0']
         };
 
         const progressData = JSON.parse(localStorage.getItem('progressData')) || {};
@@ -326,31 +325,35 @@
                 populateSections();
             } else {
                 populateSubjects(selectedStage);
+                subjectSelectionDiv.style.display = 'block'; 
             }
 
-            subjectSelectionDiv.style.display = 'none';
+            lessonContainerDiv.style.display = 'none'; 
+            completeMessage.style.display = 'none';
         });
 
         function populateSections() {
-            sectionSelect.innerHTML = '<option value="" disabled selected>Select Section</option>';
+            sectionSelect.innerHTML = '<option value="" disabled selected>Select Department</option>';
             data[3].forEach(section => {
                 const option = document.createElement('option');
                 option.value = section;
                 option.textContent = section;
                 sectionSelect.appendChild(option);
             });
-            document.querySelector('.section-selection').style.display = 'block'; // عرض قائمة الأقسام
+            document.querySelector('.section-selection').style.display = 'block'; 
+            subjectSelectionDiv.style.display = 'none'; 
         }
 
         sectionSelect.addEventListener('change', () => {
             const selectedSection = sectionSelect.value;
             populateSubjects(selectedSection);
-            subjectSelectionDiv.style.display = 'block';
+            subjectSelectionDiv.style.display = 'block'; 
         });
 
         function populateSubjects(stageOrSection) {
             subjectSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
-            const subjects = data[stageOrSection] || sections[stageOrSection]; // تحقق مما إذا كانت مواد أو أقسام
+            const subjects = data[stageOrSection] || sections[stageOrSection]; 
+
             subjects.forEach(subject => {
                 const option = document.createElement('option');
                 option.value = subject;
@@ -362,9 +365,9 @@
         subjectSelect.addEventListener('change', () => {
             const selectedSubject = subjectSelect.value;
             populateLessons(selectedSubject);
-            lessonContainerDiv.style.display = 'block';
+            lessonContainerDiv.style.display = 'block'; 
             completeMessage.style.display = 'none';
-            loadNotes(selectedSubject);
+            loadNotes(selectedSubject); 
         });
 
         function populateLessons(subject) {
