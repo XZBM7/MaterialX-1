@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo</title>
+    <title>Demo Quiz</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #e9ecef;
+            background-color: #f1f3f5;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,38 +17,39 @@
         }
 
         .quiz-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 400px;
-            transition: transform 0.2s;
+            width: 450px;
+            transition: transform 0.3s ease-in-out;
         }
 
         .quiz-container:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 25px;
         }
 
         .options {
-            margin: 20px 0;
+            margin: 25px 0;
         }
 
         .option {
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            padding: 14px 22px;
+            border-radius: 6px;
             cursor: pointer;
-            margin: 5px;
+            margin: 10px 0;
             font-size: 16px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
             width: 100%;
         }
 
@@ -56,12 +58,12 @@
         }
 
         .correct {
-            background-color: green !important;
+            background-color: #28a745 !important;
             color: white;
         }
 
         .wrong {
-            background-color: red !important; 
+            background-color: #dc3545 !important;
             color: white;
         }
 
@@ -70,77 +72,190 @@
         }
 
         #result {
-            margin-top: 20px;
-            font-size: 18px;
+            margin-top: 30px;
+            font-size: 20px;
+            color: #555;
         }
 
-        #next-btn {
-            display: none;
+        #next-btn, #review-btn, #retry-btn {
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
-            transition: background-color 0.3s;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
         }
 
-        #next-btn:hover {
+        #next-btn:hover, #review-btn:hover, #retry-btn:hover {
             background-color: #218838;
+        }
+
+        #timer {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        #review-btn, #retry-btn {
+            display: none;
+        }
+
+        #question-info {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .time-input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        .time-option {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .time-option:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <h1> Quiz Demo</h1>
-        <div id="question-box">
+        <h1>Software Development Quiz</h1>
+        <div id="time-options">
+            <h3>Select Time Option:</h3>
+            <button class="time-option" onclick="startQuizWithoutTime()">Without Time Limit</button>
+            <button class="time-option" onclick="showTimeInput()">With Time Limit</button>
+        </div>
+        <div id="time-input" class="hidden">
+            <h3>Enter Time Limit (in minutes):</h3>
+            <div class="time-input-container">
+                <input type="number" id="time-limit" min="1" placeholder="Minutes" />
+                <button class="time-option" onclick="setTimeLimit()">Set Time</button>
+            </div>
+        </div>
+        <div id="timer" class="hidden">Time Remaining: <span id="time-left">00:00</span></div>
+        <div id="question-info" class="hidden">Question <span id="current-question"></span> of <span id="total-questions"></span></div>
+        <div id="question-box" class="hidden">
             <p id="question"></p>
             <div class="options">
-                <button class="option" onclick="checkAnswer(this, false)"></button>
-                <button class="option" onclick="checkAnswer(this, false)"></button>
-                <button class="option" onclick="checkAnswer(this, false)"></button>
-                <button class="option" onclick="checkAnswer(this, false)"></button>
+                <button class="option" onclick="checkAnswer(0)"></button>
+                <button class="option" onclick="checkAnswer(1)"></button>
+                <button class="option" onclick="checkAnswer(2)"></button>
+                <button class="option" onclick="checkAnswer(3)"></button>
             </div>
         </div>
         <button id="next-btn" onclick="nextQuestion()">Next</button>
         <div id="result" class="hidden"></div>
+        <button id="review-btn" onclick="reviewAnswers()">Review Answers</button>
+        <button id="retry-btn" onclick="retryQuiz()">Retry Quiz</button>
     </div>
 
     <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
         let score = 0;
         let totalQuestions = 5;
         let currentQuestionIndex = 0;
-        let startTime;
+        let timeLimit;
+        let timerInterval;
+        let userAnswers = [];
 
         const questions = [
             {
-                question: "Which country won the FIFA World Cup in 2018?",
-                options: ["Germany", "Brazil", "France", "Argentina"],
-                answer: 2 
+                question: "Which language is primarily used for Android app development?",
+                options: ["Kotlin", "Python", "Swift", "JavaScript"],
+                answer: 0
             },
             {
-                question: "Who is known as the 'King of Football'?",
-                options: ["Lionel Messi", "Cristiano Ronaldo", "Pele", "Diego Maradona"],
-                answer: 1
+                question: "Which version control system is widely used for tracking code changes?",
+                options: ["Git", "SVN", "Mercurial", "Perforce"],
+                answer: 0
             },
             {
-                question: "Which club has won the most UEFA Champions League titles?",
-                options: ["Barcelona", "Liverpool", "Real Madrid", "AC Milan"],
+                question: "Which of the following is a popular JavaScript framework?",
+                options: ["Django", "Ruby on Rails", "React", "Laravel"],
                 answer: 2
             },
             {
-                question: "Who holds the record for the most goals in a calendar year?",
-                options: ["Lionel Messi", "Cristiano Ronaldo", "Gerd Muller", "Pelé"],
-                answer: 0
+                question: "What is the purpose of a 'Docker container'?",
+                options: ["Packaging code", "Running isolated applications", "Version control", "Data encryption"],
+                answer: 1
             },
             {
-                question: "Which player has the most international caps?",
-                options: ["Cristiano Ronaldo", "Lionel Messi", "Gianluigi Buffon", "Khalid Al-Muwallad"],
-                answer: 0
+                question: "Which of these languages is a backend programming language?",
+                options: ["HTML", "CSS", "Node.js", "Bootstrap"],
+                answer: 2
             }
         ];
+
+        function showTimeInput() {
+            document.getElementById('time-options').classList.add('hidden');
+            document.getElementById('time-input').classList.remove('hidden');
+        }
+
+        function setTimeLimit() {
+            const minutes = parseInt(document.getElementById('time-limit').value);
+            if (isNaN(minutes) || minutes < 1) {
+                alert("Please enter a valid number of minutes.");
+                return;
+            }
+            timeLimit = minutes * 60; 
+            updateTimerDisplay();
+            document.getElementById('timer').classList.remove('hidden');
+            startQuizWithTimer();
+        }
+
+        function startQuizWithoutTime() {
+            startQuiz();
+        }
+
+        function startQuizWithTimer() {
+            startQuiz();
+            timerInterval = setInterval(() => {
+                timeLimit--;
+                updateTimerDisplay();
+                if (timeLimit <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLimit / 60);
+            const seconds = timeLimit % 60;
+            document.getElementById('time-left').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
 
         function displayQuestion() {
             const questionElement = document.getElementById('question');
@@ -154,34 +269,30 @@
                 button.disabled = false;
             });
 
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('question-info').classList.remove('hidden');
             document.getElementById('next-btn').style.display = 'none';
         }
 
-        function checkAnswer(button, isCorrect) {
-            const options = document.querySelectorAll('.option');
-            const correctAnswerIndex = questions[currentQuestionIndex].answer;
+        function checkAnswer(selectedIndex) {
+            const currentQuestion = questions[currentQuestionIndex];
+            userAnswers[currentQuestionIndex] = selectedIndex;
 
-            options.forEach(opt => {
-                opt.disabled = true;
-                if (opt.textContent === questions[currentQuestionIndex].options[correctAnswerIndex]) {
-                    opt.classList.add('correct'); 
-                }
-                else if (opt === button && !isCorrect) {
-                    opt.classList.add('wrong');d
-                }
-            });
-
-            if (isCorrect) {
-                button.classList.add('correct');
+            const optionsButtons = document.querySelectorAll('.option');
+            if (selectedIndex === currentQuestion.answer) {
                 score++;
-            } 
-
+                optionsButtons[selectedIndex].classList.add('correct');
+            } else {
+                optionsButtons[selectedIndex].classList.add('wrong');
+                optionsButtons[currentQuestion.answer].classList.add('correct');
+            }
+            optionsButtons.forEach(button => button.disabled = true);
             document.getElementById('next-btn').style.display = 'block';
         }
 
         function nextQuestion() {
             currentQuestionIndex++;
-
             if (currentQuestionIndex < totalQuestions) {
                 displayQuestion();
             } else {
@@ -190,21 +301,40 @@
         }
 
         function endQuiz() {
-            const endTime = new Date();
-            const timeTaken = (endTime - startTime) / 1000;
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `You have completed the quiz!<br>Your score: ${score} out of ${totalQuestions}<br>Time taken: ${timeTaken} seconds`;
-            resultDiv.classList.remove('hidden');
-            document.getElementById('question-box').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
+            clearInterval(timerInterval);
+            document.getElementById('question-box').classList.add('hidden');
+            document.getElementById('timer').classList.add('hidden');
+            document.getElementById('result').textContent = `Your score: ${score} out of ${totalQuestions}`;
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('review-btn').style.display = 'block';
+            document.getElementById('retry-btn').style.display = 'block';
         }
 
-        function startQuiz() {
-            startTime = new Date();
+        function reviewAnswers() {
+            let reviewContent = "Your Answers:\n";
+            questions.forEach((question, index) => {
+                reviewContent += `Question ${index + 1}: ${question.question}\nYour answer: ${question.options[userAnswers[index]]}\nCorrect answer: ${question.options[question.answer]}\n\n`;
+            });
+            alert(reviewContent);
+        }
+
+        function retryQuiz() {
+            score = 0;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('review-btn').style.display = 'none';
+            document.getElementById('retry-btn').style.display = 'none';
+            document.getElementById('question-box').classList.remove('hidden');
             displayQuestion();
         }
 
-        window.onload = startQuiz;
+        function startQuiz() {
+            document.getElementById('time-options').classList.add('hidden');
+            document.getElementById('time-input').classList.add('hidden');
+            document.getElementById('question-box').classList.remove('hidden');
+            displayQuestion();
+        }
     </script>
 </body>
 </html>
