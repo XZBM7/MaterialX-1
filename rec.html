@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Recording</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        h1, h2 {
+            color: #4A90E2;
+            text-align: center;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        ul li:hover {
+            background-color: #e6f0fa;
+        }
+
+        .lesson-container {
+            display: none;
+        }
+
+        .record-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .record-list li {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .record-list li:hover {
+            background-color: #e0f7fa;
+        }
+
+        .record-list li i {
+            color: #4A90E2;
+            cursor: pointer;
+        }
+
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .audio-controls button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .audio-controls button:hover {
+            background-color: #357ABD;
+        }
+
+        .audio-controls input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .audio-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .audio-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        footer {
+            background-color: #0f2f2d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1, h2 {
+                font-size: 22px;
+            }
+
+            select, button {
+                font-size: 14px;
+            }
+
+            .audio-title {
+                font-size: 16px;
+            }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #0056b3;
+        }
+
+        .scroll-to-top i {
+            font-size: 24px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Course Recording</h1>
+
+        <div class="stage-selection">
+            <label for="stageSelect">Select Level:</label>
+            <select id="stageSelect" onchange="loadSpecializations()">
+                <option value="" disabled selected>Select Level</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+            </select>
+        </div>
+
+        <div class="specialization-selection" style="display: none;">
+            <label for="specializationSelect">Select Department:</label>
+            <select id="specializationSelect" onchange="loadSubjects()">
+                <option value="" disabled selected>Select Department</option>
+            </select>
+        </div>
+
+        <div class="subject-selection" style="display: none;">
+            <h2>Select Subject</h2>
+            <select id="subjectSelect" onchange="loadRecords()">
+                <option value="" disabled selected>Select Subject</option>
+            </select>
+        </div>
+
+        <div class="lesson-container" style="display: none;">
+            <h2>Lessons</h2>
+            <ul class="record-list" id="recordList">
+            </ul>
+        </div>
+
+        <div class="audio-controls" style="display: none;" id="audioControls">
+            <div class="audio-title" id="audioTitle"></div>
+            
+            <div class="audio-player">
+                <audio id="audioPlayer" controls>
+                    <source src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <button id="downloadButton" onclick="downloadAudio()">Download Recording</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-to-top" onclick="scrollToTop()" style="display:none;">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+   
+
+    <script>
+        const data = {
+            1: ['Math-1', 'Computer Science', 'English-1', 'Physics', 'Statistics-1'],
+            2: ['PL-2', 'Database', 'SA-1', 'Logic', 'Data structure', 'DC'],
+            3: ['IS', 'CS', 'IT', 'AI']
+        };
+
+        const sections = {
+            'IS': ['Data Mining', 'Database-2', 'AI', 'Big Data', 'Data Storage', 'Data Analytical'],
+            'CS': [],
+            'IT': [],
+            'AI': ['Parallel Processing', 'Machine learning', 'AI', 'Big Data', 'Database-2', 'Convex']
+        };
+
+        const lessons = {
+            'Math-1': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/math1_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/math1_lec1.mp3' }
+            ],
+            'Computer Science': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/cs_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/cs_lec1.mp3' }
+            ],
+            'English-1': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/english1_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/english1_lec1.mp3' }
+            ],
+            'Physics': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/physics_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/physics_lec1.mp3' }
+            ],
+            'Statistics-1': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/statistics1_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/statistics1_lec1.mp3' }
+            ],
+            'PL-2': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/pl2_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/pl2_lec1.mp3' }
+            ],
+            'Database': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/database_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/database_lec1.mp3' }
+            ],
+            'SA-1': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/sa1_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/sa1_lec1.mp3' }
+            ],
+            'Logic': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/logic_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/logic_lec1.mp3' }
+            ],
+            'Data structure': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/data_structure_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/data_structure_lec1.mp3' }
+            ],
+            'DC': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/dc_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/dc_lec1.mp3' }
+            ],
+            'Data Mining': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/data_mining_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/data_mining_lec1.mp3' }
+            ],
+            'Database-2': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/database2_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/database2_lec1.mp3' }
+            ],
+            'AI': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/ai_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/ai_lec1.mp3' }
+            ],
+            'Big Data': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/bigdata_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/bigdata_lec1.mp3' }
+            ],
+            'Data Storage': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/datastorage_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/datastorage_lec1.mp3' }
+            ],
+            'Data Analytical': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/dataanalytical_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/dataanalytical_lec1.mp3' }
+            ],
+            'Parallel Processing': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/parallelprocessing_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/parallelprocessing_lec1.mp3' }
+            ],
+            'Machine learning': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/machinelearning_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/machinelearning_lec1.mp3' }
+            ],
+            'Convex': [
+                { title: 'Lec0', url: 'https://www.example.com/audio/convex_lec0.mp3' },
+                { title: 'Lec1', url: 'https://www.example.com/audio/convex_lec1.mp3' }
+            ]
+        };
+
+        function loadSpecializations() {
+            const stageSelect = document.getElementById('stageSelect');
+            const specializationSelect = document.getElementById('specializationSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+
+            specializationSelect.innerHTML = '<option value="" disabled selected>Select Department</option>';
+            subjectSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
+            document.querySelector('.specialization-selection').style.display = 'none';
+            document.querySelector('.subject-selection').style.display = 'none';
+            document.querySelector('.lesson-container').style.display = 'none';
+
+            if (stageSelect.value == 3) {
+                document.querySelector('.specialization-selection').style.display = 'block';
+                Object.keys(sections).forEach(spec => {
+                    const option = document.createElement('option');
+                    option.value = spec;
+                    option.textContent = spec;
+                    specializationSelect.appendChild(option);
+                });
+            } else {
+                document.querySelector('.subject-selection').style.display = 'block';
+                const subjects = data[stageSelect.value];
+                subjects.forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub;
+                    option.textContent = sub;
+                    subjectSelect.appendChild(option);
+                });
+            }
+        }
+
+        function loadSubjects() {
+            const specializationSelect = document.getElementById('specializationSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const specialization = specializationSelect.value;
+
+            subjectSelect.innerHTML = '<option value="" disabled selected>Select Subject</option>';
+            document.querySelector('.lesson-container').style.display = 'none';
+
+            if (sections[specialization]) {
+                document.querySelector('.subject-selection').style.display = 'block';
+                sections[specialization].forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub;
+                    option.textContent = sub;
+                    subjectSelect.appendChild(option);
+                });
+            }
+        }
+
+        function loadRecords() {
+            const subjectSelect = document.getElementById('subjectSelect');
+            const recordList = document.getElementById('recordList');
+            const lessonContainer = document.querySelector('.lesson-container');
+            recordList.innerHTML = '';
+
+            const subject = subjectSelect.value;
+            lessonContainer.style.display = 'none';
+            document.getElementById('audioControls').style.display = 'none';
+
+            if (lessons[subject]) {
+                lessonContainer.style.display = 'block';
+                lessons[subject].forEach(lesson => {
+                    const li = document.createElement('li');
+                    li.textContent = lesson.title;
+                    const icon = document.createElement('i');
+                    icon.className = 'fas fa-play';
+                    icon.onclick = () => playAudio(lesson.title, lesson.url);
+                    li.appendChild(icon);
+                    recordList.appendChild(li);
+                });
+            }
+        }
+
+        function playAudio(title, url) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const audioTitle = document.getElementById('audioTitle');
+            const downloadButton = document.getElementById('downloadButton');
+
+            audioPlayer.src = url;
+            audioTitle.textContent = title;
+            document.getElementById('audioControls').style.display = 'block';
+
+            audioPlayer.play();
+
+            downloadButton.onclick = () => {
+                downloadAudio(url, title);
+            };
+        }
+
+        function downloadAudio(url, title) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = title + '.mp3';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+        function toggleMenu() {
+            var menu = document.getElementById("nav-menu");
+            menu.classList.toggle("active");
+        }
+
+    </script>
+</body>
+</html>
