@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +41,13 @@
             margin: 25px 0;
         }
 
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
         .option {
             background-color: #007bff;
             color: white;
@@ -47,7 +55,6 @@
             padding: 14px 22px;
             border-radius: 6px;
             cursor: pointer;
-            margin: 10px 0;
             font-size: 16px;
             transition: background-color 0.3s ease;
             width: 100%;
@@ -56,6 +63,24 @@
         .option:hover {
             background-color: #0056b3;
         }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .option {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            #timer,
+            #result {
+                font-size: 16px;
+            }
+        }
+
 
         .correct {
             background-color: #28a745 !important;
@@ -77,7 +102,9 @@
             color: #555;
         }
 
-        #next-btn, #review-btn, #retry-btn {
+        #next-btn,
+        #review-btn,
+        #back-btn {
             background-color: #28a745;
             color: white;
             border: none;
@@ -89,7 +116,9 @@
             transition: background-color 0.3s ease;
         }
 
-        #next-btn:hover, #review-btn:hover, #retry-btn:hover {
+        #next-btn:hover,
+        #review-btn:hover,
+        #back-btn:hover {
             background-color: #218838;
         }
 
@@ -98,7 +127,8 @@
             margin-top: 10px;
         }
 
-        #review-btn, #retry-btn {
+        #review-btn,
+        #back-btn {
             display: none;
         }
 
@@ -144,11 +174,18 @@
         .time-option:hover {
             background-color: #0056b3;
         }
+
+        .statistics {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
     </style>
 </head>
+
 <body>
     <div class="quiz-container">
-        <h1>Software Development Quiz</h1>
+        <h1>Database Quiz</h1>
         <div id="time-options">
             <h3>Select Time Option:</h3>
             <button class="time-option" onclick="startQuizWithoutTime()">Without Time Limit</button>
@@ -162,7 +199,8 @@
             </div>
         </div>
         <div id="timer" class="hidden">Time Remaining: <span id="time-left">00:00</span></div>
-        <div id="question-info" class="hidden">Question <span id="current-question"></span> of <span id="total-questions"></span></div>
+        <div id="question-info" class="hidden">Question <span id="current-question"></span> of <span
+                id="total-questions"></span></div>
         <div id="question-box" class="hidden">
             <p id="question"></p>
             <div class="options">
@@ -172,49 +210,151 @@
                 <button class="option" onclick="checkAnswer(3)"></button>
             </div>
         </div>
-        <button id="next-btn" onclick="nextQuestion()">Next</button>
+        <button id="next-btn" onclick="nextQuestion()" class="hidden">Next</button>
         <div id="result" class="hidden"></div>
+        <div id="time-taken" class="hidden"></div>
         <button id="review-btn" onclick="reviewAnswers()">Review Answers</button>
-        <button id="retry-btn" onclick="retryQuiz()">Retry Quiz</button>
+        <button id="back-btn" onclick="backToHome()">Retake The Quiz</button>
     </div>
 
     <script>
-        document.addEventListener('contextmenu', function(e) {
+        document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
 
         let score = 0;
-        let totalQuestions = 5;
+        let totalQuestions = 25;
         let currentQuestionIndex = 0;
         let timeLimit;
         let timerInterval;
         let userAnswers = [];
+        let startTime;
 
         const questions = [
             {
-                question: "Which language is primarily used for Android app development?",
-                options: ["Kotlin", "Python", "Swift", "JavaScript"],
-                answer: 0
-            },
-            {
-                question: "Which version control system is widely used for tracking code changes?",
-                options: ["Git", "SVN", "Mercurial", "Perforce"],
-                answer: 0
-            },
-            {
-                question: "Which of the following is a popular JavaScript framework?",
-                options: ["Django", "Ruby on Rails", "React", "Laravel"],
-                answer: 2
-            },
-            {
-                question: "What is the purpose of a 'Docker container'?",
-                options: ["Packaging code", "Running isolated applications", "Version control", "Data encryption"],
+                question: "What is a database?",
+                options: ["A collection of unrelated data", "A collection of related data", "A program that retrieves data", "A storage medium for documents"],
                 answer: 1
             },
             {
-                question: "Which of these languages is a backend programming language?",
-                options: ["HTML", "CSS", "Node.js", "Bootstrap"],
+                question: "Which of the following is a function of a DBMS?",
+                options: ["Text editing", "Defining the database", "Printing documents", "Browsing the internet"],
+                answer: 1
+            },
+            {
+                question: "What is the primary purpose of a Database Management System (DBMS)?",
+                options: ["To create images", "To manage data efficiently", "To play music", "To manage emails"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is a disadvantage of file-based systems?",
+                options: ["Easy data sharing", "High data integrity", "Data duplication", "Automatic backup"],
                 answer: 2
+            },
+            {
+                question: "What does data consistency in a database imply?",
+                options: ["Data stored in different formats", "Data is consistent across different files", "Any update is performed once and is available to all users", "Multiple copies of data exist"],
+                answer: 2
+            },
+            {
+                question: "What does a database catalog contain?",
+                options: ["List of all employees", "Metadata", "User passwords", "System logs"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is not a DBMS function?",
+                options: ["Manipulating data", "Sharing the database", "Protecting the database", "Compiling code"],
+                answer: 3
+            },
+            {
+                question: "What is atomicity in the context of databases?",
+                options: ["The ability to store large files", "The ability to process transactions entirely or not at all", "The ability to share data among users", "The ability to create backups"],
+                answer: 1
+            },
+            {
+                question: "What type of language is used to specify the structure of a database?",
+                options: ["Data Manipulation Language (DML)", "Data Definition Language (DDL)", "Data Query Language (DQL)", "Procedural Language"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is a disadvantage of using a database?",
+                options: ["High performance", "Complexity", "Ease of use", "Small size"],
+                answer: 1
+            },
+            {
+                question: "Which users primarily interact with the database to satisfy their data needs?",
+                options: ["Database Designers", "End Users", "Database Administrators", "Systems Analysts"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is an advantage of a database system?",
+                options: ["Data redundancy", "Limited data sharing", "Improved data integrity", "Atomicity problems"],
+                answer: 2
+            },
+            {
+                question: "What is a 'view' in the context of databases?",
+                options: ["A different program", "A subset of the database", "A backup of the database", "A query language"],
+                answer: 1
+            },
+            {
+                question: "Which of the following tasks is not typically handled by a Database Administrator (DBA)?",
+                options: ["Authorizing access to the database", "Designing the database", "Monitoring database use", "Developing applications"],
+                answer: 3
+            },
+            {
+                question: "When is it more desirable to use regular files instead of a database?",
+                options: ["For complex, ever-changing applications", "For embedded systems with limited storage capacity", "For large multi-user environments", "For systems requiring high security"],
+                answer: 1
+            },
+            {
+                question: "Data is always consistent in a file-based system.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A DBMS allows multiple users to access data simultaneously.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "A database application is a program that interacts with the database.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "The physical structure of data is independent of application programs in a DBMS.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "In a database, data redundancy is increased to improve performance.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A file-based system is more efficient than a database in handling complex data relationships.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A DBMS does not provide any security mechanisms to protect data.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "Sharing a database can only be done by a single user at a time.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The cost of implementing a DBMS is usually lower than using a file-based system.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "Data integrity in a database is easier to achieve than in a file-based system.",
+                options: ["True", "False"],
+                answer: 0
             }
         ];
 
@@ -229,7 +369,7 @@
                 alert("Please enter a valid number of minutes.");
                 return;
             }
-            timeLimit = minutes * 60; 
+            timeLimit = minutes * 60;
             updateTimerDisplay();
             document.getElementById('timer').classList.remove('hidden');
             startQuizWithTimer();
@@ -241,6 +381,7 @@
 
         function startQuizWithTimer() {
             startQuiz();
+            startTime = new Date();
             timerInterval = setInterval(() => {
                 timeLimit--;
                 updateTimerDisplay();
@@ -255,24 +396,6 @@
             const minutes = Math.floor(timeLimit / 60);
             const seconds = timeLimit % 60;
             document.getElementById('time-left').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        }
-
-        function displayQuestion() {
-            const questionElement = document.getElementById('question');
-            const optionsButtons = document.querySelectorAll('.option');
-            const currentQuestion = questions[currentQuestionIndex];
-
-            questionElement.textContent = currentQuestion.question;
-            optionsButtons.forEach((button, index) => {
-                button.textContent = currentQuestion.options[index];
-                button.classList.remove('correct', 'wrong');
-                button.disabled = false;
-            });
-
-            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
-            document.getElementById('total-questions').textContent = totalQuestions;
-            document.getElementById('question-info').classList.remove('hidden');
-            document.getElementById('next-btn').style.display = 'none';
         }
 
         function checkAnswer(selectedIndex) {
@@ -291,6 +414,7 @@
             document.getElementById('next-btn').style.display = 'block';
         }
 
+
         function nextQuestion() {
             currentQuestionIndex++;
             if (currentQuestionIndex < totalQuestions) {
@@ -300,33 +424,64 @@
             }
         }
 
+        function displayQuestion() {
+            const questionElement = document.getElementById('question');
+            const optionsButtons = document.querySelectorAll('.option');
+            const currentQuestion = questions[currentQuestionIndex];
+
+            questionElement.textContent = currentQuestion.question;
+            optionsButtons.forEach((button, index) => {
+                button.textContent = currentQuestion.options[index];
+                button.classList.remove('correct', 'wrong');
+                button.disabled = false;
+            });
+
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('question-info').classList.remove('hidden');
+
+            if (currentQuestionIndex === totalQuestions - 1) {
+                document.getElementById('next-btn').textContent = "Finish";
+            } else {
+                document.getElementById('next-btn').textContent = "Next";
+            }
+
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
         function endQuiz() {
             clearInterval(timerInterval);
             document.getElementById('question-box').classList.add('hidden');
             document.getElementById('timer').classList.add('hidden');
-            document.getElementById('result').textContent = `Your score: ${score} out of ${totalQuestions}`;
+
+            const endTime = new Date();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+            const minutesTaken = Math.floor(timeTaken / 60);
+            const secondsTaken = timeTaken % 60;
+
+            const percentageScore = (score / totalQuestions) * 100;
+            document.getElementById('result').innerHTML = `Your score: ${score} out of ${totalQuestions} (${percentageScore.toFixed(2)}%)`;
+            document.getElementById('time-taken').innerHTML = `Time taken: ${String(minutesTaken).padStart(2, '0')} minutes ${String(secondsTaken).padStart(2, '0')} seconds`; // عرض الوقت المستغرق
+            document.getElementById('time-taken').classList.remove('hidden');
             document.getElementById('result').classList.remove('hidden');
             document.getElementById('review-btn').style.display = 'block';
-            document.getElementById('retry-btn').style.display = 'block';
+            document.getElementById('back-btn').style.display = 'block';
+            document.getElementById('next-btn').style.display = 'none';
         }
 
         function reviewAnswers() {
             let reviewContent = "Your Answers:\n";
             questions.forEach((question, index) => {
-                reviewContent += `Question ${index + 1}: ${question.question}\nYour answer: ${question.options[userAnswers[index]]}\nCorrect answer: ${question.options[question.answer]}\n\n`;
+                if (index < userAnswers.length) {
+                    reviewContent += `Question ${index + 1}: ${question.question}\nYour answer: ${userAnswers[index] !== undefined ? question.options[userAnswers[index]] : "No answer"}\nCorrect answer: ${question.options[question.answer]}\n\n`;
+                }
             });
             alert(reviewContent);
         }
 
-        function retryQuiz() {
-            score = 0;
-            currentQuestionIndex = 0;
-            userAnswers = [];
-            document.getElementById('result').classList.add('hidden');
-            document.getElementById('review-btn').style.display = 'none';
-            document.getElementById('retry-btn').style.display = 'none';
-            document.getElementById('question-box').classList.remove('hidden');
-            displayQuestion();
+
+        function backToHome() {
+            location.reload();
         }
 
         function startQuiz() {
@@ -335,6 +490,8 @@
             document.getElementById('question-box').classList.remove('hidden');
             displayQuestion();
         }
+
     </script>
 </body>
+
 </html>
