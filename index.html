@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materialx | Home</title>
+    <title>MaterialX | Home</title>
     <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -16,11 +16,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: black;
-            color: white;
+            background: linear-gradient(135deg, #1c1c1c, #3a3a3a);
+            color: #ffffff;
             font-family: 'Courier New', Courier, monospace;
             overflow: hidden;
             flex-direction: column;
+            position: relative;
         }
 
         #logo {
@@ -30,7 +31,8 @@
             width: 40vw; 
             max-width: 400px; 
             height: auto; 
-            animation: fadeIn 1s forwards, moveRight 1s forwards;
+            animation: fadeIn 1s forwards, bounce 1s forwards;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.7));
         }
 
         #text {
@@ -42,17 +44,17 @@
             top: 15%; 
             transform: translate(-50%, -50%); 
             animation: fadeInText 1s forwards; 
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        @keyframes moveRight {
-            from { transform: translateX(-50%); }
-            to { transform: translateX(0); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         @keyframes fadeInText {
@@ -82,7 +84,7 @@
 </head>
 <body>
     <div id="text"></div>
-    <img id="logo" src="img/photo_2024-10-01_00-48-56.png" alt="Materialx Logo">
+    <img id="logo" src="img/photo_2024-10-01_00-48-56.png" alt="MaterialX Logo">
 
     <script>
         const textElement = document.getElementById('text');
