@@ -15,6 +15,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 10px;
         }
 
         .quiz-container {
@@ -23,7 +24,8 @@
             border-radius: 12px;
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 450px;
+            width: 100%;
+            max-width: 450px;
             transition: transform 0.3s ease-in-out;
         }
 
@@ -35,10 +37,6 @@
             font-size: 26px;
             color: #333;
             margin-bottom: 25px;
-        }
-
-        .options {
-            margin: 25px 0;
         }
 
         .options {
@@ -66,7 +64,7 @@
 
         @media (max-width: 600px) {
             .quiz-container {
-                width: 90%;
+                width: 100%;
                 padding: 20px;
             }
 
@@ -99,6 +97,12 @@
             margin-top: 30px;
             font-size: 20px;
             color: #555;
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+
+        #result div {
+            padding: 10px;
         }
 
         #next-btn,
@@ -114,6 +118,7 @@
             font-size: 16px;
             margin-top: 25px;
             transition: background-color 0.3s ease;
+            width: 100%;
         }
 
         #next-btn:hover,
@@ -196,28 +201,96 @@
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s;
+            width: 100%;
         }
 
         #start-new-quiz:hover {
             background-color: #45a049;
         }
 
-        #result {
-            max-width: 100%;
-            overflow-wrap: break-word;
-        }
-
-        #result div {
-            padding: 10px;
-        }
-
         h2 {
             font-size: 1.5em;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
         }
 
         hr {
             border: 1px solid #ccc;
             margin: 10px 0;
+        }
+
+
+        #review-answers {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f3f5;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .quiz-container {
+            max-width: 100%;
+            width: 450px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+            overflow: hidden;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .option {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            #timer,
+            #result {
+                font-size: 16px;
+            }
+
+            #review-answers {
+                max-height: 300px;
+            }
+        }
+
+        .review-question {
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .review-question p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .review-question strong {
+            color: #007bff;
+        }
+
+        .review-question em {
+            color: #dc3545;
         }
     </style>
 </head>
@@ -229,6 +302,21 @@
             <button class="time-option" onclick="selectQuiz('database')">Database</button>
             <button class="time-option" onclick="selectQuiz('datastructures')">Data Structures</button>
         </div>
+
+        <div id="database-quiz-selection" class="hidden">
+            <h3>Select Database Quiz:</h3>
+            <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database Quiz 1</button>
+            <!-- <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database Quiz 2</button>
+            <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button> -->
+        </div>
+
+        <div id="data-structure-quiz-selection" class="hidden">
+            <h3>Select Data Structures Quiz:</h3>
+            <button class="time-option" onclick="chooseDataStructuresQuiz(1)">Data Structures Quiz 1</button>
+            <!-- <button class="time-option" onclick="chooseDataStructuresQuiz(2)">Data Structures Quiz 2</button>
+            <button class="time-option" onclick="chooseDataStructuresQuiz(3)">Data Structures Quiz 3</button> -->
+        </div>
+
 
         <div id="time-options" class="hidden">
             <h3>Select Time Option:</h3>
@@ -258,10 +346,12 @@
         <button id="finish-btn" onclick="showResult()" class="hidden">Finish</button>
         <div id="result" class="hidden"></div>
         <div id="time-taken" class="hidden"></div>
-        <button id="review-btn" onclick="reviewAnswers()">Review Answers</button>
         <button id="start-new-quiz" style="display:none;" onclick="startNewQuiz()">Start New Quiz</button>
-        <button id="back-btn" onclick="backToHome()">Retake The Quiz</button>
+        <button id="review-btn" class="hidden" onclick="reviewAnswers()">Review Answers</button>
     </div>
+
+
+    <div id="review-answers" style="display:none;"></div>
 
     <script>
         document.addEventListener('contextmenu', function (e) {
@@ -276,8 +366,12 @@
         let userAnswers = [];
         let startTime;
         let selectedQuiz;
+        let databaseQuizVariant = 1;
+        let dataStructureQuizVariant = 1;
 
-        const databaseQuestions = [
+
+        const databaseQuestions1 = [
+
             {
                 question: "What is a database?",
                 options: ["A collection of unrelated data", "A collection of related data", "A program that retrieves data", "A storage medium for documents"],
@@ -405,6 +499,12 @@
             }
         ];
 
+        const databaseQuestions2 = [
+        ];
+
+        const databaseQuestions3 = [
+        ];
+
         const dataStructureQuestions = [
             {
                 question: "Process of inserting an element in a stack is called:",
@@ -454,7 +554,7 @@
             {
                 question: "The postfix form of the expression (A+B)*(C*D-E)*F/G is:",
                 options: ["AB+CD*E-FG/**", "AB+CD*E-F**G/", "AB+CD*E-*F*G/", "AB+CDE*-*F*G/"],
-                answer: 2 
+                answer: 2
             },
             {
                 question: "The process of accessing data stored in a serial access memory is similar to manipulating data on a:",
@@ -528,18 +628,56 @@
             }
         ];
 
+        const dataStructureQuestions2 = [
+        ];
+
+        const dataStructureQuestions3 = [
+        ];
+
+
+
         function selectQuiz(quiz) {
             selectedQuiz = quiz;
             if (quiz === 'database') {
-                totalQuestions = databaseQuestions.length;
-                document.getElementById('quiz-title').innerText = "Database Quiz";
-            } else {
-                totalQuestions = dataStructureQuestions.length;
-                document.getElementById('quiz-title').innerText = "Data Structures Quiz";
+                document.getElementById('quiz-selection').classList.add('hidden');
+                document.getElementById('database-quiz-selection').classList.remove('hidden');
+            } else if (quiz === 'datastructures') {
+                document.getElementById('quiz-selection').classList.add('hidden');
+                document.getElementById('data-structure-quiz-selection').classList.remove('hidden');
             }
-            document.getElementById('quiz-selection').classList.add('hidden');
+        }
+
+
+
+        function chooseDatabaseQuiz(variant) {
+            databaseQuizVariant = variant;
+            totalQuestions = getDatabaseQuestions().length;
+            document.getElementById('quiz-title').innerText = `Database Quiz ${variant}`;
+            document.getElementById('database-quiz-selection').classList.add('hidden');
             document.getElementById('time-options').classList.remove('hidden');
         }
+
+
+        function getDatabaseQuestions() {
+            if (databaseQuizVariant === 1) return databaseQuestions1;
+            if (databaseQuizVariant === 2) return databaseQuestions2;
+            if (databaseQuizVariant === 3) return databaseQuestions3;
+        }
+
+        function chooseDataStructuresQuiz(variant) {
+            dataStructureQuizVariant = variant;
+            totalQuestions = getDataStructureQuestions().length;
+            document.getElementById('quiz-title').innerText = `Data Structures Quiz ${variant}`;
+            document.getElementById('data-structure-quiz-selection').classList.add('hidden');
+            document.getElementById('time-options').classList.remove('hidden');
+        }
+
+        function getDataStructureQuestions() {
+            if (dataStructureQuizVariant === 1) return dataStructureQuestions;
+            if (dataStructureQuizVariant === 2) return dataStructureQuestions2;
+            if (dataStructureQuizVariant === 3) return dataStructureQuestions3;
+        }
+
 
         function showTimeInput() {
             document.getElementById('time-options').classList.add('hidden');
@@ -577,7 +715,7 @@
         }
 
         function loadQuestion() {
-            const quiz = selectedQuiz === 'database' ? databaseQuestions : dataStructureQuestions;
+            const quiz = selectedQuiz === 'database' ? getDatabaseQuestions() : dataStructureQuestions;
             document.getElementById('current-question').innerText = currentQuestionIndex + 1;
             document.getElementById('total-questions').innerText = totalQuestions;
             document.getElementById('question').innerText = quiz[currentQuestionIndex].question;
@@ -591,7 +729,7 @@
         }
 
         function checkAnswer(selectedIndex) {
-            const quiz = selectedQuiz === 'database' ? databaseQuestions : dataStructureQuestions;
+            const quiz = selectedQuiz === 'database' ? getDatabaseQuestions() : dataStructureQuestions;
             const correctIndex = quiz[currentQuestionIndex].answer;
 
             userAnswers[currentQuestionIndex] = selectedIndex;
@@ -618,79 +756,80 @@
 
         function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                loadQuestion();
-            }
+            loadQuestion();
         }
 
         function showResult() {
-            clearInterval(timerInterval);
-            document.getElementById('time-options').classList.add('hidden');
-            document.getElementById('time-input').classList.add('hidden');
+            document.getElementById('question-info').classList.add('hidden');
             document.getElementById('question-box').classList.add('hidden');
-            document.getElementById('next-btn').classList.add('hidden');
-            document.getElementById('finish-btn').classList.add('hidden');
             document.getElementById('result').classList.remove('hidden');
 
-            const correctPercentage = (score / totalQuestions) * 100;
-            const elapsed = Math.floor((new Date() - startTime) / 1000);
-            const minutesTaken = Math.floor(elapsed / 60);
-            const secondsTaken = elapsed % 60;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('result').innerText = `Your Score: ${score} out of ${totalQuestions} (${percentage}%)`;
 
-            document.getElementById('result').innerText = `Your Score: ${score} out of ${totalQuestions} (${correctPercentage.toFixed(2)}%)`;
-            document.getElementById('time-taken').innerText = `Time Taken: ${minutesTaken}:${secondsTaken < 10 ? '0' : ''}${secondsTaken}`;
-            document.getElementById('time-taken').classList.remove('hidden');
-            document.getElementById('review-btn').style.display = "block";
-            document.getElementById('back-btn').style.display = "block";
-            document.getElementById('start-new-quiz').style.display = "block";
-        }
+            document.getElementById('finish-btn').classList.add('hidden');
 
-        function updateTimer() {
-            const elapsed = Math.floor((new Date() - startTime) / 1000);
-            const remaining = timeLimit - elapsed;
-            if (remaining <= 0) {
+            if (timeLimit) {
+                const timeTaken = Math.floor((new Date() - startTime) / 1000);
+                const minutes = Math.floor(timeTaken / 60);
+                const seconds = timeTaken % 60;
+                document.getElementById('time-taken').style.display = 'block';
+                document.getElementById('time-taken').innerText = `Time Taken: ${minutes}m ${seconds}s`;
                 clearInterval(timerInterval);
-                showResult();
-            } else {
-                updateTimerDisplay(remaining);
             }
-        }
 
-        function updateTimerDisplay(remaining) {
-            const minutes = Math.floor(remaining / 60);
-            const seconds = remaining % 60;
-            document.getElementById('time-left').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-
-        function backToHome() {
-            location.reload();
-        }
-
-        function reviewAnswers() {
-            const quiz = selectedQuiz === 'database' ? databaseQuestions : dataStructureQuestions;
-            let reviewHtml = "<h2>Review Your Answers</h2>";
-
-            quiz.forEach((question, index) => {
-                reviewHtml += `
-            <div style="margin-bottom: 20px;">
-                <strong>Q${index + 1}: ${question.question}</strong><br>
-                <strong>Your Answer:</strong> ${userAnswers[index] !== undefined ? question.options[userAnswers[index]] : 'No Answer'}<br>
-                <strong>Correct Answer:</strong> ${question.options[question.answer]}<br>
-            </div>
-            <hr>`;
-            });
-
-            document.getElementById('result').innerHTML = reviewHtml;
-
-            document.getElementById('review-btn').style.display = "none";
-            document.getElementById('back-btn').style.display = "none";
-            document.getElementById('start-new-quiz').style.display = "block";
+            document.getElementById('start-new-quiz').style.display = 'block';
+            document.getElementById('review-btn').style.display = 'block';
         }
 
 
         function startNewQuiz() {
             location.reload();
         }
+
+        function updateTimer() {
+            timeLimit--;
+            if (timeLimit <= 0) {
+                clearInterval(timerInterval);
+                showResult();
+            }
+            updateTimerDisplay(timeLimit);
+        }
+
+        function updateTimerDisplay(timeLimit) {
+            const minutes = Math.floor(timeLimit / 60);
+            const seconds = timeLimit % 60;
+            document.getElementById('time-left').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function backToHome() {
+            location.reload();
+        }
+        document.getElementById('review-btn').classList.remove('hidden');
+
+        function reviewAnswers() {
+            let quiz = selectedQuiz === 'database' ? getDatabaseQuestions() : dataStructureQuestions;
+            let reviewMessage = '<div class="review-container">';
+
+            for (let i = 0; i < totalQuestions; i++) {
+                let userAnswerIndex = userAnswers[i];
+                let correctAnswerIndex = quiz[i].answer;
+
+                reviewMessage += `
+            <div class="review-question">
+                <p><strong>Question ${i + 1}:</strong> ${quiz[i].question}</p>
+                <p><strong>Your Answer:</strong> ${quiz[i].options[userAnswerIndex] || '<em>No answer</em>'}</p>
+                <p><strong>Correct Answer:</strong> ${quiz[i].options[correctAnswerIndex]}</p>
+            </div>
+        `;
+            }
+
+            reviewMessage += '</div>';
+
+            document.getElementById('review-answers').innerHTML = reviewMessage;
+            document.getElementById('review-answers').style.display = 'block';
+        }
+
     </script>
 </body>
 
