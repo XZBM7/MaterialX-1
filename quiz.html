@@ -81,7 +81,6 @@
             }
         }
 
-
         .correct {
             background-color: #28a745 !important;
             color: white;
@@ -103,6 +102,7 @@
         }
 
         #next-btn,
+        #finish-btn,
         #review-btn,
         #back-btn {
             background-color: #28a745;
@@ -117,6 +117,7 @@
         }
 
         #next-btn:hover,
+        #finish-btn:hover,
         #review-btn:hover,
         #back-btn:hover {
             background-color: #218838;
@@ -125,6 +126,7 @@
         #timer {
             font-size: 18px;
             margin-top: 10px;
+            visibility: hidden;
         }
 
         #review-btn,
@@ -180,13 +182,55 @@
             justify-content: space-around;
             margin-top: 15px;
         }
+
+        #start-new-quiz {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #start-new-quiz:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+
+        #result div {
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+        }
+
+        hr {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
     </style>
 </head>
 
 <body>
     <div class="quiz-container">
-        <h1>Database Quiz</h1>
-        <div id="time-options">
+        <h1 id="quiz-title">Select Quiz</h1>
+        <div id="quiz-selection">
+            <button class="time-option" onclick="selectQuiz('database')">Database</button>
+            <button class="time-option" onclick="selectQuiz('datastructures')">Data Structures</button>
+        </div>
+
+        <div id="time-options" class="hidden">
             <h3>Select Time Option:</h3>
             <button class="time-option" onclick="startQuizWithoutTime()">Without Time Limit</button>
             <button class="time-option" onclick="showTimeInput()">With Time Limit</button>
@@ -198,7 +242,7 @@
                 <button class="time-option" onclick="setTimeLimit()">Set Time</button>
             </div>
         </div>
-        <div id="timer" class="hidden">Time Remaining: <span id="time-left">00:00</span></div>
+        <div id="timer">Time Remaining: <span id="time-left">00:00</span></div>
         <div id="question-info" class="hidden">Question <span id="current-question"></span> of <span
                 id="total-questions"></span></div>
         <div id="question-box" class="hidden">
@@ -211,9 +255,11 @@
             </div>
         </div>
         <button id="next-btn" onclick="nextQuestion()" class="hidden">Next</button>
+        <button id="finish-btn" onclick="showResult()" class="hidden">Finish</button>
         <div id="result" class="hidden"></div>
         <div id="time-taken" class="hidden"></div>
         <button id="review-btn" onclick="reviewAnswers()">Review Answers</button>
+        <button id="start-new-quiz" style="display:none;" onclick="startNewQuiz()">Start New Quiz</button>
         <button id="back-btn" onclick="backToHome()">Retake The Quiz</button>
     </div>
 
@@ -223,14 +269,15 @@
         });
 
         let score = 0;
-        let totalQuestions = 25;
+        let totalQuestions;
         let currentQuestionIndex = 0;
         let timeLimit;
         let timerInterval;
         let userAnswers = [];
         let startTime;
+        let selectedQuiz;
 
-        const questions = [
+        const databaseQuestions = [
             {
                 question: "What is a database?",
                 options: ["A collection of unrelated data", "A collection of related data", "A program that retrieves data", "A storage medium for documents"],
@@ -358,6 +405,142 @@
             }
         ];
 
+        const dataStructureQuestions = [
+            {
+                question: "Process of inserting an element in a stack is called:",
+                options: ["Create", "Push", "Evaluation", "Pop"],
+                answer: 1 // Push
+            },
+            {
+                question: "Process of removing an element from a stack is called:",
+                options: ["Create", "Push", "Evaluation", "Pop"],
+                answer: 3 // Pop
+            },
+            {
+                question: "In a stack, if a user tries to remove an element from an empty stack, it is called:",
+                options: ["Underflow", "Empty collection", "Overflow", "Garbage Collection"],
+                answer: 0 // Underflow
+            },
+            {
+                question: "Pushing an element into a stack already having five elements and a size limit of 5 will cause:",
+                options: ["Underflow", "User flow", "Overflow", "Crash"],
+                answer: 2 // Overflow
+            },
+            {
+                question: "Which of the following is not an application of stack?",
+                options: ["A parentheses balancing program", "Tracking of local variables at run time", "Compiler Syntax Analyzer", "Data transfer between two asynchronous processes"],
+                answer: 3 // Data transfer between two asynchronous processes
+            },
+            {
+                question: "The maximum number of parentheses that appear on the stack at any one time when analyzing (()(())(())) is:",
+                options: ["1", "2", "3", "4 or more"],
+                answer: 3 // 4 or more
+            },
+            {
+                question: "What is the value of the postfix expression 6 3 2 4 + - * ?",
+                options: ["1", "40", "74", "-18"],
+                answer: 3 // -18
+            },
+            {
+                question: "The maximum number of symbols that will appear on the stack at one time during the conversion of 4 + 3*(6*3-12) from infix to postfix notation is:",
+                options: ["1", "2", "3", "4"],
+                answer: 2 // 3
+            },
+            {
+                question: "The data structure required to check whether an expression contains balanced parentheses is:",
+                options: ["Stack", "Queue", "Array", "Tree"],
+                answer: 0 // Stack
+            },
+            {
+                question: "The postfix form of the expression (A+B)*(C*D-E)*F/G is:",
+                options: ["AB+CD*E-FG/**", "AB+CD*E-F**G/", "AB+CD*E-*F*G/", "AB+CDE*-*F*G/"],
+                answer: 0 // AB+CD*E-FG/**
+            },
+            {
+                question: "The process of accessing data stored in a serial access memory is similar to manipulating data on a:",
+                options: ["Heap", "Binary Tree", "Array", "Stack"],
+                answer: 3 // Stack
+            },
+            {
+                question: "The postfix form of A*B+C/D is:",
+                options: ["*AB/CD+", "AB*CD/+", "A*BC+/D", "ABCD+/*"],
+                answer: 1 // AB*CD/+
+            },
+            {
+                question: "Which data structure is needed to convert infix notation to postfix notation?",
+                options: ["Stack", "Queue", "Branch", "Tree"],
+                answer: 0 // Stack
+            },
+            {
+                question: "The prefix form of A-B/(C*D^E) is:",
+                options: ["-/*^ACBDE", "-ABCD*^DE", "-A/B*C^DE", "-A/BC*^DE"],
+                answer: 2 // -A/B*C^DE
+            },
+            {
+                question: "The prefix form of the infix expression (p + q) - (r * t) is:",
+                options: ["+ pq - *rt", "-+pqr*t", "-+pq*rt", "-+*pqrt"],
+                answer: 2 // -+pq*rt
+            },
+            {
+                question: "Which data structure is used for implementing recursion?",
+                options: ["List", "Queue", "Array", "Stack"],
+                answer: 3 // Stack
+            },
+            {
+                question: "The result of evaluating the postfix expression 5 4 6 + * 4 9 3 / + * is:",
+                options: ["600", "350", "650", "588"],
+                answer: 0 // 600
+            },
+            {
+                question: "Convert the infix expression (A+B^D)/(E-F)+G to postfix:",
+                options: ["(ABD^+EF-/G+)", "(ABD+^EF-/G+)", "(ABD^+EF/-G+)", "(ABDEF+^/-G+)"],
+                answer: 0 // (ABD^+EF-/G+)
+            },
+            {
+                question: "Convert the infix expression x+y*z+(p*q+r)*s to postfix form:",
+                options: ["xyz*+pq*r+s*+", "xyz*+pq*r+s+*", "xyz+*pq*r+s*+", "xyzp+**qr+s*+"],
+                answer: 0 // xyz*+pq*r+s*+
+            },
+            {
+                question: "Which of the following is not an inherent application of stack?",
+                options: ["Reversing a string", "Evaluation of postfix expression", "Implementation of recursion", "Job scheduling"],
+                answer: 3 // Job scheduling
+            },
+            {
+                question: "The result of evaluating the postfix expression 10 5 +60 6 /*8- is:",
+                options: ["284", "213", "142", "71"],
+                answer: 2 // 142
+            },
+            {
+                question: "If elements 'A', 'B', 'C', and 'D' are placed in a stack and are deleted one at a time, what is the order of removal?",
+                options: ["ABCD", "DCBA", "DCAB", "ABDC"],
+                answer: 1 // DCBA
+            },
+            {
+                question: "Suppose a stack is implemented with a linked list instead of an array. What would be the time complexity of push and pop operations?",
+                options: ["O(1) for insertion and O(n) for deletion", "O(1) for insertion and O(1) for deletion", "O(n) for insertion and O(1) for deletion", "O(n) for insertion and O(n) for deletion"],
+                answer: 1 // O(1) for insertion and O(1) for deletion
+            },
+            {
+                question: "To evaluate an expression without any embedded function calls:",
+                options: ["As many stacks as the height of the expression tree are needed", "One stack is enough", "Two stacks are needed", "A Turing machine is needed in the general case"],
+                answer: 1 // One stack is enough
+            }
+        ];
+
+        function selectQuiz(quiz) {
+            selectedQuiz = quiz;
+            if (quiz === 'database') {
+                totalQuestions = databaseQuestions.length;
+                document.getElementById('quiz-title').innerText = "Database Quiz";
+            } else {
+                totalQuestions = dataStructureQuestions.length;
+                document.getElementById('quiz-title').innerText = "Data Structures Quiz";
+            }
+            document.getElementById('quiz-selection').classList.add('hidden');
+            document.getElementById('time-options').classList.remove('hidden');
+        }
+
         function showTimeInput() {
             document.getElementById('time-options').classList.add('hidden');
             document.getElementById('time-input').classList.remove('hidden');
@@ -370,8 +553,8 @@
                 return;
             }
             timeLimit = minutes * 60;
-            updateTimerDisplay();
-            document.getElementById('timer').classList.remove('hidden');
+            updateTimerDisplay(timeLimit);
+            document.getElementById('timer').style.visibility = "visible";
             startQuizWithTimer();
         }
 
@@ -382,115 +565,132 @@
         function startQuizWithTimer() {
             startQuiz();
             startTime = new Date();
-            timerInterval = setInterval(() => {
-                timeLimit--;
-                updateTimerDisplay();
-                if (timeLimit <= 0) {
-                    clearInterval(timerInterval);
-                    endQuiz();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLimit / 60);
-            const seconds = timeLimit % 60;
-            document.getElementById('time-left').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        }
-
-        function checkAnswer(selectedIndex) {
-            const currentQuestion = questions[currentQuestionIndex];
-            userAnswers[currentQuestionIndex] = selectedIndex;
-
-            const optionsButtons = document.querySelectorAll('.option');
-            if (selectedIndex === currentQuestion.answer) {
-                score++;
-                optionsButtons[selectedIndex].classList.add('correct');
-            } else {
-                optionsButtons[selectedIndex].classList.add('wrong');
-                optionsButtons[currentQuestion.answer].classList.add('correct');
-            }
-            optionsButtons.forEach(button => button.disabled = true);
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                displayQuestion();
-            } else {
-                endQuiz();
-            }
-        }
-
-        function displayQuestion() {
-            const questionElement = document.getElementById('question');
-            const optionsButtons = document.querySelectorAll('.option');
-            const currentQuestion = questions[currentQuestionIndex];
-
-            questionElement.textContent = currentQuestion.question;
-            optionsButtons.forEach((button, index) => {
-                button.textContent = currentQuestion.options[index];
-                button.classList.remove('correct', 'wrong');
-                button.disabled = false;
-            });
-
-            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
-            document.getElementById('total-questions').textContent = totalQuestions;
-            document.getElementById('question-info').classList.remove('hidden');
-
-            if (currentQuestionIndex === totalQuestions - 1) {
-                document.getElementById('next-btn').textContent = "Finish";
-            } else {
-                document.getElementById('next-btn').textContent = "Next";
-            }
-
-            document.getElementById('next-btn').style.display = 'none';
-        }
-
-        function endQuiz() {
-            clearInterval(timerInterval);
-            document.getElementById('question-box').classList.add('hidden');
-            document.getElementById('timer').classList.add('hidden');
-
-            const endTime = new Date();
-            const timeTaken = Math.floor((endTime - startTime) / 1000);
-            const minutesTaken = Math.floor(timeTaken / 60);
-            const secondsTaken = timeTaken % 60;
-
-            const percentageScore = (score / totalQuestions) * 100;
-            document.getElementById('result').innerHTML = `Your score: ${score} out of ${totalQuestions} (${percentageScore.toFixed(2)}%)`;
-            document.getElementById('time-taken').innerHTML = `Time taken: ${String(minutesTaken).padStart(2, '0')} minutes ${String(secondsTaken).padStart(2, '0')} seconds`; // عرض الوقت المستغرق
-            document.getElementById('time-taken').classList.remove('hidden');
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('review-btn').style.display = 'block';
-            document.getElementById('back-btn').style.display = 'block';
-            document.getElementById('next-btn').style.display = 'none';
-        }
-
-        function reviewAnswers() {
-            let reviewContent = "Your Answers:\n";
-            questions.forEach((question, index) => {
-                if (index < userAnswers.length) {
-                    reviewContent += `Question ${index + 1}: ${question.question}\nYour answer: ${userAnswers[index] !== undefined ? question.options[userAnswers[index]] : "No answer"}\nCorrect answer: ${question.options[question.answer]}\n\n`;
-                }
-            });
-            alert(reviewContent);
-        }
-
-
-        function backToHome() {
-            location.reload();
+            timerInterval = setInterval(updateTimer, 1000);
         }
 
         function startQuiz() {
             document.getElementById('time-options').classList.add('hidden');
             document.getElementById('time-input').classList.add('hidden');
+            document.getElementById('question-info').classList.remove('hidden');
             document.getElementById('question-box').classList.remove('hidden');
-            displayQuestion();
+            loadQuestion();
         }
 
+        function loadQuestion() {
+            const quiz = selectedQuiz === 'database' ? databaseQuestions : dataStructureQuestions;
+            document.getElementById('current-question').innerText = currentQuestionIndex + 1;
+            document.getElementById('total-questions').innerText = totalQuestions;
+            document.getElementById('question').innerText = quiz[currentQuestionIndex].question;
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.innerText = quiz[currentQuestionIndex].options[index];
+                option.classList.remove('correct', 'wrong');
+            });
+            document.getElementById('next-btn').classList.add('hidden');
+            document.getElementById('finish-btn').classList.add('hidden');
+        }
+
+        function checkAnswer(selectedIndex) {
+            const quiz = selectedQuiz === 'database' ? databaseQuestions : dataStructureQuestions;
+            const correctIndex = quiz[currentQuestionIndex].answer;
+
+            userAnswers[currentQuestionIndex] = selectedIndex;
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.remove('correct', 'wrong');
+                if (index === correctIndex) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    option.classList.add('wrong');
+                }
+            });
+
+            if (selectedIndex === correctIndex) {
+                score++;
+            }
+
+            if (currentQuestionIndex < totalQuestions - 1) {
+                document.getElementById('next-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('finish-btn').classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();
+            }
+        }
+
+        function showResult() {
+            clearInterval(timerInterval);
+            document.getElementById('time-options').classList.add('hidden');
+            document.getElementById('time-input').classList.add('hidden');
+            document.getElementById('question-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            document.getElementById('finish-btn').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+
+            const correctPercentage = (score / totalQuestions) * 100;
+            const elapsed = Math.floor((new Date() - startTime) / 1000);
+            const minutesTaken = Math.floor(elapsed / 60);
+            const secondsTaken = elapsed % 60;
+
+            document.getElementById('result').innerText = `Your Score: ${score} out of ${totalQuestions} (${correctPercentage.toFixed(2)}%)`;
+            document.getElementById('time-taken').innerText = `Time Taken: ${minutesTaken}:${secondsTaken < 10 ? '0' : ''}${secondsTaken}`;
+            document.getElementById('time-taken').classList.remove('hidden');
+            document.getElementById('review-btn').style.display = "block";
+            document.getElementById('back-btn').style.display = "block";
+            document.getElementById('start-new-quiz').style.display = "block";
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((new Date() - startTime) / 1000);
+            const remaining = timeLimit - elapsed;
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                showResult();
+            } else {
+                updateTimerDisplay(remaining);
+            }
+        }
+
+        function updateTimerDisplay(remaining) {
+            const minutes = Math.floor(remaining / 60);
+            const seconds = remaining % 60;
+            document.getElementById('time-left').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function backToHome() {
+            location.reload();
+        }
+
+        function reviewAnswers() {
+            const quiz = selectedQuiz === 'database' ? databaseQuestions : dataStructureQuestions;
+            let reviewHtml = "<h2>Review Your Answers</h2>";
+
+            quiz.forEach((question, index) => {
+                reviewHtml += `
+            <div style="margin-bottom: 20px;">
+                <strong>Q${index + 1}: ${question.question}</strong><br>
+                <strong>Your Answer:</strong> ${userAnswers[index] !== undefined ? question.options[userAnswers[index]] : 'No Answer'}<br>
+                <strong>Correct Answer:</strong> ${question.options[question.answer]}<br>
+            </div>
+            <hr>`;
+            });
+
+            document.getElementById('result').innerHTML = reviewHtml;
+
+            document.getElementById('review-btn').style.display = "none";
+            document.getElementById('back-btn').style.display = "none";
+            document.getElementById('start-new-quiz').style.display = "block";
+        }
+
+
+        function startNewQuiz() {
+            location.reload();
+        }
     </script>
 </body>
 
