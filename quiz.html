@@ -299,13 +299,14 @@
     <div class="quiz-container">
         <h1 id="quiz-title">Select Quiz</h1>
         <div id="quiz-selection">
-            <button class="time-option" onclick="selectQuiz('database')">Database</button>
+            <button class="time-option" onclick="selectQuiz('database')">Database-1</button>
             <button class="time-option" onclick="selectQuiz('datastructures')">Data Structures</button>
+            <button class="time-option" onclick="selectQuiz('dc')">DC</button>
         </div>
 
         <div id="database-quiz-selection" class="hidden">
             <h3>Select Database Quiz:</h3>
-            <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database Quiz 1</button>
+            <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database-1 Quiz 1</button>
             <!-- <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database Quiz 2</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button> -->
         </div>
@@ -315,6 +316,14 @@
             <button class="time-option" onclick="chooseDataStructuresQuiz(1)">Data Structures Quiz 1</button>
             <!-- <button class="time-option" onclick="chooseDataStructuresQuiz(2)">Data Structures Quiz 2</button>
             <button class="time-option" onclick="chooseDataStructuresQuiz(3)">Data Structures Quiz 3</button> -->
+        </div>
+
+
+        <div id="datacommunction-quiz-selection" class="hidden">
+            <h3>Select DC Quiz:</h3>
+            <button class="time-option" onclick="chooseDCQuiz(1)">DC Quiz 1</button>
+            <button class="time-option" onclick="chooseDCQuiz(2)">DC Quiz 2</button>
+            <!-- <button class="time-option" onclick="chooseDatabaseQuiz(3)">DC Quiz 3</button>  -->
         </div>
 
 
@@ -358,6 +367,8 @@
             e.preventDefault();
         });
 
+
+
         let score = 0;
         let totalQuestions;
         let currentQuestionIndex = 0;
@@ -368,6 +379,14 @@
         let selectedQuiz;
         let databaseQuizVariant = 1;
         let dataStructureQuizVariant = 1;
+        let dcQuizVariant = 1;
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
         const databaseQuestions1 = [
@@ -505,6 +524,17 @@
         const databaseQuestions3 = [
         ];
 
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
         const dataStructureQuestions = [
             {
                 question: "Process of inserting an element in a stack is called:",
@@ -636,6 +666,417 @@
 
 
 
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+        const dcQuestions1 = [
+            {
+                question: "Communication between a computer and keyboard involves transmission.",
+                options: ["Simplex", "Automatic", "Full-duplex", "Half-duplex"],
+                answer: 0
+            },
+            {
+                question: "Which of the following isn’t a type of transmission mode?",
+                options: ["Half-duplex", "Full-duplex", "Simplex", "physical"],
+                answer: 3
+            },
+            {
+                question: "A transmission that generally involves dedicated circuits.",
+                options: ["Half-duplex", "Simplex", "Semi-duplex", "Full-duplex"],
+                answer: 1
+            },
+            {
+                question: "A transmission mode that can transmit data in both directions but transmits in only one direction at a time.",
+                options: ["Full-duplex", "Semi-duplex", "Simplex", "Half-duplex"],
+                answer: 3
+            },
+            {
+                question: "Telephone networks operate in this mode.",
+                options: ["Simplex", "Semi-duplex", "Full-duplex", "Half-duplex"],
+                answer: 2
+            },
+            {
+                question: "A walkie-talkie operates in ________.",
+                options: ["Half-duplex", "Full-duplex", "Simplex", "Semi-duplex"],
+                answer: 0
+            },
+            {
+                question: "Data can flow only in one direction all the time in a _____ mode.",
+                options: ["Half-duplex", "None of these", "Simplex", "Full-duplex"],
+                answer: 2
+            },
+            {
+                question: "Data can flow in both directions all the time in a _____ mode.",
+                options: ["Full-duplex", "None of these", "Simplex", "Half-duplex"],
+                answer: 0
+            },
+            {
+                question: "Both stations can transmit and receive data simultaneously in ______.",
+                options: ["Full-duplex mode", "Unicode", "Simplex mode", "Half-duplex mode"],
+                answer: 0
+            },
+            {
+                question: "A _____ is the physical path over which a message travels.",
+                options: ["path", "medium", "protocol", "route"],
+                answer: 1
+            },
+            {
+                question: "Which of these elements is not involved in the process of communication?",
+                options: ["pipe", "sender", "message", "channel"],
+                answer: 0
+            },
+            {
+                question: "A ______ set of rules that governs data communication is called ______.",
+                options: ["protocols", "standards", "RFCs", "Servers"],
+                answer: 0
+            },
+            {
+                question: "A ______ is the person who transmits a message.",
+                options: ["Receiver", "Sender", "Message", "Transmission medium"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is not one of the components of a data communication system?",
+                options: ["Medium", "Sender", "Message", "All of the choices are correct"],
+                answer: 3
+            },
+            {
+                question: "The function of the data transmission element is ______.",
+                options: ["To transfer data from one element to another", "To process the data", "To modify the data", "To separate the signal hidden in the noise"],
+                answer: 0
+            },
+            {
+                question: "Any set of digits or alphabets are generally referred to as ______.",
+                options: ["Characters", "Symbols", "Bits", "Bytes"],
+                answer: 0
+            },
+            {
+                question: "What is a pixel?",
+                options: ["Pixel is the element of a digital image", "Pixel is the cluster of a digital image", "Pixel is the element of an analog image", "Pixel is the cluster of an analog image"],
+                answer: 0
+            },
+            {
+                question: "Which color model is used for most computer model and video systems?",
+                options: ["RGB", "RYB", "CMU", "HSV"],
+                answer: 0
+            },
+            {
+                question: "What does ASCII stand for?",
+                options: ["American Standard Code for Information Interchange", "American Scientific Code for Information Interchange", "American Scientific Code for Interchanging Information", "American Standard Code for Interchanging Information"],
+                answer: 0
+            },
+            {
+                question: "The largest geographic area a wide area network (WAN) can span is ______.",
+                options: ["A town", "A state", "A country", "The world"],
+                answer: 3
+            },
+            {
+                question: "A data communication system spanning states, countries, or the whole world is a ______.",
+                options: ["WAN", "LAN", "MAN", "PAN"],
+                answer: 0
+            },
+            {
+                question: "WAN stands for ______.",
+                options: ["World area network", "Web area network", "Wide area network", "Web access network"],
+                answer: 2
+            },
+            {
+                question: "What is the purpose of a WAN?",
+                options: ["To allow computers to communicate with each other in the same area", "To allow computers to communicate with each other anywhere in the world", "To allow computers to communicate with each other in the same country", "To allow computers to communicate with each other in the home"],
+                answer: 1
+            },
+            {
+                question: "Wide Area Networks (WANs) ______.",
+                options: ["Cover a large geographical area", "Use cables, telephone lines, satellites, and radio waves to connect", "Are used by international organizations", "All 3 options"],
+                answer: 3
+            },
+            {
+                question: "The World Wide Web (WWW) is the largest ______.",
+                options: ["Local Area Network (LAN)", "Wide Area Network (WAN)", "Metropolitan Area Network (MAN)"],
+                answer: 1
+            },
+            {
+                question: "How is software reliability defined?",
+                options: ["Time", "Quality", "Efficiency", "Speed"],
+                answer: 0
+            },
+            {
+                question: "A local area network (LAN) is defined by ______.",
+                options: ["The geometric size of the network", "The maximum number of hosts in the network and/or the geometric size of the network", "The maximum number of hosts in the network", "The topology of the network"],
+                answer: 1
+            },
+            {
+                question: "WLAN stands for ______.",
+                options: ["Wireless Local Area Network", "Wire Lost Area Network", "Wired Local Area Network", "Wireless Local Ambiguity Network"],
+                answer: 0
+            },
+            {
+                question: "Which of the following is not one of the network criteria?",
+                options: ["Performance", "Reliability", "Security", "All of the choices are correct"],
+                answer: 3
+            },
+            {
+                question: "Which of the following is a small single-site network?",
+                options: ["LAN", "DSL", "MAN", "WAN"],
+                answer: 0
+            },
+            {
+                question: "A term that refers to the way in which the nodes of a network are linked together is called ______.",
+                options: ["Network", "Topology", "Connection", "Interconnection"],
+                answer: 1
+            },
+            {
+                question: "Three or more devices share a link in a ______ connection.",
+                options: ["Unipoint", "Multipoint", "Point to point", "Simplex"],
+                answer: 1
+            },
+            {
+                question: "______ topology requires multiple connections.",
+                options: ["Star", "Mesh", "Ring", "Bus"],
+                answer: 3
+            },
+            {
+                question: "The participating computers in a network are referred to as ______.",
+                options: ["Clients", "Servers", "Nodes", "CPUs"],
+                answer: 2
+            },
+            {
+                question: "A topology that is responsible for describing the geometric arrangement of components that make up the LAN is ______.",
+                options: ["Complex", "Physical", "Logical", "Incremental"],
+                answer: 1
+            },
+            {
+                question: "Which network topology requires a central controller or hub?",
+                options: ["Star", "Mesh", "Ring", "Bus"],
+                answer: 0
+            }
+        ];
+
+
+
+
+        const dcQuestions2 = [
+            {
+                question: "In TCP/IP, a message at the application layer is encapsulated in a packet at the ____ layer.",
+                options: ["network", "transport", "data-link", "physical"],
+                answer: 1
+            },
+            {
+                question: "In TCP/IP, a message at the transport layer is encapsulated in a packet at the ____ layer.",
+                options: ["network", "transport", "data-link", "physical"],
+                answer: 0
+            },
+            {
+                question: "In TCP/IP, a message belonging to the network layer is decapsulated from a packet at the ____ layer.",
+                options: ["network", "transport", "data-link", "physical"],
+                answer: 2
+            },
+            {
+                question: "In TCP/IP, a message belonging to the transport layer is decapsulated from a packet at the ____ layer.",
+                options: ["network", "transport", "data-link", "physical"],
+                answer: 1
+            },
+            {
+                question: "Which layer does the data link layer take packets from and encapsulate them into frames for transmission?",
+                options: ["transport layer", "application layer", "network layer", "physical layer"],
+                answer: 2
+            },
+            {
+                question: "How many levels of addressing is provided in TCP/IP protocol?",
+                options: ["One", "Two", "Three", "Four"],
+                answer: 3
+            },
+            {
+                question: "PROTOCOL LAYERING is applied when communication is ____.",
+                options: ["large", "simple", "complex", "complicated"],
+                answer: 2
+            },
+            {
+                question: "The network layer is concerned with........ of data.",
+                options: ["packets", "frames", "bits", "bytes"],
+                answer: 0
+            },
+            {
+                question: "The packet of information at the application layer is called........",
+                options: ["packets", "frames", "message", "segment"],
+                answer: 2
+            },
+            {
+                question: "The data link layer takes the packets from...... and encapsulates them into frames for transmission.",
+                options: ["network layer", "physical layer", "transport layer", "application layer"],
+                answer: 0
+            },
+            {
+                question: "The TCP/IP protocol suite consists of........ layers.",
+                options: ["two", "three", "five", "six"],
+                answer: 2
+            },
+            {
+                question: "A router is involved in........ layers of the TCP/IP protocol suite.",
+                options: ["two", "three", "five", "four"],
+                answer: 1
+            },
+            {
+                question: "A link-layer switch is involved in ......... layers of the TCP/IP protocol suite.",
+                options: ["two", "three", "five", "four"],
+                answer: 0
+            },
+            {
+                question: "The transport-layer packet in the TCP/IP protocol suite is called........",
+                options: ["a message", "a datagram", "a segment or a user datagram", "a frame"],
+                answer: 2
+            },
+            {
+                question: "The......... layer is responsible for the delivery of a message from one process to another.",
+                options: ["physical", "transport", "network", "application"],
+                answer: 1
+            },
+            {
+                question: "OSI stands for ______.",
+                options: ["open system interconnection", "operating system interface", "optical service implementation", "open service Internet"],
+                answer: 0
+            },
+            {
+                question: "The number of layers in ISO OSI reference model is ______.",
+                options: ["4", "5", "6", "7"],
+                answer: 3
+            },
+            {
+                question: "TCP/IP model does not have ____ layer but OSI model have this layer.",
+                options: ["session layer", "transport layer", "application layer", "network layer"],
+                answer: 0
+            },
+            {
+                question: "Which of the following layers is an addition to OSI model when compared with TCP IP model?",
+                options: ["session layer", "Presentation layer", "application layer", "Session and Presentation layer"],
+                answer: 3
+            },
+            {
+                question: "In OSI model, when data is sent from device A to device B, the 5th layer to receive data at B is ____.",
+                options: ["application layer", "Transport layer", "Session layer", "Link layer"],
+                answer: 2
+            },
+            {
+                question: "Which one of the following protocol delivers/stores mail to receiver server?",
+                options: ["simple mail transfer protocol", "post office protocol", "hypertext transfer protocol", "internet mail access protocol"],
+                answer: 0
+            },
+            {
+                question: "In the TCP/IP protocol suite, which of the following is an application layer protocol?",
+                options: ["The User Datagram Protocol (UDP)", "The Internet Protocol (IP)", "The Transmission Control Protocol(TCP)", "The File Transfer Protocol (FTP)"],
+                answer: 3
+            },
+            {
+                question: "In the TCP/IP protocol suite, which of the following is a transport-layer protocol?",
+                options: ["The Internet Protocol (IP)", "The Internet Control Message Protocol (ICMP)", "The Address Resolution Protocol (ARP)", "The Transmission Control Protocol (TCP)"],
+                answer: 3
+            },
+            {
+                question: "In the TCP/IP protocol suite, which of the following is a network layer protocol?",
+                options: ["The Stream Control Transmission Protocol (SCTP)", "The Internet Protocol (IP)", "The Secure Shell (SSH)", "User Datagram Protocol (UDP)"],
+                answer: 1
+            },
+            {
+                question: "In the TCP/IP protocol suite, the ...... layer is responsible for moving frames from one hop (node) to the next.",
+                options: ["physical", "data-link", "transport", "network"],
+                answer: 1
+            },
+            {
+                question: "In the TCP/IP protocol suite, the physical layer is concerned with the movement of ....... over the physical medium.",
+                options: ["programs", "dialogs", "protocols", "bits"],
+                answer: 3
+            },
+            {
+                question: "In the TCP/IP protocol suite, a port number is the identifier at the.........",
+                options: ["application layer", "network layer", "transport layer", "physical layer"],
+                answer: 2
+            },
+            {
+                question: "In the TCP/IP protocol suite, a logical address is the identifier at the........",
+                options: ["network layer", "transport layer", "data-link layer", "application layer"],
+                answer: 0
+            },
+            {
+                question: "The Internet Protocol (IP) is ...... protocol.",
+                options: ["a unreliable", "a connection-oriented", "a reliable and connection-oriented"],
+                answer: 0
+            },
+            {
+                question: "The application layer in the TCP/IP protocol suite is usually considered to be the combination of ....... layers in the OSI model.",
+                options: ["application, presentation, and session", "application, transport, and network", "application, data-link, and physical", "network, data-link, and physical"],
+                answer: 0
+            },
+            {
+                question: "In TCP/IP, a logical connection between an entity at the network layer can be made with another entity at the ............ layer.",
+                options: ["network", "transport", "data-link", "physical"],
+                answer: 0
+            },
+            {
+                question: "In TCP/IP, a logical connection between an entity at the data-link layer can be made with another entity at the ......... layer.",
+                options: ["network", "transport", "data-link", "physical"],
+                answer: 2
+            },
+            {
+                question: "Which is not a application layer protocol?",
+                options: ["HTTP", "SMTP", "FTP", "TCP"],
+                answer: 3
+            },
+            {
+                question: "Application layer offers ......... service.",
+                options: ["End to end", "Process to process", "None of the mentioned", "Both End to end and Process to process"],
+                answer: 3
+            },
+            {
+                question: "Which of the following is an application layer service?",
+                options: ["Network virtual terminal", "All of the mentioned", "File transfer, access, and management", "Mail service"],
+                answer: 1
+            },
+            {
+                question: "Electronic mail uses which Application layer protocol?",
+                options: ["HTTP", "SMTP", "FTP", "SIP"],
+                answer: 1
+            },
+            {
+                question: "The physical layer is concerned with.....",
+                options: ["bit-by-bit delivery", "process to process delivery", "application to application delivery", "port to port delivery"],
+                answer: 0
+            },
+            {
+                question: "HTTP is ...... protocol.",
+                options: ["application layer", "transport layer", "network layer", "data link layer"],
+                answer: 0
+            },
+            {
+                question: "Which level is the network layer in the OSI model?",
+                options: ["Third level", "Fourth level", "Second level", "Fifth layer"],
+                answer: 0
+            },
+            {
+                question: "ICMP stands for.......",
+                options: ["Internet Coordinate Message Protocol", "Internet Control Message Protocol", "Interconnect Control Message Protocol", "Interconnect Coordinate Message Protocol"],
+                answer: 1
+            }
+        ];
+
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
         function selectQuiz(quiz) {
             selectedQuiz = quiz;
             if (quiz === 'database') {
@@ -644,8 +1085,17 @@
             } else if (quiz === 'datastructures') {
                 document.getElementById('quiz-selection').classList.add('hidden');
                 document.getElementById('data-structure-quiz-selection').classList.remove('hidden');
+            } else if (quiz === 'dc') {
+                document.getElementById('quiz-selection').classList.add('hidden');
+                document.getElementById('datacommunction-quiz-selection').classList.remove('hidden');
             }
         }
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -664,6 +1114,17 @@
             if (databaseQuizVariant === 3) return databaseQuestions3;
         }
 
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
         function chooseDataStructuresQuiz(variant) {
             dataStructureQuizVariant = variant;
             totalQuestions = getDataStructureQuestions().length;
@@ -677,6 +1138,40 @@
             if (dataStructureQuizVariant === 2) return dataStructureQuestions2;
             if (dataStructureQuizVariant === 3) return dataStructureQuestions3;
         }
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+        function chooseDCQuiz(variant) {
+            dcQuizVariant = variant;
+            totalQuestions = getDCQuestions().length;
+            document.getElementById('quiz-title').innerText = `DC Quiz ${variant}`;
+            document.getElementById('datacommunction-quiz-selection').classList.add('hidden');
+            document.getElementById('time-options').classList.remove('hidden');
+
+        }
+
+        function getDCQuestions() {
+            if (dcQuizVariant === 1) return dcQuestions1;
+            if (dcQuizVariant === 2) return dcQuestions2;
+            // if (dcQuizVariant === 3) return dcQuestions3;
+        }
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
         function showTimeInput() {
@@ -714,8 +1209,26 @@
             loadQuestion();
         }
 
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
         function loadQuestion() {
-            const quiz = selectedQuiz === 'database' ? getDatabaseQuestions() : dataStructureQuestions;
+            let quiz;
+            if (selectedQuiz === 'database') {
+                quiz = getDatabaseQuestions();
+            } else if (selectedQuiz === 'datastructures') {
+                quiz = getDataStructureQuestions();
+            } else if (selectedQuiz === 'dc') {
+                quiz = getDCQuestions();
+            }
+
             document.getElementById('current-question').innerText = currentQuestionIndex + 1;
             document.getElementById('total-questions').innerText = totalQuestions;
             document.getElementById('question').innerText = quiz[currentQuestionIndex].question;
@@ -728,8 +1241,27 @@
             document.getElementById('finish-btn').classList.add('hidden');
         }
 
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
         function checkAnswer(selectedIndex) {
-            const quiz = selectedQuiz === 'database' ? getDatabaseQuestions() : dataStructureQuestions;
+            let quiz;
+
+            if (selectedQuiz === 'database') {
+                quiz = getDatabaseQuestions();
+            } else if (selectedQuiz === 'datastructures') {
+                quiz = getDataStructureQuestions();
+            } else if (selectedQuiz === 'dc') {
+                quiz = getDCQuestions();
+            }
+
             const correctIndex = quiz[currentQuestionIndex].answer;
 
             userAnswers[currentQuestionIndex] = selectedIndex;
@@ -753,6 +1285,18 @@
                 document.getElementById('finish-btn').classList.remove('hidden');
             }
         }
+
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
         function nextQuestion() {
             currentQuestionIndex++;
@@ -807,10 +1351,31 @@
         }
         document.getElementById('review-btn').classList.remove('hidden');
 
-        function reviewAnswers() {
-            let quiz = selectedQuiz === 'database' ? getDatabaseQuestions() : dataStructureQuestions;
-            let reviewMessage = '<div class="review-container">';
 
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+        function reviewAnswers() {
+            let quiz;
+            if (selectedQuiz === 'database') {
+                quiz = getDatabaseQuestions();
+            } else if (selectedQuiz === 'datastructures') {
+                quiz = getDataStructureQuestions();
+            } else if (selectedQuiz === 'dc') {
+                quiz = getDCQuestions();
+            }
+
+            let reviewMessage = '<div class="review-container">';
             for (let i = 0; i < totalQuestions; i++) {
                 let userAnswerIndex = userAnswers[i];
                 let correctAnswerIndex = quiz[i].answer;
@@ -825,10 +1390,11 @@
             }
 
             reviewMessage += '</div>';
-
             document.getElementById('review-answers').innerHTML = reviewMessage;
             document.getElementById('review-answers').style.display = 'block';
         }
+
+
 
     </script>
 </body>
