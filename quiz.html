@@ -189,7 +189,7 @@
         }
 
         #start-new-quiz {
-            background-color: #28a745;
+            background-color: #218838;
             color: white;
             border: none;
             padding: 15px 32px;
@@ -307,8 +307,8 @@
         <div id="database-quiz-selection" class="hidden">
             <h3>Select Database Quiz:</h3>
             <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database-1 Quiz 1</button>
-            <!-- <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database Quiz 2</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button> -->
+            <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database-1 Quiz 2</button>
+            <!-- <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button>  -->
         </div>
 
         <div id="data-structure-quiz-selection" class="hidden">
@@ -515,10 +515,217 @@
                 question: "Data integrity in a database is easier to achieve than in a file-based system.",
                 options: ["True", "False"],
                 answer: 0
-            }
+            },
+
         ];
 
+
+
+
         const databaseQuestions2 = [
+
+            {
+                question: "What is the primary purpose of data abstraction in database systems?",
+                options: [
+                    "To improve data storage efficiency",
+                    "To hide details of physical data storage",
+                    "To increase data redundancy",
+                    "To enhance data retrieval speed"
+                ],
+                answer: 1
+            },
+            {
+                question: "Which of the following describes a conceptual data model?",
+                options: [
+                    "It describes how data is physically stored.",
+                    "It is used for database implementation in DBMS.",
+                    "It describes the database structure in an understandable way for most users.",
+                    "It focuses on data retrieval operations."
+                ],
+                answer: 2
+            },
+            {
+                question: "What is an example of a representational data model?",
+                options: [
+                    "Entity-Relationship Model",
+                    "Hierarchical Model",
+                    "Physical Data Model",
+                    "Conceptual Data Model"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does the term 'database schema' refer to?",
+                options: [
+                    "The actual data stored in the database",
+                    "The description of the database structure",
+                    "The physical storage of data",
+                    "The current state of the database"
+                ],
+                answer: 1
+            },
+            {
+                question: "In the context of databases, what is a 'database state'?",
+                options: [
+                    "The schema of the database",
+                    "The current set of data in the database",
+                    "A backup of the database",
+                    "The data model used"
+                ],
+                answer: 1
+            },
+            {
+                question: "What is the primary function of an access path in a database?",
+                options: [
+                    "To define the schema of the database",
+                    "To ensure data integrity",
+                    "To make searching for records efficient",
+                    "To store data physically"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which level of the three-schema architecture describes the physical storage structure?",
+                options: [
+                    "External Level",
+                    "Logical Level",
+                    "Internal Level",
+                    "Conceptual Level"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is logical data independence?",
+                options: [
+                    "The ability to change physical storage without affecting the logical schema",
+                    "The ability to change the logical schema without affecting external schemas",
+                    "The ability to change external schemas without affecting the logical schema",
+                    "The ability to change data types in the database"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does physical data independence allow?",
+                options: [
+                    "Changes to the logical schema without affecting external schemas",
+                    "Changes to the internal schema without affecting the logical schema",
+                    "Changes to the database state without affecting the schema",
+                    "Changes to the external schema without affecting the internal schema"
+                ],
+                answer: 1
+            },
+            {
+                question: "What characterizes a two-tier client/server architecture?",
+                options: [
+                    "It has three distinct layers of processing.",
+                    "It separates user interface and application programs from the database.",
+                    "It allows for multiple databases to be accessed simultaneously.",
+                    "It is primarily used for web applications."
+                ],
+                answer: 1
+            },
+            {
+                question: "In a three-tier architecture, what is the role of the application server?",
+                options: [
+                    "To store the database",
+                    "To manage user interfaces",
+                    "To run application programs and manage business rules",
+                    "To handle data backups"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is the main benefit of a three-tier architecture in database systems?",
+                options: [
+                    "Increased data redundancy",
+                    "Simplified database design",
+                    "Improved security and easier application updates",
+                    "Faster data retrieval"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which of the following is NOT a characteristic of the database approach?",
+                options: [
+                    "Use of a catalog for schema storage",
+                    "Data independence",
+                    "Support for multiple user views",
+                    "Fixed data structures"
+                ],
+                answer: 3
+            },
+            {
+                question: "What does a schema diagram typically display?",
+                options: [
+                    "The actual data in the database",
+                    "The complete physical storage details",
+                    "Names of record types and some constraints",
+                    "The current state of the database"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which of the following best describes the physical data model?",
+                options: [
+                    "It focuses on user interactions with the database.",
+                    "It describes how data is stored as files in the computer.",
+                    "It is used for designing user interfaces.",
+                    "It defines the relationships among data entities."
+                ],
+                answer: 1
+            },
+
+            {
+                question: "Data abstraction in database systems aims to improve data storage efficiency.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The entity-relationship model is an example of a representational data model.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The current set of data in a database is called the database schema.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The internal level of the three-schema architecture describes the physical storage structure.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "Logical data independence allows changes to the logical schema without affecting external schemas.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "Physical data independence allows changes to the database state without affecting the schema.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "In a two-tier client/server architecture, the application server runs application programs and manages business rules.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The main benefit of a three-tier architecture is increased data redundancy.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A schema diagram typically displays the actual data in the database.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The physical data model focuses on how data is stored as files in the computer.",
+                options: ["True", "False"],
+                answer: 0
+            }
+
         ];
 
         const databaseQuestions3 = [
