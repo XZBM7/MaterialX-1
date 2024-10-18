@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Practice </title>
+    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/clike/clike.min.js"></script>
+    <script src="https://unpkg.com/skulpt@1.2.0/dist/skulpt.min.js"></script>
+    <script src="https://unpkg.com/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        select {
+            margin-bottom: 20px;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #editor {
+            margin: 20px 0;
+        }
+
+        .CodeMirror {
+            height: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #progressStats {
+            margin-top: 20px;
+        }
+
+        #questionBox {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Programming Practice </h1>
+        <p>Select your programming language and question type to start:</p>
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect">
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+        </select>
+        <label for="questionType">Select Question Type:</label>
+        <select id="questionType">
+            <option value="general">General Programming Questions</option>
+            <option value="dataStructures">Data Structures Questions</option>
+        </select>
+        <button id="startButton">Start</button>
+        <div id="questionBox" style="display: none;">
+            <h3>Question:</h3>
+            <p id="currentQuestion"></p>
+            <p><strong>Example:</strong> <span id="questionExample"></span></p>
+        </div>
+        <div id="editor" style="display: none;">
+            <textarea id="codeEditor" placeholder="Write your code here..."></textarea>
+        </div>
+        <div id="output" style="display: none;">
+            <h3>Output:</h3>
+            <pre id="codeOutput"></pre>
+        </div>
+        <div id="progressStats" style="display: none;">
+            <h3>Progress and Statistics</h3>
+            <p id="level">Current Difficulty Level: Easy</p>
+            <p id="score">Your Score: 0</p>
+            <p id="correctAnswers">Correct Answers: 0</p>
+            <p id="wrongAnswers">Wrong Answers: 0</p>
+        </div>
+        <button id="submitButton" style="display: none;">Submit Answer</button>
+    </div>
+    <script>
+
+        let editor;
+        let score = 0;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let difficultyLevel = 'Easy';
+        let currentLanguage = 'python';
+        let currentQuestion = '';
+        let questionExample = '';
+        let questionIndex = 0; 
+
+        const questions = {
+            general: [
+                { question: 'Write a function to calculate the factorial of a number.', example: 'factorial(5) = 120', difficulty: 'Easy' },
+                { question: 'Write a function to check if a string is a palindrome.', example: 'isPalindrome("madam") = true', difficulty: 'Easy' },
+                { question: 'Write a program to find the largest of three numbers.', example: 'largest(3, 7, 5) = 7', difficulty: 'Easy' },
+                { question: 'Create a function that returns the Fibonacci sequence up to n.', example: 'fibonacci(5) = [0, 1, 1, 2, 3]', difficulty: 'Medium' },
+                { question: 'Write a program to sort a list of numbers.', example: 'sort([5, 3, 8]) = [3, 5, 8]', difficulty: 'Medium' },
+                { question: 'Implement a basic calculator for addition, subtraction, multiplication, and division.', example: 'calculator(3, 2, "+") = 5', difficulty: 'Medium' },
+                { question: 'Write a function to convert Celsius to Fahrenheit.', example: 'celsiusToFahrenheit(0) = 32', difficulty: 'Medium' },
+                { question: 'Create a program that counts the number of vowels in a string.', example: 'countVowels("hello") = 2', difficulty: 'Hard' },
+                { question: 'Write a function that returns the nth prime number.', example: 'nthPrime(5) = 11', difficulty: 'Hard' },
+                { question: 'Implement a function to check if a number is even or odd.', example: 'isEven(4) = true', difficulty: 'Hard' }
+            ],
+            dataStructures: [
+                { question: 'Implement a stack using an array.', example: 'push(5), pop()', difficulty: 'Easy' },
+                { question: 'Write a function to reverse a linked list.', example: 'Input: 1->2->3, Output: 3->2->1', difficulty: 'Medium' },
+                { question: 'Create a queue using two stacks.', example: 'enqueue(1), dequeue()', difficulty: 'Medium' },
+                { question: 'Implement a binary search tree and provide insert and search methods.', example: 'insert(5), search(5)', difficulty: 'Medium' },
+                { question: 'Write a function to find the maximum depth of a binary tree.', example: 'maxDepth(root)', difficulty: 'Hard' },
+                { question: 'Implement a hash table with basic operations (insert, delete, search).', example: 'insert("key", "value")', difficulty: 'Hard' },
+                { question: 'Write a function to find the intersection of two arrays.', example: 'intersection([1,2,3], [2,3,4]) = [2,3]', difficulty: 'Hard' }
+            ]
+        };
+
+        function loadStats() {
+            const storedStats = JSON.parse(localStorage.getItem('programmingStats'));
+            if (storedStats) {
+                score = storedStats.score || 0;
+                correctAnswers = storedStats.correctAnswers || 0;
+                wrongAnswers = storedStats.wrongAnswers || 0;
+                difficultyLevel = storedStats.difficultyLevel || 'Easy';
+                document.getElementById('level').textContent = `Current Difficulty Level: ${difficultyLevel}`;
+                document.getElementById('score').textContent = `Your Score: ${score}`;
+                document.getElementById('correctAnswers').textContent = `Correct Answers: ${correctAnswers}`;
+                document.getElementById('wrongAnswers').textContent = `Wrong Answers: ${wrongAnswers}`;
+            }
+        }
+
+        function saveStats() {
+            const stats = {
+                score,
+                correctAnswers,
+                wrongAnswers,
+                difficultyLevel
+            };
+            localStorage.setItem('programmingStats', JSON.stringify(stats));
+        }
+
+        document.getElementById('startButton').addEventListener('click', function () {
+            const language = document.getElementById('languageSelect').value;
+            const questionType = document.getElementById('questionType').value;
+            currentLanguage = language;
+            document.getElementById('editor').style.display = 'block';
+            document.getElementById('output').style.display = 'block';
+            document.getElementById('progressStats').style.display = 'block';
+            document.getElementById('questionBox').style.display = 'block';
+            document.getElementById('submitButton').style.display = 'block';
+
+            if (!editor) {
+                editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+                    lineNumbers: true,
+                    mode: getLanguageMode(language),
+                    theme: "default"
+                });
+            } else {
+                editor.setOption("mode", getLanguageMode(language));
+            }
+
+            loadNewQuestion(questionType);
+            loadStats();
+        });
+
+        function loadNewQuestion(type) {
+            const questionSet = questions[type].filter(q => q.difficulty === difficultyLevel);
+            const question = questionSet[questionIndex % questionSet.length];
+            currentQuestion = question.question;
+            questionExample = question.example;
+            questionIndex += 1;
+
+            document.getElementById('currentQuestion').textContent = currentQuestion;
+            document.getElementById('questionExample').textContent = questionExample;
+        }
+
+        function getLanguageMode(language) {
+            switch (language) {
+                case 'python':
+                    return 'python';
+                case 'java':
+                    return 'text/x-java';
+                case 'c':
+                case 'cpp':
+                    return 'text/x-csrc';
+                default:
+                    return 'python';
+            }
+        }
+
+        function runCode() {
+            const outputElement = document.getElementById('codeOutput');
+            outputElement.innerHTML = '';
+            const code = editor.getValue();
+
+            if (currentLanguage === 'python') {
+                runPythonCode(code, outputElement);
+            } else {
+                outputElement.innerHTML = currentLanguage + ' execution is not supported in this environment.';
+            }
+        }
+
+        function runPythonCode(code, outputElement) {
+            Sk.configure({
+                output: function (text) { outputElement.innerHTML += text + '\n'; },
+                read: function (x) { throw "File not found: '" + x + "'"; }
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, code, true);
+            } catch (error) {
+                outputElement.innerHTML = error.toString();
+            }
+        }
+
+        document.getElementById('submitButton').addEventListener('click', function () {
+            runCode();
+            const code = editor.getValue();
+
+            if (code.trim() === '') {
+                alert('Your answer is empty. Please write some code.');
+                return;
+            } else {
+                if (document.getElementById('codeOutput').innerText.includes('Error')) {
+                    wrongAnswers += 1;
+                } else {
+                    score += 10;
+                    correctAnswers += 1;
+                    updateDifficultyLevel();
+                }
+            }
+
+            document.getElementById('level').textContent = `Current Difficulty Level: ${difficultyLevel}`;
+            document.getElementById('score').textContent = `Your Score: ${score}`;
+            document.getElementById('correctAnswers').textContent = `Correct Answers: ${correctAnswers}`;
+            document.getElementById('wrongAnswers').textContent = `Wrong Answers: ${wrongAnswers}`;
+
+            saveStats();
+            loadNewQuestion(document.getElementById('questionType').value);
+        });
+
+        function updateDifficultyLevel() {
+            if (correctAnswers >= 1 && correctAnswers < 3) {
+                difficultyLevel = 'Easy';
+            } else if (correctAnswers >= 3 && correctAnswers < 6) {
+                difficultyLevel = 'Medium';
+            } else if (correctAnswers >= 6) {
+                difficultyLevel = 'Hard';
+            }
+        }
+
+    </script>
+</body>
+
+</html>
