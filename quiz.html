@@ -308,7 +308,7 @@
             <h3>Select Database Quiz:</h3>
             <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database-1 Quiz 1</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database-1 Quiz 2</button>
-            <!-- <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button>  -->
+            <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button>
         </div>
 
         <div id="data-structure-quiz-selection" class="hidden">
@@ -335,7 +335,7 @@
         <div id="time-input" class="hidden">
             <h3>Enter Time Limit (in minutes):</h3>
             <div class="time-input-container">
-                <input type="number" id="time-limit" min="1" placeholder="Minutes" />
+                <input type="number" max="120" id="time-limit" min="1" placeholder="Minutes" />
                 <button class="time-option" onclick="setTimeLimit()">Set Time</button>
             </div>
         </div>
@@ -729,7 +729,247 @@
         ];
 
         const databaseQuestions3 = [
-        ];
+            {
+                "question": "Which of the following is NOT a key concept in the relational model?",
+                "options": [
+                    "Tuple",
+                    "Degree",
+                    "Hierarchical node",
+                    "Domain"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "What does the degree of a relation refer to?",
+                "options": [
+                    "Number of tuples in a relation",
+                    "Number of attributes in a relation",
+                    "The primary key of the relation",
+                    "The number of foreign keys in a relation"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the relational model, a domain is:",
+                "options": [
+                    "A set of tables in the database",
+                    "A set of allowable values for one or more attributes",
+                    "The primary key of a table",
+                    "A unique identifier for a row"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "What is a super key in a relational database?",
+                "options": [
+                    "A key that contains foreign keys only",
+                    "A key that uniquely identifies a tuple and may contain redundant attributes",
+                    "A key that is always a primary key",
+                    "A key that contains no attributes"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Primary key can be null.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Which operation can potentially violate referential integrity?",
+                "options": [
+                    "Select",
+                    "Insert",
+                    "Delete",
+                    "Update"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "The referential integrity constraint ensures that:",
+                "options": [
+                    "A tuple’s primary key can be NULL",
+                    "Foreign key values must exist in the referenced relation or be NULL",
+                    "Each attribute in a relation must be unique",
+                    "Relations can have composite attributes"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Which of the following is NOT allowed in a relational model?",
+                "options": [
+                    "NULL values",
+                    "Composite attributes",
+                    "Unique keys",
+                    "Atomic values"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the relational model, each attribute in a relation must have a unique name.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Foreign key can be repeat value.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Super keys always contain redundant attributes.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In a valid database state, all defined integrity constraints must be satisfied.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Updating a foreign key does not affect referential integrity.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Unique key can be null.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": " the property information table:\n\n| PropertyNo | Address           | Type  | Rooms | Rent | OwnerNo |\n|------------|-------------------|-------|-------|------|---------|\n| PA14       | 16 Holhead House   | House | 6     | 650  | C046    |\n| PL94       | 6 Argyll St.       | Flat  | 4     | 400  | C087    |\n| PG4        | 6 Lawrence St.     | Flat  | 3     | 350  | C040    |\n| PG36       | 2 Manor Rd         | Flat  | 3     | 375  | C093    |\n| PG21       | 18 Dale Rd         | House | 5     | 600  | C087    |\n| PG16       | 5 Novar Dr.        | Flat  | 4     | 450  | C093    |\n\nDegree of relation is:",
+                "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "6"
+                ],
+                "answer": 3
+            },
+
+            {
+                question: " the property information table:\n\n| PropertyNo | Address           | Type  | Rooms | Rent | OwnerNo |\n|------------|-------------------|-------|-------|------|---------|\n| PA14       | 16 Holhead House   | House | 6     | 650  | C046    |\n| PL94       | 6 Argyll St.       | Flat  | 4     | 400  | C087    |\n| PG4        | 6 Lawrence St.     | Flat  | 3     | 350  | C040    |\n| PG36       | 2 Manor Rd         | Flat  | 3     | 375  | C093    |\n| PG21       | 18 Dale Rd         | House | 5     | 600  | C087    |\n| PG16       | 5 Novar Dr.        | Flat  | 4     | 450  | C093    |\n\nCardinality of relation :",
+                options: [
+                    "7",
+                    "8",
+                    "6",
+                    "9"
+                ],
+                answer: 0
+            },
+
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhat is the primary key in the Employees table?",
+                    "options": [
+                        "EmpID",
+                        "Salary",
+                        "EmpName",
+                        "DeptNo"
+                    ],
+                    "answer": 0
+                },
+
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhich of the following represents the foreign key in the Employees table?",
+                    "options": [
+                        "EmpID",
+                        "DeptNo",
+                        "DeptName",
+                        "Salary"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nHow can the department name where a specific employee works be retrieved?",
+                    "options": [
+                        "By joining the Employees table with the DeptNo column",
+                        "By using the EmpID column",
+                        "By searching in the Departments table using DeptName only",
+                        "It is not possible to retrieve the department name from the existing tables"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhich of the following departments has no employees according to the tables?",
+                    "options": [
+                        "Sales",
+                        "Human Resource",
+                        "Finance",
+                        "Warehouses"
+                    ],
+                    "answer": 3
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThere can be more than one employee with the same EmpID in the Employees table.",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nEach employee must belong to a department, so the DeptNo field in the Employees table cannot be NULL.",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThere is a one-to-many relationship between the Departments and Employees tables.",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nA new department can be added to the Departments table without any employees being assigned to it initially.",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThe combination of EmpID and DeptNo can serve as a composite key in the Employees table.",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThe DeptNo column in the Employees table is a primary key.",
+                    "options": [
+                        "True",
+                        "False"
+                    ],
+                    "answer": 1
+                }
+            ];
+
+
+        
 
 
 
@@ -1391,6 +1631,10 @@
             if (isNaN(minutes) || minutes < 1) {
                 alert("Please enter a valid number of minutes.");
                 return;
+            }
+            if (minutes > 120) {
+                alert("Please enter a number between 1-120 minutes.");
+                return false;
             }
             timeLimit = minutes * 60;
             updateTimerDisplay(timeLimit);
