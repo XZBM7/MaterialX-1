@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>  Chatbot</title>
+    <title> Chatbot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
     <style>
@@ -27,13 +27,16 @@
             height: 100%;
             width: 100%;
             background-color: #e5ddd5;
+            background-image: url('your-image-url.jpg');
+            background-size: cover;
+            background-position: center;
         }
 
         #chat-box {
             flex: 1;
             overflow-y: auto;
             padding: 15px;
-            background-color: #f0f0f0;
+            background-color: rgba(236, 229, 221, 0.9);
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -42,12 +45,11 @@
 
         .chat-message {
             max-width: 75%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 18px;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 1rem;
+            line-height: 1.6;
             margin: 5px 0;
-            position: relative;
         }
 
         .bot-message {
@@ -69,22 +71,20 @@
         .input-area {
             display: flex;
             padding: 10px;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             border-top: 1px solid #ddd;
             align-items: center;
             gap: 10px;
-            position: relative;
         }
 
         input[type="text"] {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border-radius: 20px;
             border: 1px solid #ccc;
             outline: none;
             box-sizing: border-box;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+            font-size: 1.1rem;
         }
 
         input[type="text"]:focus {
@@ -92,7 +92,7 @@
         }
 
         button {
-            padding: 10px;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -103,7 +103,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s;
         }
 
         button:hover {
@@ -116,7 +115,6 @@
             border-radius: 8px;
             padding: 10px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
         }
 
         .option {
@@ -125,7 +123,6 @@
             cursor: pointer;
             background-color: #f2f2f2;
             margin: 5px 0;
-            transition: background-color 0.3s;
         }
 
         .option:hover {
@@ -134,15 +131,19 @@
 
         @media (max-width: 600px) {
             .chat-message {
-                font-size: 0.8rem;
-            }
-
-            input[type="text"] {
                 font-size: 0.9rem;
             }
 
-            button {
+            input[type="text"] {
                 font-size: 1rem;
+            }
+
+            button {
+                font-size: 1.1rem;
+            }
+
+            .input-area {
+                padding: 1vh;
             }
         }
     </style>
@@ -194,6 +195,17 @@
         </div>
     `, c.scrollTop = c.scrollHeight
         } startChat(); function clearChat() { location.reload() }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputField = document.getElementById("user-input");
+
+            inputField.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        });
+
 
     </script>
 </body>
