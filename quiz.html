@@ -27,6 +27,7 @@
             width: 100%;
             max-width: 450px;
             transition: transform 0.3s ease-in-out;
+            overflow: hidden;
         }
 
         .quiz-container:hover {
@@ -64,7 +65,7 @@
 
         @media (max-width: 600px) {
             .quiz-container {
-                width: 100%;
+                width: 90%;
                 padding: 20px;
             }
 
@@ -76,6 +77,10 @@
             #timer,
             #result {
                 font-size: 16px;
+            }
+
+            #review-answers {
+                max-height: 300px;
             }
         }
 
@@ -176,6 +181,8 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            margin: 5px 0;
+            width: 100%;
         }
 
         .time-option:hover {
@@ -227,7 +234,6 @@
             margin: 10px 0;
         }
 
-
         #review-answers {
             max-height: 400px;
             overflow-y: auto;
@@ -236,39 +242,6 @@
             background-color: #f1f3f5;
             border-radius: 8px;
             border: 1px solid #ddd;
-        }
-
-        .quiz-container {
-            max-width: 100%;
-            width: 450px;
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease-in-out;
-            overflow: hidden;
-        }
-
-        @media (max-width: 600px) {
-            .quiz-container {
-                width: 90%;
-                padding: 20px;
-            }
-
-            .option {
-                padding: 12px;
-                font-size: 14px;
-            }
-
-            #timer,
-            #result {
-                font-size: 16px;
-            }
-
-            #review-answers {
-                max-height: 300px;
-            }
         }
 
         .review-question {
@@ -302,6 +275,8 @@
             <button class="time-option" onclick="selectQuiz('database')">Database-1</button>
             <button class="time-option" onclick="selectQuiz('datastructures')">Data Structures</button>
             <button class="time-option" onclick="selectQuiz('dc')">DC</button>
+            <button class="time-option" onclick="selectQuiz('bigdata')">Big Data</button>
+
         </div>
 
         <div id="database-quiz-selection" class="hidden">
@@ -324,6 +299,13 @@
             <button class="time-option" onclick="chooseDCQuiz(1)">DC Quiz 1</button>
             <button class="time-option" onclick="chooseDCQuiz(2)">DC Quiz 2</button>
             <!-- <button class="time-option" onclick="chooseDatabaseQuiz(3)">DC Quiz 3</button>  -->
+        </div>
+
+        <div id="bigdata-quiz-selection" class="hidden">
+            <h3>Select Big Data Quiz:</h3>
+            <button class="time-option" onclick="choosebigdataQuiz(1)">Big Data Quiz 1</button>
+            <!-- <button class="time-option" onclick="choosebigdataQuiz(2)">Big Data Quiz 2</button> -->
+            <!-- <button class="time-option" onclick="choosebigdataQuiz(3)">Big Data Quiz 3</button>  -->
         </div>
 
 
@@ -363,1488 +345,1249 @@
     <div id="review-answers" style="display:none;"></div>
 
     <script>
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
-
-
-
-        let score = 0;
-        let totalQuestions;
-        let currentQuestionIndex = 0;
-        let timeLimit;
-        let timerInterval;
-        let userAnswers = [];
-        let startTime;
-        let selectedQuiz;
-        let databaseQuizVariant = 1;
-        let dataStructureQuizVariant = 1;
-        let dcQuizVariant = 1;
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-        const databaseQuestions1 = [
-
-            {
-                question: "What is a database?",
-                options: ["A collection of unrelated data", "A collection of related data", "A program that retrieves data", "A storage medium for documents"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is a function of a DBMS?",
-                options: ["Text editing", "Defining the database", "Printing documents", "Browsing the internet"],
-                answer: 1
-            },
-            {
-                question: "What is the primary purpose of a Database Management System (DBMS)?",
-                options: ["To create images", "To manage data efficiently", "To play music", "To manage emails"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is a disadvantage of file-based systems?",
-                options: ["Easy data sharing", "High data integrity", "Data duplication", "Automatic backup"],
-                answer: 2
-            },
-            {
-                question: "What does data consistency in a database imply?",
-                options: ["Data stored in different formats", "Data is consistent across different files", "Any update is performed once and is available to all users", "Multiple copies of data exist"],
-                answer: 2
-            },
-            {
-                question: "What does a database catalog contain?",
-                options: ["List of all employees", "Metadata", "User passwords", "System logs"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is not a DBMS function?",
-                options: ["Manipulating data", "Sharing the database", "Protecting the database", "Compiling code"],
-                answer: 3
-            },
-            {
-                question: "What is atomicity in the context of databases?",
-                options: ["The ability to store large files", "The ability to process transactions entirely or not at all", "The ability to share data among users", "The ability to create backups"],
-                answer: 1
-            },
-            {
-                question: "What type of language is used to specify the structure of a database?",
-                options: ["Data Manipulation Language (DML)", "Data Definition Language (DDL)", "Data Query Language (DQL)", "Procedural Language"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is a disadvantage of using a database?",
-                options: ["High performance", "Complexity", "Ease of use", "Small size"],
-                answer: 1
-            },
-            {
-                question: "Which users primarily interact with the database to satisfy their data needs?",
-                options: ["Database Designers", "End Users", "Database Administrators", "Systems Analysts"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is an advantage of a database system?",
-                options: ["Data redundancy", "Limited data sharing", "Improved data integrity", "Atomicity problems"],
-                answer: 2
-            },
-            {
-                question: "What is a 'view' in the context of databases?",
-                options: ["A different program", "A subset of the database", "A backup of the database", "A query language"],
-                answer: 1
-            },
-            {
-                question: "Which of the following tasks is not typically handled by a Database Administrator (DBA)?",
-                options: ["Authorizing access to the database", "Designing the database", "Monitoring database use", "Developing applications"],
-                answer: 3
-            },
-            {
-                question: "When is it more desirable to use regular files instead of a database?",
-                options: ["For complex, ever-changing applications", "For embedded systems with limited storage capacity", "For large multi-user environments", "For systems requiring high security"],
-                answer: 1
-            },
-            {
-                question: "Data is always consistent in a file-based system.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A DBMS allows multiple users to access data simultaneously.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "A database application is a program that interacts with the database.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "The physical structure of data is independent of application programs in a DBMS.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "In a database, data redundancy is increased to improve performance.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A file-based system is more efficient than a database in handling complex data relationships.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A DBMS does not provide any security mechanisms to protect data.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "Sharing a database can only be done by a single user at a time.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The cost of implementing a DBMS is usually lower than using a file-based system.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "Data integrity in a database is easier to achieve than in a file-based system.",
-                options: ["True", "False"],
-                answer: 0
-            },
-
-        ];
-
-
-
-
-        const databaseQuestions2 = [
-
-            {
-                question: "What is the primary purpose of data abstraction in database systems?",
-                options: [
-                    "To improve data storage efficiency",
-                    "To hide details of physical data storage",
-                    "To increase data redundancy",
-                    "To enhance data retrieval speed"
-                ],
-                answer: 1
-            },
-            {
-                question: "Which of the following describes a conceptual data model?",
-                options: [
-                    "It describes how data is physically stored.",
-                    "It is used for database implementation in DBMS.",
-                    "It describes the database structure in an understandable way for most users.",
-                    "It focuses on data retrieval operations."
-                ],
-                answer: 2
-            },
-            {
-                question: "What is an example of a representational data model?",
-                options: [
-                    "Entity-Relationship Model",
-                    "Hierarchical Model",
-                    "Physical Data Model",
-                    "Conceptual Data Model"
-                ],
-                answer: 1
-            },
-            {
-                question: "What does the term 'database schema' refer to?",
-                options: [
-                    "The actual data stored in the database",
-                    "The description of the database structure",
-                    "The physical storage of data",
-                    "The current state of the database"
-                ],
-                answer: 1
-            },
-            {
-                question: "In the context of databases, what is a 'database state'?",
-                options: [
-                    "The schema of the database",
-                    "The current set of data in the database",
-                    "A backup of the database",
-                    "The data model used"
-                ],
-                answer: 1
-            },
-            {
-                question: "What is the primary function of an access path in a database?",
-                options: [
-                    "To define the schema of the database",
-                    "To ensure data integrity",
-                    "To make searching for records efficient",
-                    "To store data physically"
-                ],
-                answer: 2
-            },
-            {
-                question: "Which level of the three-schema architecture describes the physical storage structure?",
-                options: [
-                    "External Level",
-                    "Logical Level",
-                    "Internal Level",
-                    "Conceptual Level"
-                ],
-                answer: 2
-            },
-            {
-                question: "What is logical data independence?",
-                options: [
-                    "The ability to change physical storage without affecting the logical schema",
-                    "The ability to change the logical schema without affecting external schemas",
-                    "The ability to change external schemas without affecting the logical schema",
-                    "The ability to change data types in the database"
-                ],
-                answer: 1
-            },
-            {
-                question: "What does physical data independence allow?",
-                options: [
-                    "Changes to the logical schema without affecting external schemas",
-                    "Changes to the internal schema without affecting the logical schema",
-                    "Changes to the database state without affecting the schema",
-                    "Changes to the external schema without affecting the internal schema"
-                ],
-                answer: 1
-            },
-            {
-                question: "What characterizes a two-tier client/server architecture?",
-                options: [
-                    "It has three distinct layers of processing.",
-                    "It separates user interface and application programs from the database.",
-                    "It allows for multiple databases to be accessed simultaneously.",
-                    "It is primarily used for web applications."
-                ],
-                answer: 1
-            },
-            {
-                question: "In a three-tier architecture, what is the role of the application server?",
-                options: [
-                    "To store the database",
-                    "To manage user interfaces",
-                    "To run application programs and manage business rules",
-                    "To handle data backups"
-                ],
-                answer: 2
-            },
-            {
-                question: "What is the main benefit of a three-tier architecture in database systems?",
-                options: [
-                    "Increased data redundancy",
-                    "Simplified database design",
-                    "Improved security and easier application updates",
-                    "Faster data retrieval"
-                ],
-                answer: 2
-            },
-            {
-                question: "Which of the following is NOT a characteristic of the database approach?",
-                options: [
-                    "Use of a catalog for schema storage",
-                    "Data independence",
-                    "Support for multiple user views",
-                    "Fixed data structures"
-                ],
-                answer: 3
-            },
-            {
-                question: "What does a schema diagram typically display?",
-                options: [
-                    "The actual data in the database",
-                    "The complete physical storage details",
-                    "Names of record types and some constraints",
-                    "The current state of the database"
-                ],
-                answer: 2
-            },
-            {
-                question: "Which of the following best describes the physical data model?",
-                options: [
-                    "It focuses on user interactions with the database.",
-                    "It describes how data is stored as files in the computer.",
-                    "It is used for designing user interfaces.",
-                    "It defines the relationships among data entities."
-                ],
-                answer: 1
-            },
-
-            {
-                question: "Data abstraction in database systems aims to improve data storage efficiency.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The entity-relationship model is an example of a representational data model.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The current set of data in a database is called the database schema.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The internal level of the three-schema architecture describes the physical storage structure.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "Logical data independence allows changes to the logical schema without affecting external schemas.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "Physical data independence allows changes to the database state without affecting the schema.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "In a two-tier client/server architecture, the application server runs application programs and manages business rules.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The main benefit of a three-tier architecture is increased data redundancy.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A schema diagram typically displays the actual data in the database.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The physical data model focuses on how data is stored as files in the computer.",
-                options: ["True", "False"],
-                answer: 0
-            }
-
-        ];
-
-        const databaseQuestions3 = [
-            {
-                "question": "Which of the following is NOT a key concept in the relational model?",
-                "options": [
-                    "Tuple",
-                    "Degree",
-                    "Hierarchical node",
-                    "Domain"
-                ],
-                "answer": 2
-            },
-            {
-                "question": "What does the degree of a relation refer to?",
-                "options": [
-                    "Number of tuples in a relation",
-                    "Number of attributes in a relation",
-                    "The primary key of the relation",
-                    "The number of foreign keys in a relation"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "In the relational model, a domain is:",
-                "options": [
-                    "A set of tables in the database",
-                    "A set of allowable values for one or more attributes",
-                    "The primary key of a table",
-                    "A unique identifier for a row"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "What is a super key in a relational database?",
-                "options": [
-                    "A key that contains foreign keys only",
-                    "A key that uniquely identifies a tuple and may contain redundant attributes",
-                    "A key that is always a primary key",
-                    "A key that contains no attributes"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "Primary key can be null.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "Which operation can potentially violate referential integrity?",
-                "options": [
-                    "Select",
-                    "Insert",
-                    "Delete",
-                    "Update"
-                ],
-                "answer": 2
-            },
-            {
-                "question": "The referential integrity constraint ensures that:",
-                "options": [
-                    "A tuple’s primary key can be NULL",
-                    "Foreign key values must exist in the referenced relation or be NULL",
-                    "Each attribute in a relation must be unique",
-                    "Relations can have composite attributes"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "Which of the following is NOT allowed in a relational model?",
-                "options": [
-                    "NULL values",
-                    "Composite attributes",
-                    "Unique keys",
-                    "Atomic values"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "In the relational model, each attribute in a relation must have a unique name.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 0
-            },
-            {
-                "question": "Foreign key can be repeat value.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 0
-            },
-            {
-                "question": "Super keys always contain redundant attributes.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "In a valid database state, all defined integrity constraints must be satisfied.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 0
-            },
-            {
-                "question": "Updating a foreign key does not affect referential integrity.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 1
-            },
-            {
-                "question": "Unique key can be null.",
-                "options": [
-                    "True",
-                    "False"
-                ],
-                "answer": 0
-            },
-            {
-                "question": " the property information table:\n\n| PropertyNo | Address           | Type  | Rooms | Rent | OwnerNo |\n|------------|-------------------|-------|-------|------|---------|\n| PA14       | 16 Holhead House   | House | 6     | 650  | C046    |\n| PL94       | 6 Argyll St.       | Flat  | 4     | 400  | C087    |\n| PG4        | 6 Lawrence St.     | Flat  | 3     | 350  | C040    |\n| PG36       | 2 Manor Rd         | Flat  | 3     | 375  | C093    |\n| PG21       | 18 Dale Rd         | House | 5     | 600  | C087    |\n| PG16       | 5 Novar Dr.        | Flat  | 4     | 450  | C093    |\n\nDegree of relation is:",
-                "options": [
-                    "7",
-                    "8",
-                    "9",
-                    "6"
-                ],
-                "answer": 3
-            },
-
-            {
-                question: " the property information table:\n\n| PropertyNo | Address           | Type  | Rooms | Rent | OwnerNo |\n|------------|-------------------|-------|-------|------|---------|\n| PA14       | 16 Holhead House   | House | 6     | 650  | C046    |\n| PL94       | 6 Argyll St.       | Flat  | 4     | 400  | C087    |\n| PG4        | 6 Lawrence St.     | Flat  | 3     | 350  | C040    |\n| PG36       | 2 Manor Rd         | Flat  | 3     | 375  | C093    |\n| PG21       | 18 Dale Rd         | House | 5     | 600  | C087    |\n| PG16       | 5 Novar Dr.        | Flat  | 4     | 450  | C093    |\n\nCardinality of relation :",
-                options: [
-                    "7",
-                    "8",
-                    "6",
-                    "9"
-                ],
-                answer: 2
-            },
-
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhat is the primary key in the Employees table?",
-                    "options": [
-                        "EmpID",
-                        "Salary",
-                        "EmpName",
-                        "DeptNo"
-                    ],
-                    "answer": 0
-                },
-
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhich of the following represents the foreign key in the Employees table?",
-                    "options": [
-                        "EmpID",
-                        "DeptNo",
-                        "DeptName",
-                        "Salary"
-                    ],
-                    "answer": 1
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nHow can the department name where a specific employee works be retrieved?",
-                    "options": [
-                        "By joining the Employees table with the DeptNo column",
-                        "By using the EmpID column",
-                        "By searching in the Departments table using DeptName only",
-                        "It is not possible to retrieve the department name from the existing tables"
-                    ],
-                    "answer": 0
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhich of the following departments has no employees according to the tables?",
-                    "options": [
-                        "Sales",
-                        "Human Resource",
-                        "Finance",
-                        "Warehouses"
-                    ],
-                    "answer": 3
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThere can be more than one employee with the same EmpID in the Employees table.",
-                    "options": [
-                        "True",
-                        "False"
-                    ],
-                    "answer": 1
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nEach employee must belong to a department, so the DeptNo field in the Employees table cannot be NULL.",
-                    "options": [
-                        "True",
-                        "False"
-                    ],
-                    "answer": 0
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThere is a one-to-many relationship between the Departments and Employees tables.",
-                    "options": [
-                        "True",
-                        "False"
-                    ],
-                    "answer": 0
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nA new department can be added to the Departments table without any employees being assigned to it initially.",
-                    "options": [
-                        "True",
-                        "False"
-                    ],
-                    "answer": 0
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThe combination of EmpID and DeptNo can serve as a composite key in the Employees table.",
-                    "options": [
-                        "True",
-                        "False"
-                    ],
-                    "answer": 1
-                },
-                {
-                    "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThe DeptNo column in the Employees table is a primary key.",
-                    "options": [
-                        "True",
-                        "False"
-                    ],
-                    "answer": 1
-                }
-            ];
-
-
-        
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-        const dataStructureQuestions = [
-            {
-                question: "Process of inserting an element in a stack is called:",
-                options: ["Create", "Push", "Evaluation", "Pop"],
-                answer: 1 // Push
-            },
-            {
-                question: "Process of removing an element from a stack is called:",
-                options: ["Create", "Push", "Evaluation", "Pop"],
-                answer: 3 // Pop
-            },
-            {
-                question: "In a stack, if a user tries to remove an element from an empty stack, it is called:",
-                options: ["Underflow", "Empty collection", "Overflow", "Garbage Collection"],
-                answer: 0 // Underflow
-            },
-            {
-                question: "Pushing an element into a stack already having five elements and a size limit of 5 will cause:",
-                options: ["Underflow", "User flow", "Overflow", "Crash"],
-                answer: 2 // Overflow
-            },
-            {
-                question: "Which of the following is not an application of stack?",
-                options: ["A parentheses balancing program", "Tracking of local variables at run time", "Compiler Syntax Analyzer", "Data transfer between two asynchronous processes"],
-                answer: 3 // Data transfer between two asynchronous processes
-            },
-            {
-                question: "The maximum number of parentheses that appear on the stack at any one time when analyzing (()(())(())) is:",
-                options: ["1", "2", "3", "4 or more"],
-                answer: 2
-            },
-            {
-                question: "What is the value of the postfix expression 6 3 2 4 + - * ?",
-                options: ["1", "40", "74", "-18"],
-                answer: 3 // -18
-            },
-            {
-                question: "The maximum number of symbols that will appear on the stack at one time during the conversion of 4 + 3*(6*3-12) from infix to postfix notation is:",
-                options: ["1", "2", "3", "4"],
-                answer: 3
-            },
-            {
-                question: "The data structure required to check whether an expression contains balanced parentheses is:",
-                options: ["Stack", "Queue", "Array", "Tree"],
-                answer: 0 // Stack
-            },
-            {
-                question: "The postfix form of the expression (A+B)*(C*D-E)*F/G is:",
-                options: ["AB+CD*E-FG/**", "AB+CD*E-F**G/", "AB+CD*E-*F*G/", "AB+CDE*-*F*G/"],
-                answer: 2
-            },
-            {
-                question: "The process of accessing data stored in a serial access memory is similar to manipulating data on a:",
-                options: ["Heap", "Binary Tree", "Array", "Stack"],
-                answer: 3 // Stack
-            },
-            {
-                question: "The postfix form of A*B+C/D is:",
-                options: ["*AB/CD+", "AB*CD/+", "A*BC+/D", "ABCD+/*"],
-                answer: 1 // AB*CD/+
-            },
-            {
-                question: "Which data structure is needed to convert infix notation to postfix notation?",
-                options: ["Stack", "Queue", "Branch", "Tree"],
-                answer: 0 // Stack
-            },
-            {
-                question: "The prefix form of A-B/(C*D^E) is:",
-                options: ["-/*^ACBDE", "-ABCD*^DE", "-A/B*C^DE", "-A/BC*^DE"],
-                answer: 2 // -A/B*C^DE
-            },
-            {
-                question: "The prefix form of the infix expression (p + q) - (r * t) is:",
-                options: ["+ pq - *rt", "-+pqr*t", "-+pq*rt", "-+*pqrt"],
-                answer: 2 // -+pq*rt
-            },
-            {
-                question: "Which data structure is used for implementing recursion?",
-                options: ["List", "Queue", "Array", "Stack"],
-                answer: 3 // Stack
-            },
-            {
-                question: "The result of evaluating the postfix expression 5 4 6 + * 4 9 3 / + * is:",
-                options: ["600", "350", "650", "588"],
-                answer: 1
-            },
-            {
-                question: "Convert the infix expression (A+B^D)/(E-F)+G to postfix:",
-                options: ["(ABD^+EF-/G+)", "(ABD+^EF-/G+)", "(ABD^+EF/-G+)", "(ABDEF+^/-G+)"],
-                answer: 0 // (ABD^+EF-/G+)
-            },
-            {
-                question: "Convert the infix expression x+y*z+(p*q+r)*s to postfix form:",
-                options: ["xyz*+pq*r+s*+", "xyz*+pq*r+s+*", "xyz+*pq*r+s*+", "xyzp+**qr+s*+"],
-                answer: 0 // xyz*+pq*r+s*+
-            },
-            {
-                question: "Which of the following is not an inherent application of stack?",
-                options: ["Reversing a string", "Evaluation of postfix expression", "Implementation of recursion", "Job scheduling"],
-                answer: 3 // Job scheduling
-            },
-            {
-                question: "The result of evaluating the postfix expression 10 5 +60 6 /*8- is:",
-                options: ["284", "213", "142", "71"],
-                answer: 2 // 142
-            },
-            {
-                question: "If elements 'A', 'B', 'C', and 'D' are placed in a stack and are deleted one at a time, what is the order of removal?",
-                options: ["ABCD", "DCBA", "DCAB", "ABDC"],
-                answer: 1 // DCBA
-            },
-            {
-                question: "Suppose a stack is implemented with a linked list instead of an array. What would be the time complexity of push and pop operations?",
-                options: ["O(1) for insertion and O(n) for deletion", "O(1) for insertion and O(1) for deletion", "O(n) for insertion and O(1) for deletion", "O(n) for insertion and O(n) for deletion"],
-                answer: 1 // O(1) for insertion and O(1) for deletion
-            },
-            {
-                question: "To evaluate an expression without any embedded function calls:",
-                options: ["As many stacks as the height of the expression tree are needed", "One stack is enough", "Two stacks are needed", "A Turing machine is needed in the general case"],
-                answer: 1 // One stack is enough
-            }
-        ];
-
-        const dataStructureQuestions2 = [
-        ];
-
-        const dataStructureQuestions3 = [
-        ];
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-        const dcQuestions1 = [
-            {
-                question: "Communication between a computer and keyboard involves transmission.",
-                options: ["Simplex", "Automatic", "Full-duplex", "Half-duplex"],
-                answer: 0
-            },
-            {
-                question: "Which of the following isn’t a type of transmission mode?",
-                options: ["Half-duplex", "Full-duplex", "Simplex", "physical"],
-                answer: 3
-            },
-            {
-                question: "A transmission that generally involves dedicated circuits.",
-                options: ["Half-duplex", "Simplex", "Semi-duplex", "Full-duplex"],
-                answer: 1
-            },
-            {
-                question: "A transmission mode that can transmit data in both directions but transmits in only one direction at a time.",
-                options: ["Full-duplex", "Semi-duplex", "Simplex", "Half-duplex"],
-                answer: 3
-            },
-            {
-                question: "Telephone networks operate in this mode.",
-                options: ["Simplex", "Semi-duplex", "Full-duplex", "Half-duplex"],
-                answer: 2
-            },
-            {
-                question: "A walkie-talkie operates in ________.",
-                options: ["Half-duplex", "Full-duplex", "Simplex", "Semi-duplex"],
-                answer: 0
-            },
-            {
-                question: "Data can flow only in one direction all the time in a _____ mode.",
-                options: ["Half-duplex", "None of these", "Simplex", "Full-duplex"],
-                answer: 2
-            },
-            {
-                question: "Data can flow in both directions all the time in a _____ mode.",
-                options: ["Full-duplex", "None of these", "Simplex", "Half-duplex"],
-                answer: 0
-            },
-            {
-                question: "Both stations can transmit and receive data simultaneously in ______.",
-                options: ["Full-duplex mode", "Unicode", "Simplex mode", "Half-duplex mode"],
-                answer: 0
-            },
-            {
-                question: "A _____ is the physical path over which a message travels.",
-                options: ["path", "medium", "protocol", "route"],
-                answer: 1
-            },
-            {
-                question: "Which of these elements is not involved in the process of communication?",
-                options: ["pipe", "sender", "message", "channel"],
-                answer: 0
-            },
-            {
-                question: "A ______ set of rules that governs data communication is called ______.",
-                options: ["protocols", "standards", "RFCs", "Servers"],
-                answer: 0
-            },
-            {
-                question: "A ______ is the person who transmits a message.",
-                options: ["Receiver", "Sender", "Message", "Transmission medium"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is not one of the components of a data communication system?",
-                options: ["Medium", "Sender", "Message", "All of the choices are correct"],
-                answer: 3
-            },
-            {
-                question: "The function of the data transmission element is ______.",
-                options: ["To transfer data from one element to another", "To process the data", "To modify the data", "To separate the signal hidden in the noise"],
-                answer: 0
-            },
-            {
-                question: "Any set of digits or alphabets are generally referred to as ______.",
-                options: ["Characters", "Symbols", "Bits", "Bytes"],
-                answer: 0
-            },
-            {
-                question: "What is a pixel?",
-                options: ["Pixel is the element of a digital image", "Pixel is the cluster of a digital image", "Pixel is the element of an analog image", "Pixel is the cluster of an analog image"],
-                answer: 0
-            },
-            {
-                question: "Which color model is used for most computer model and video systems?",
-                options: ["RGB", "RYB", "CMU", "HSV"],
-                answer: 0
-            },
-            {
-                question: "What does ASCII stand for?",
-                options: ["American Standard Code for Information Interchange", "American Scientific Code for Information Interchange", "American Scientific Code for Interchanging Information", "American Standard Code for Interchanging Information"],
-                answer: 0
-            },
-            {
-                question: "The largest geographic area a wide area network (WAN) can span is ______.",
-                options: ["A town", "A state", "A country", "The world"],
-                answer: 3
-            },
-            {
-                question: "A data communication system spanning states, countries, or the whole world is a ______.",
-                options: ["WAN", "LAN", "MAN", "PAN"],
-                answer: 0
-            },
-            {
-                question: "WAN stands for ______.",
-                options: ["World area network", "Web area network", "Wide area network", "Web access network"],
-                answer: 2
-            },
-            {
-                question: "What is the purpose of a WAN?",
-                options: ["To allow computers to communicate with each other in the same area", "To allow computers to communicate with each other anywhere in the world", "To allow computers to communicate with each other in the same country", "To allow computers to communicate with each other in the home"],
-                answer: 1
-            },
-            {
-                question: "Wide Area Networks (WANs) ______.",
-                options: ["Cover a large geographical area", "Use cables, telephone lines, satellites, and radio waves to connect", "Are used by international organizations", "All 3 options"],
-                answer: 3
-            },
-            {
-                question: "The World Wide Web (WWW) is the largest ______.",
-                options: ["Local Area Network (LAN)", "Wide Area Network (WAN)", "Metropolitan Area Network (MAN)"],
-                answer: 1
-            },
-            {
-                question: "How is software reliability defined?",
-                options: ["Time", "Quality", "Efficiency", "Speed"],
-                answer: 0
-            },
-            {
-                question: "A local area network (LAN) is defined by ______.",
-                options: ["The geometric size of the network", "The maximum number of hosts in the network and/or the geometric size of the network", "The maximum number of hosts in the network", "The topology of the network"],
-                answer: 1
-            },
-            {
-                question: "WLAN stands for ______.",
-                options: ["Wireless Local Area Network", "Wire Lost Area Network", "Wired Local Area Network", "Wireless Local Ambiguity Network"],
-                answer: 0
-            },
-            {
-                question: "Which of the following is not one of the network criteria?",
-                options: ["Performance", "Reliability", "Security", "All of the choices are correct"],
-                answer: 3
-            },
-            {
-                question: "Which of the following is a small single-site network?",
-                options: ["LAN", "DSL", "MAN", "WAN"],
-                answer: 0
-            },
-            {
-                question: "A term that refers to the way in which the nodes of a network are linked together is called ______.",
-                options: ["Network", "Topology", "Connection", "Interconnection"],
-                answer: 1
-            },
-            {
-                question: "Three or more devices share a link in a ______ connection.",
-                options: ["Unipoint", "Multipoint", "Point to point", "Simplex"],
-                answer: 1
-            },
-            {
-                question: "______ topology requires multiple connections.",
-                options: ["Star", "Mesh", "Ring", "Bus"],
-                answer: 3
-            },
-            {
-                question: "The participating computers in a network are referred to as ______.",
-                options: ["Clients", "Servers", "Nodes", "CPUs"],
-                answer: 2
-            },
-            {
-                question: "A topology that is responsible for describing the geometric arrangement of components that make up the LAN is ______.",
-                options: ["Complex", "Physical", "Logical", "Incremental"],
-                answer: 1
-            },
-            {
-                question: "Which network topology requires a central controller or hub?",
-                options: ["Star", "Mesh", "Ring", "Bus"],
-                answer: 0
-            }
-        ];
-
-
-
-
-        const dcQuestions2 = [
-            {
-                question: "In TCP/IP, a message at the application layer is encapsulated in a packet at the ____ layer.",
-                options: ["network", "transport", "data-link", "physical"],
-                answer: 1
-            },
-            {
-                question: "In TCP/IP, a message at the transport layer is encapsulated in a packet at the ____ layer.",
-                options: ["network", "transport", "data-link", "physical"],
-                answer: 0
-            },
-            {
-                question: "In TCP/IP, a message belonging to the network layer is decapsulated from a packet at the ____ layer.",
-                options: ["network", "transport", "data-link", "physical"],
-                answer: 2
-            },
-            {
-                question: "In TCP/IP, a message belonging to the transport layer is decapsulated from a packet at the ____ layer.",
-                options: ["network", "transport", "data-link", "physical"],
-                answer: 1
-            },
-            {
-                question: "Which layer does the data link layer take packets from and encapsulate them into frames for transmission?",
-                options: ["transport layer", "application layer", "network layer", "physical layer"],
-                answer: 2
-            },
-            {
-                question: "How many levels of addressing is provided in TCP/IP protocol?",
-                options: ["One", "Two", "Three", "Four"],
-                answer: 3
-            },
-            {
-                question: "PROTOCOL LAYERING is applied when communication is ____.",
-                options: ["large", "simple", "complex", "complicated"],
-                answer: 2
-            },
-            {
-                question: "The network layer is concerned with........ of data.",
-                options: ["packets", "frames", "bits", "bytes"],
-                answer: 0
-            },
-            {
-                question: "The packet of information at the application layer is called........",
-                options: ["packets", "frames", "message", "segment"],
-                answer: 2
-            },
-            {
-                question: "The data link layer takes the packets from...... and encapsulates them into frames for transmission.",
-                options: ["network layer", "physical layer", "transport layer", "application layer"],
-                answer: 0
-            },
-            {
-                question: "The TCP/IP protocol suite consists of........ layers.",
-                options: ["two", "three", "five", "six"],
-                answer: 2
-            },
-            {
-                question: "A router is involved in........ layers of the TCP/IP protocol suite.",
-                options: ["two", "three", "five", "four"],
-                answer: 1
-            },
-            {
-                question: "A link-layer switch is involved in ......... layers of the TCP/IP protocol suite.",
-                options: ["two", "three", "five", "four"],
-                answer: 0
-            },
-            {
-                question: "The transport-layer packet in the TCP/IP protocol suite is called........",
-                options: ["a message", "a datagram", "a segment or a user datagram", "a frame"],
-                answer: 2
-            },
-            {
-                question: "The......... layer is responsible for the delivery of a message from one process to another.",
-                options: ["physical", "transport", "network", "application"],
-                answer: 1
-            },
-            {
-                question: "OSI stands for ______.",
-                options: ["open system interconnection", "operating system interface", "optical service implementation", "open service Internet"],
-                answer: 0
-            },
-            {
-                question: "The number of layers in ISO OSI reference model is ______.",
-                options: ["4", "5", "6", "7"],
-                answer: 3
-            },
-            {
-                question: "TCP/IP model does not have ____ layer but OSI model have this layer.",
-                options: ["session layer", "transport layer", "application layer", "network layer"],
-                answer: 0
-            },
-            {
-                question: "Which of the following layers is an addition to OSI model when compared with TCP IP model?",
-                options: ["session layer", "Presentation layer", "application layer", "Session and Presentation layer"],
-                answer: 3
-            },
-            {
-                question: "In OSI model, when data is sent from device A to device B, the 5th layer to receive data at B is ____.",
-                options: ["application layer", "Transport layer", "Session layer", "Link layer"],
-                answer: 2
-            },
-            {
-                question: "Which one of the following protocol delivers/stores mail to receiver server?",
-                options: ["simple mail transfer protocol", "post office protocol", "hypertext transfer protocol", "internet mail access protocol"],
-                answer: 0
-            },
-            {
-                question: "In the TCP/IP protocol suite, which of the following is an application layer protocol?",
-                options: ["The User Datagram Protocol (UDP)", "The Internet Protocol (IP)", "The Transmission Control Protocol(TCP)", "The File Transfer Protocol (FTP)"],
-                answer: 3
-            },
-            {
-                question: "In the TCP/IP protocol suite, which of the following is a transport-layer protocol?",
-                options: ["The Internet Protocol (IP)", "The Internet Control Message Protocol (ICMP)", "The Address Resolution Protocol (ARP)", "The Transmission Control Protocol (TCP)"],
-                answer: 3
-            },
-            {
-                question: "In the TCP/IP protocol suite, which of the following is a network layer protocol?",
-                options: ["The Stream Control Transmission Protocol (SCTP)", "The Internet Protocol (IP)", "The Secure Shell (SSH)", "User Datagram Protocol (UDP)"],
-                answer: 1
-            },
-            {
-                question: "In the TCP/IP protocol suite, the ...... layer is responsible for moving frames from one hop (node) to the next.",
-                options: ["physical", "data-link", "transport", "network"],
-                answer: 1
-            },
-            {
-                question: "In the TCP/IP protocol suite, the physical layer is concerned with the movement of ....... over the physical medium.",
-                options: ["programs", "dialogs", "protocols", "bits"],
-                answer: 3
-            },
-            {
-                question: "In the TCP/IP protocol suite, a port number is the identifier at the.........",
-                options: ["application layer", "network layer", "transport layer", "physical layer"],
-                answer: 2
-            },
-            {
-                question: "In the TCP/IP protocol suite, a logical address is the identifier at the........",
-                options: ["network layer", "transport layer", "data-link layer", "application layer"],
-                answer: 0
-            },
-            {
-                question: "The Internet Protocol (IP) is ...... protocol.",
-                options: ["a unreliable", "a connection-oriented", "a reliable and connection-oriented"],
-                answer: 0
-            },
-            {
-                question: "The application layer in the TCP/IP protocol suite is usually considered to be the combination of ....... layers in the OSI model.",
-                options: ["application, presentation, and session", "application, transport, and network", "application, data-link, and physical", "network, data-link, and physical"],
-                answer: 0
-            },
-            {
-                question: "In TCP/IP, a logical connection between an entity at the network layer can be made with another entity at the ............ layer.",
-                options: ["network", "transport", "data-link", "physical"],
-                answer: 0
-            },
-            {
-                question: "In TCP/IP, a logical connection between an entity at the data-link layer can be made with another entity at the ......... layer.",
-                options: ["network", "transport", "data-link", "physical"],
-                answer: 2
-            },
-            {
-                question: "Which is not a application layer protocol?",
-                options: ["HTTP", "SMTP", "FTP", "TCP"],
-                answer: 3
-            },
-            {
-                question: "Application layer offers ......... service.",
-                options: ["End to end", "Process to process", "None of the mentioned", "Both End to end and Process to process"],
-                answer: 3
-            },
-            {
-                question: "Which of the following is an application layer service?",
-                options: ["Network virtual terminal", "All of the mentioned", "File transfer, access, and management", "Mail service"],
-                answer: 1
-            },
-            {
-                question: "Electronic mail uses which Application layer protocol?",
-                options: ["HTTP", "SMTP", "FTP", "SIP"],
-                answer: 1
-            },
-            {
-                question: "The physical layer is concerned with.....",
-                options: ["bit-by-bit delivery", "process to process delivery", "application to application delivery", "port to port delivery"],
-                answer: 0
-            },
-            {
-                question: "HTTP is ...... protocol.",
-                options: ["application layer", "transport layer", "network layer", "data link layer"],
-                answer: 0
-            },
-            {
-                question: "Which level is the network layer in the OSI model?",
-                options: ["Third level", "Fourth level", "Second level", "Fifth layer"],
-                answer: 0
-            },
-            {
-                question: "ICMP stands for.......",
-                options: ["Internet Coordinate Message Protocol", "Internet Control Message Protocol", "Interconnect Control Message Protocol", "Interconnect Coordinate Message Protocol"],
-                answer: 1
-            }
-        ];
-
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-        function selectQuiz(quiz) {
-            selectedQuiz = quiz;
-            if (quiz === 'database') {
-                document.getElementById('quiz-selection').classList.add('hidden');
-                document.getElementById('database-quiz-selection').classList.remove('hidden');
-            } else if (quiz === 'datastructures') {
-                document.getElementById('quiz-selection').classList.add('hidden');
-                document.getElementById('data-structure-quiz-selection').classList.remove('hidden');
-            } else if (quiz === 'dc') {
-                document.getElementById('quiz-selection').classList.add('hidden');
-                document.getElementById('datacommunction-quiz-selection').classList.remove('hidden');
-            }
+      
+
+
+
+      const _0x4c2b31 = _0x35a4;
+function _0x2fa1() {
+    const _0x2c6c72 = [
+        "Structured\x20Data",
+        "What\x20is\x20logical\x20data\x20independence?",
+        "a\x20reliable\x20and\x20connection-oriented",
+        "MapReduce\x20has\x20built-in\x20iterative\x20processing.",
+        "OSI\x20stands\x20for\x20______.",
+        "55TeXlSV",
+        "A\x20key\x20that\x20contains\x20foreign\x20keys\x20only",
+        "RYB",
+        "Distributed\x20data\x20storage",
+        "Process\x20to\x20process",
+        "Super\x20keys\x20always\x20contain\x20redundant\x20attributes.",
+        "472SKJnhE",
+        "Both\x20stations\x20can\x20transmit\x20and\x20receive\x20data\x20simultaneously\x20in\x20______.",
+        "Only\x20supports\x20small\x20datasets",
+        "O(1)\x20for\x20insertion\x20and\x20O(n)\x20for\x20deletion",
+        "It\x20is\x20the\x20only\x20option\x20for\x20interactive\x20queries.",
+        "WAN\x20stands\x20for\x20______.",
+        "The\x20current\x20set\x20of\x20data\x20in\x20the\x20database",
+        "To\x20manage\x20data\x20efficiently",
+        "review-btn",
+        "a\x20connection-oriented",
+        "Local\x20Area\x20Network\x20(LAN)",
+        "-/*^ACBDE",
+        "Data\x20can\x20flow\x20only\x20in\x20one\x20direction\x20all\x20the\x20time\x20in\x20a\x20_____\x20mode.",
+        "If\x20elements\x20\x27A\x27,\x20\x27B\x27,\x20\x27C\x27,\x20and\x20\x27D\x27\x20are\x20placed\x20in\x20a\x20stack\x20and\x20are\x20deleted\x20one\x20at\x20a\x20time,\x20what\x20is\x20the\x20order\x20of\x20removal?",
+        "Pixel\x20is\x20the\x20cluster\x20of\x20a\x20digital\x20image",
+        "Wire\x20Lost\x20Area\x20Network",
+        "The\x20primary\x20key\x20of\x20a\x20table",
+        "3292604MwsdSJ",
+        "To\x20manage\x20emails",
+        "Printing\x20documents",
+        "For\x20embedded\x20systems\x20with\x20limited\x20storage\x20capacity",
+        "Interconnect\x20Coordinate\x20Message\x20Protocol",
+        "HTTP\x20is\x20......\x20protocol.",
+        "Which\x20of\x20these\x20frameworks\x20is\x20specifically\x20designed\x20for\x20real-time\x20data\x20stream\x20processing?",
+        "What\x20is\x20the\x20role\x20of\x20the\x20\x27reduce\x27\x20function\x20in\x20MapReduce?",
+        "Presentation\x20layer",
+        "Why\x20is\x20normalization\x20challenging\x20in\x20a\x20Hadoop\x20environment?",
+        "Only\x20one\x20task\x20runs\x20at\x20a\x20time.",
+        "For\x20complex,\x20ever-changing\x20applications",
+        "To\x20evaluate\x20an\x20expression\x20without\x20any\x20embedded\x20function\x20calls:",
+        "XML",
+        "The\x20ability\x20to\x20process\x20transactions\x20entirely\x20or\x20not\x20at\x20all",
+        "What\x20type\x20of\x20language\x20is\x20used\x20to\x20specify\x20the\x20structure\x20of\x20a\x20database?",
+        "1023790Fzokxb",
+        "Internet\x20Coordinate\x20Message\x20Protocol",
+        "Stack",
+        "In\x20a\x20database,\x20data\x20redundancy\x20is\x20increased\x20to\x20improve\x20performance.",
+        "When\x20is\x20it\x20more\x20desirable\x20to\x20use\x20regular\x20files\x20instead\x20of\x20a\x20database?",
+        "Mesh",
+        "Convert\x20the\x20infix\x20expression\x20(A+B^D)/(E-F)+G\x20to\x20postfix:",
+        "What\x20is\x20a\x20key\x20feature\x20of\x20the\x20\x27shared-nothing\x27\x20architecture\x20in\x20MapReduce?",
+        "hidden",
+        "A\x20router\x20is\x20involved\x20in........\x20layers\x20of\x20the\x20TCP/IP\x20protocol\x20suite.",
+        "ABCD+/*",
+        "four",
+        "Authorizing\x20access\x20to\x20the\x20database",
+        "Message",
+        "What\x20is\x20the\x20primary\x20purpose\x20of\x20a\x20Database\x20Management\x20System\x20(DBMS)?",
+        "three",
+        "MapReduce",
+        "Which\x20color\x20model\x20is\x20used\x20for\x20most\x20computer\x20model\x20and\x20video\x20systems?",
+        "The\x20physical\x20layer\x20is\x20concerned\x20with.....",
+        "Evaluation",
+        "Star",
+        "To\x20improve\x20data\x20storage\x20efficiency",
+        "Limited\x20data\x20sharing",
+        "Pop",
+        "Involves\x20static\x20data\x20definitions",
+        "Data\x20abstraction\x20in\x20database\x20systems\x20aims\x20to\x20improve\x20data\x20storage\x20efficiency.",
+        "Unstructured\x20Data",
+        "Update",
+        "DSL",
+        "List",
+        "Please\x20enter\x20a\x20number\x20between\x201-120\x20minutes.",
+        "A\x20backup\x20of\x20the\x20database",
+        "Flink\x20offers\x20lower\x20latency\x20and\x20supports\x20stateful\x20stream\x20operations\x20natively.",
+        "Which\x20tool\x20is\x20commonly\x20used\x20for\x20interactive\x20SQL\x20on\x20Hadoop?",
+        "MapReduce’s\x20native\x20support\x20for\x20streaming\x20operations.",
+        "PROTOCOL\x20LAYERING\x20is\x20applied\x20when\x20communication\x20is\x20____.",
+        "Use\x20of\x20a\x20catalog\x20for\x20schema\x20storage",
+        "Delete",
+        "Which\x20of\x20the\x20following\x20is\x20not\x20one\x20of\x20the\x20components\x20of\x20a\x20data\x20communication\x20system?",
+        "internet\x20mail\x20access\x20protocol",
+        "DCAB",
+        "It\x20allows\x20for\x20multiple\x20databases\x20to\x20be\x20accessed\x20simultaneously.",
+        "Historical\x20data\x20analysis",
+        "In\x20the\x20relational\x20model,\x20a\x20domain\x20is:",
+        "End\x20to\x20end",
+        "What\x20is\x20the\x20primary\x20function\x20of\x20an\x20access\x20path\x20in\x20a\x20database?",
+        "The\x20prefix\x20form\x20of\x20A-B/(C*D^E)\x20is:",
+        "Atomicity\x20problems",
+        "Reduced\x20network\x20bandwidth\x20usage",
+        "Full-duplex\x20mode",
+        "Multiple\x20copies\x20of\x20data\x20exist",
+        "(ABDEF+^/-G+)",
+        "It\x20supports\x20real-time\x20and\x20interactive\x20data\x20processing.",
+        "time-taken",
+        "Pixel\x20is\x20the\x20element\x20of\x20an\x20analog\x20image",
+        "Management\x20of\x20cluster\x20resources\x20for\x20various\x20applications",
+        "Ring",
+        "segment",
+        "Easy\x20data\x20sharing",
+        "In\x20OSI\x20model,\x20when\x20data\x20is\x20sent\x20from\x20device\x20A\x20to\x20device\x20B,\x20the\x205th\x20layer\x20to\x20receive\x20data\x20at\x20B\x20is\x20____.",
+        "Compiling\x20code",
+        "Spark\x20exclusively\x20stores\x20data\x20on\x20disk.",
+        "CMU",
+        "A\x20program\x20that\x20retrieves\x20data",
+        "Flexible\x20interpretation\x20of\x20unstructured\x20data",
+        "Fault-tolerance",
+        "Spark\x20is\x20slower\x20because\x20all\x20data\x20is\x20stored\x20on\x20disk.",
+        "Bytes",
+        "result",
+        "In\x20TCP/IP,\x20a\x20message\x20at\x20the\x20application\x20layer\x20is\x20encapsulated\x20in\x20a\x20packet\x20at\x20the\x20____\x20layer.",
+        "ABCD",
+        "large",
+        "The\x20actual\x20data\x20in\x20the\x20database",
+        "To\x20allow\x20computers\x20to\x20communicate\x20with\x20each\x20other\x20in\x20the\x20same\x20area",
+        "The\x20Stream\x20Control\x20Transmission\x20Protocol\x20(SCTP)",
+        "Symbols",
+        "Direct\x20access\x20to\x20remote\x20databases",
+        "complicated",
+        "NULL\x20values",
+        "To\x20run\x20application\x20programs\x20and\x20manage\x20business\x20rules",
+        "What\x20does\x20physical\x20data\x20independence\x20allow?",
+        "To\x20manage\x20user\x20interfaces",
+        "To\x20split\x20datasets\x20for\x20faster\x20processing",
+        "It\x20supports\x20only\x20batch\x20processing.",
+        "data\x20link\x20layer",
+        "What\x20is\x20the\x20key\x20difference\x20between\x20MapReduce\x20and\x20Spark\x20regarding\x20storage\x20and\x20memory\x20use?",
+        "total-questions",
+        "start-new-quiz",
+        "HTTP",
+        "The\x20ability\x20to\x20store\x20large\x20files",
+        "A\x20transmission\x20that\x20generally\x20involves\x20dedicated\x20circuits.",
+        "Incremental",
+        "MAN",
+        "Implementation\x20of\x20recursion",
+        "Warehouses",
+        "The\x20maximum\x20number\x20of\x20hosts\x20in\x20the\x20network",
+        "Half-duplex\x20mode",
+        "open\x20service\x20Internet",
+        "ICMP\x20stands\x20for.......",
+        "next-btn",
+        "Semi-duplex",
+        "Spark\x20is\x20more\x20efficient\x20for\x20iterative\x20processing\x20as\x20it\x20keeps\x20data\x20in\x20memory.",
+        "213",
+        "Full-duplex",
+        "To\x20modify\x20the\x20data",
+        "protocols",
+        "classList",
+        "network\x20layer",
+        "To\x20process\x20the\x20data",
+        "The\x20physical\x20storage\x20of\x20data",
+        "Metadata",
+        "Apache\x20Flink",
+        "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aThere\x20can\x20be\x20more\x20than\x20one\x20employee\x20with\x20the\x20same\x20EmpID\x20in\x20the\x20Employees\x20table.",
+        "Insert",
+        "What\x20does\x20the\x20term\x20\x27database\x20schema\x27\x20refer\x20to?",
+        "Tasks\x20are\x20independent\x20with\x20no\x20dependencies.",
+        "add",
+        "Samza",
+        "Spark\x20lacks\x20support\x20for\x20iterative\x20processing.",
+        "When\x20handling\x20streaming\x20data,\x20which\x20of\x20the\x20following\x20distinguishes\x20Apache\x20Flink\x20from\x20Apache\x20Spark?",
+        "Queue",
+        "Allows\x20data\x20structure\x20to\x20be\x20defined\x20during\x20read",
+        "The\x20postfix\x20form\x20of\x20the\x20expression\x20(A+B)*(C*D-E)*F/G\x20is:",
+        "What\x20does\x20ASCII\x20stand\x20for?",
+        "4\x20or\x20more",
+        "Spark’s\x20exclusive\x20reliance\x20on\x20disk\x20storage\x20for\x20faster\x20retrieval.",
+        "What\x20is\x20a\x20pixel?",
+        "The\x20Internet\x20Protocol\x20(IP)",
+        "Which\x20of\x20the\x20following\x20is\x20a\x20disadvantage\x20of\x20file-based\x20systems?",
+        "Wide\x20Area\x20Networks\x20(WANs)\x20______.",
+        "Primary\x20key\x20can\x20be\x20null.",
+        "For\x20large\x20multi-user\x20environments",
+        "medium",
+        "Changes\x20to\x20the\x20logical\x20schema\x20without\x20affecting\x20external\x20schemas",
+        "284",
+        "length",
+        "List\x20of\x20all\x20employees",
+        "It\x20leads\x20to\x20data\x20duplication.",
+        "innerText",
+        "forEach",
+        "current-question",
+        "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20the\x20physical\x20layer\x20is\x20concerned\x20with\x20the\x20movement\x20of\x20.......\x20over\x20the\x20physical\x20medium.",
+        "Quality",
+        "Data\x20duplication",
+        "Pixel\x20is\x20the\x20element\x20of\x20a\x20digital\x20image",
+        "CPUs",
+        "Simplex\x20mode",
+        "It\x20needs\x20to\x20load\x20data\x20from\x20disk\x20for\x20each\x20iteration,\x20making\x20it\x20slower.",
+        "The\x20ability\x20to\x20change\x20the\x20logical\x20schema\x20without\x20affecting\x20external\x20schemas",
+        "Low-latency\x20real-time\x20processing",
+        "What\x20is\x20atomicity\x20in\x20the\x20context\x20of\x20databases?",
+        "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20which\x20of\x20the\x20following\x20is\x20a\x20transport-layer\x20protocol?",
+        "Unicode",
+        "Fourth\x20level",
+        "The\x20transport-layer\x20packet\x20in\x20the\x20TCP/IP\x20protocol\x20suite\x20is\x20called........",
+        "Centralized\x20storage",
+        "The\x20data\x20model\x20used",
+        "Why\x20is\x20Flink\x20more\x20suitable\x20for\x20applications\x20that\x20require\x20quick\x20response\x20times\x20compared\x20to\x20MapReduce?",
+        "Heap",
+        "It\x20is\x20not\x20suitable\x20for\x20iterative\x20processing.",
+        "*AB/CD+",
+        "packets",
+        "American\x20Scientific\x20Code\x20for\x20Interchanging\x20Information",
+        "It\x20focuses\x20on\x20user\x20interactions\x20with\x20the\x20database.",
+        "In\x20TCP/IP,\x20a\x20logical\x20connection\x20between\x20an\x20entity\x20at\x20the\x20data-link\x20layer\x20can\x20be\x20made\x20with\x20another\x20entity\x20at\x20the\x20.........\x20layer.",
+        "dialogs",
+        "How\x20is\x20software\x20reliability\x20defined?",
+        "\x20the\x20property\x20information\x20table:\x0a\x0a|\x20PropertyNo\x20|\x20Address\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20Type\x20\x20|\x20Rooms\x20|\x20Rent\x20|\x20OwnerNo\x20|\x0a|------------|-------------------|-------|-------|------|---------|\x0a|\x20PA14\x20\x20\x20\x20\x20\x20\x20|\x2016\x20Holhead\x20House\x20\x20\x20|\x20House\x20|\x206\x20\x20\x20\x20\x20|\x20650\x20\x20|\x20C046\x20\x20\x20\x20|\x0a|\x20PL94\x20\x20\x20\x20\x20\x20\x20|\x206\x20Argyll\x20St.\x20\x20\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x204\x20\x20\x20\x20\x20|\x20400\x20\x20|\x20C087\x20\x20\x20\x20|\x0a|\x20PG4\x20\x20\x20\x20\x20\x20\x20\x20|\x206\x20Lawrence\x20St.\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x203\x20\x20\x20\x20\x20|\x20350\x20\x20|\x20C040\x20\x20\x20\x20|\x0a|\x20PG36\x20\x20\x20\x20\x20\x20\x20|\x202\x20Manor\x20Rd\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x203\x20\x20\x20\x20\x20|\x20375\x20\x20|\x20C093\x20\x20\x20\x20|\x0a|\x20PG21\x20\x20\x20\x20\x20\x20\x20|\x2018\x20Dale\x20Rd\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20House\x20|\x205\x20\x20\x20\x20\x20|\x20600\x20\x20|\x20C087\x20\x20\x20\x20|\x0a|\x20PG16\x20\x20\x20\x20\x20\x20\x20|\x205\x20Novar\x20Dr.\x20\x20\x20\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x204\x20\x20\x20\x20\x20|\x20450\x20\x20|\x20C093\x20\x20\x20\x20|\x0a\x0aDegree\x20of\x20relation\x20is:",
+        "Sender",
+        "(ABD^+EF-/G+)",
+        "Which\x20of\x20these\x20statements\x20accurately\x20describes\x20\x27grid\x20computing\x27\x20compared\x20to\x20Hadoop?",
+        "A\x20DBMS\x20does\x20not\x20provide\x20any\x20security\x20mechanisms\x20to\x20protect\x20data.",
+        "External\x20Level",
+        "path",
+        "A\x20different\x20program",
+        "A\x20collection\x20of\x20related\x20data",
+        "Automatic\x20backup",
+        "Which\x20of\x20the\x20following\x20is\x20not\x20an\x20inherent\x20application\x20of\x20stack?",
+        "Characters",
+        "time-input",
+        "The\x20Secure\x20Shell\x20(SSH)",
+        "It\x20describes\x20the\x20database\x20structure\x20in\x20an\x20understandable\x20way\x20for\x20most\x20users.",
+        "application\x20layer",
+        "The\x20ability\x20to\x20change\x20physical\x20storage\x20without\x20affecting\x20the\x20logical\x20schema",
+        "reload",
+        "Push",
+        "675215axByiw",
+        "One\x20stack\x20is\x20enough",
+        "Data\x20storage\x20management",
+        "It\x20does\x20not\x20handle\x20large\x20data\x20sets\x20effectively.",
+        "sender",
+        "Which\x20of\x20the\x20following\x20is\x20NOT\x20allowed\x20in\x20a\x20relational\x20model?",
+        "MapReduce\x20stores\x20data\x20on\x20disk\x20and\x20reloads\x20it\x20with\x20each\x20iteration.",
+        "Batch\x20processing",
+        "Four",
+        "In\x20TCP/IP,\x20a\x20message\x20belonging\x20to\x20the\x20network\x20layer\x20is\x20decapsulated\x20from\x20a\x20packet\x20at\x20the\x20____\x20layer.",
+        "</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Your\x20Answer:</strong>\x20",
+        "padStart",
+        "Binary\x20Tree",
+        "It\x20requires\x20complex\x20configurations.",
+        "a\x20unreliable",
+        "review-answers",
+        "display",
+        "Two",
+        "FTP",
+        "205839zERvpN",
+        "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20the\x20......\x20layer\x20is\x20responsible\x20for\x20moving\x20frames\x20from\x20one\x20hop\x20(node)\x20to\x20the\x20next.",
+        "To\x20define\x20the\x20schema\x20of\x20the\x20database",
+        "Bus",
+        "Limited\x20scalability\x20for\x20big\x20data",
+        "In\x20Hadoop,\x20how\x20does\x20\x27schema-on-read\x27\x20differ\x20from\x20traditional\x20RDBMS\x20schema\x20management?",
+        "O(n)\x20for\x20insertion\x20and\x20O(1)\x20for\x20deletion",
+        "Connection",
+        "A\x20_____\x20is\x20the\x20physical\x20path\x20over\x20which\x20a\x20message\x20travels.",
+        "JSON",
+        "(ABD^+EF/-G+)",
+        "Which\x20of\x20the\x20following\x20describes\x20a\x20conceptual\x20data\x20model?",
+        "Mail\x20service",
+        "MapReduce\x20supports\x20continuous\x20query\x20updates.",
+        "Speed",
+        "The\x20complete\x20physical\x20storage\x20details",
+        "Servers",
+        "End\x20Users",
+        "MapReduce\x20has\x20in-built\x20support\x20for\x20real-time\x20analytics.",
+        "All\x203\x20options",
+        "The\x20number\x20of\x20layers\x20in\x20ISO\x20OSI\x20reference\x20model\x20is\x20______.",
+        "Which\x20of\x20the\x20following\x20is\x20an\x20application\x20layer\x20service?",
+        "-+pq*rt",
+        "MapReduce’s\x20advantage\x20in\x20real-time\x20processing.",
+        "Requires\x20predefined\x20schema\x20at\x20load\x20time",
+        "Large-scale\x20unstructured\x20data",
+        "One",
+        "a\x20frame",
+        "<em>No\x20answer</em>",
+        "bigdata-quiz-selection",
+        "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aWhich\x20of\x20the\x20following\x20departments\x20has\x20no\x20employees\x20according\x20to\x20the\x20tables?",
+        "AB*CD/+",
+        "Electronic\x20mail\x20uses\x20which\x20Application\x20layer\x20protocol?",
+        "DCBA",
+        "-ABCD*^DE",
+        "Schema-on-read\x20flexibility",
+        "Which\x20feature\x20makes\x20Spark\x20more\x20efficient\x20for\x20machine\x20learning\x20tasks\x20compared\x20to\x20MapReduce?",
+        "Which\x20of\x20the\x20following\x20is\x20a\x20function\x20of\x20a\x20DBMS?",
+        "It\x20describes\x20how\x20data\x20is\x20stored\x20as\x20files\x20in\x20the\x20computer.",
+        "The\x20World\x20Wide\x20Web\x20(WWW)\x20is\x20the\x20largest\x20______.",
+        "Garbage\x20Collection",
+        "Cannot\x20be\x20classified",
+        "The\x20maximum\x20number\x20of\x20hosts\x20in\x20the\x20network\x20and/or\x20the\x20geometric\x20size\x20of\x20the\x20network",
+        "Number\x20of\x20tuples\x20in\x20a\x20relation",
+        "Physical",
+        "High\x20data\x20integrity",
+        "Physical\x20Data\x20Model",
+        "querySelectorAll",
+        "Time",
+        "question",
+        "Spark’s\x20streaming\x20capabilities\x20are\x20more\x20advanced\x20for\x20continuous\x20updates.",
+        "Automatic",
+        "The\x20physical\x20data\x20model\x20focuses\x20on\x20how\x20data\x20is\x20stored\x20as\x20files\x20in\x20the\x20computer.",
+        "Simplex",
+        "Support\x20for\x20multiple\x20user\x20views",
+        "A\x20transmission\x20mode\x20that\x20can\x20transmit\x20data\x20in\x20both\x20directions\x20but\x20transmits\x20in\x20only\x20one\x20direction\x20at\x20a\x20time.",
+        "Spark\x20is\x20faster\x20due\x20to\x20in-memory\x20processing.",
+        "A\x20collection\x20of\x20unrelated\x20data",
+        "Which\x20of\x20the\x20following\x20layers\x20is\x20an\x20addition\x20to\x20OSI\x20model\x20when\x20compared\x20with\x20TCP\x20IP\x20model?",
+        "database-quiz-selection",
+        "The\x20entity-relationship\x20model\x20is\x20an\x20example\x20of\x20a\x20representational\x20data\x20model.",
+        "simple",
+        "Spark’s\x20ability\x20to\x20store\x20intermediate\x20data\x20in\x20memory\x20for\x20iterative\x20tasks.",
+        "A\x20database\x20application\x20is\x20a\x20program\x20that\x20interacts\x20with\x20the\x20database.",
+        "-+*pqrt",
+        "A\x20country",
+        "It\x20provides\x20foundational\x20concepts\x20in\x20data\x20processing.",
+        "\x20the\x20property\x20information\x20table:\x0a\x0a|\x20PropertyNo\x20|\x20Address\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20Type\x20\x20|\x20Rooms\x20|\x20Rent\x20|\x20OwnerNo\x20|\x0a|------------|-------------------|-------|-------|------|---------|\x0a|\x20PA14\x20\x20\x20\x20\x20\x20\x20|\x2016\x20Holhead\x20House\x20\x20\x20|\x20House\x20|\x206\x20\x20\x20\x20\x20|\x20650\x20\x20|\x20C046\x20\x20\x20\x20|\x0a|\x20PL94\x20\x20\x20\x20\x20\x20\x20|\x206\x20Argyll\x20St.\x20\x20\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x204\x20\x20\x20\x20\x20|\x20400\x20\x20|\x20C087\x20\x20\x20\x20|\x0a|\x20PG4\x20\x20\x20\x20\x20\x20\x20\x20|\x206\x20Lawrence\x20St.\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x203\x20\x20\x20\x20\x20|\x20350\x20\x20|\x20C040\x20\x20\x20\x20|\x0a|\x20PG36\x20\x20\x20\x20\x20\x20\x20|\x202\x20Manor\x20Rd\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x203\x20\x20\x20\x20\x20|\x20375\x20\x20|\x20C093\x20\x20\x20\x20|\x0a|\x20PG21\x20\x20\x20\x20\x20\x20\x20|\x2018\x20Dale\x20Rd\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20House\x20|\x205\x20\x20\x20\x20\x20|\x20600\x20\x20|\x20C087\x20\x20\x20\x20|\x0a|\x20PG16\x20\x20\x20\x20\x20\x20\x20|\x205\x20Novar\x20Dr.\x20\x20\x20\x20\x20\x20\x20\x20|\x20Flat\x20\x20|\x204\x20\x20\x20\x20\x20|\x20450\x20\x20|\x20C093\x20\x20\x20\x20|\x0a\x0aCardinality\x20of\x20relation\x20:",
+        "Names\x20of\x20record\x20types\x20and\x20some\x20constraints",
+        "False",
+        "By\x20searching\x20in\x20the\x20Departments\x20table\x20using\x20DeptName\x20only",
+        "Apache\x20HDFS",
+        "The\x20ability\x20to\x20change\x20external\x20schemas\x20without\x20affecting\x20the\x20logical\x20schema",
+        "To\x20enhance\x20data\x20retrieval\x20speed",
+        "HSV",
+        "Which\x20of\x20the\x20following\x20is\x20a\x20disadvantage\x20of\x20using\x20a\x20database?",
+        "</div>",
+        "</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Correct\x20Answer:</strong>\x20",
+        "Data\x20Manipulation\x20Language\x20(DML)",
+        "A\x20term\x20that\x20refers\x20to\x20the\x20way\x20in\x20which\x20the\x20nodes\x20of\x20a\x20network\x20are\x20linked\x20together\x20is\x20called\x20______.",
+        "optical\x20service\x20implementation",
+        "Spark\x20relies\x20entirely\x20on\x20disk\x20storage\x20for\x20data.",
+        "Data\x20Query\x20Language\x20(DQL)",
+        "application\x20to\x20application\x20delivery",
+        "-A/BC*^DE",
+        "Session\x20and\x20Presentation\x20layer",
+        "data-link",
+        "Hierarchical\x20node",
+        "World\x20area\x20network",
+        "To\x20directly\x20query\x20the\x20dataset",
+        "It\x20focuses\x20only\x20on\x20batch\x20processing\x20without\x20interactive\x20analysis\x20support.",
+        "A\x20parentheses\x20balancing\x20program",
+        "TCP/IP\x20model\x20does\x20not\x20have\x20____\x20layer\x20but\x20OSI\x20model\x20have\x20this\x20layer.",
+        "Spark\x20uses\x20in-memory\x20caching,\x20reducing\x20disk\x20reads.",
+        "MapReduce\x20depends\x20on\x20in-memory\x20processing\x20to\x20increase\x20speed.",
+        "Changes\x20to\x20the\x20external\x20schema\x20without\x20affecting\x20the\x20internal\x20schema",
+        "Finance",
+        "PAN",
+        "simple\x20mail\x20transfer\x20protocol",
+        "WLAN\x20stands\x20for\x20______.",
+        "Which\x20of\x20the\x20following\x20is\x20not\x20a\x20DBMS\x20function?",
+        "Apache\x20Hive",
+        "data-structure-quiz-selection",
+        "A\x20set\x20of\x20allowable\x20values\x20for\x20one\x20or\x20more\x20attributes",
+        "Clients",
+        "Text\x20editing",
+        "Unique\x20keys",
+        "EmpName",
+        ".option",
+        "The\x20world",
+        "Convert\x20the\x20infix\x20expression\x20x+y*z+(p*q+r)*s\x20to\x20postfix\x20form:",
+        "Logical\x20Level",
+        "The\x20ability\x20to\x20change\x20data\x20types\x20in\x20the\x20database",
+        "Which\x20type\x20of\x20data\x20processing\x20requires\x20low\x20latency\x20and\x20is\x20best\x20achieved\x20with\x20stream\x20processing?",
+        "The\x20data\x20structure\x20required\x20to\x20check\x20whether\x20an\x20expression\x20contains\x20balanced\x20parentheses\x20is:",
+        "Spark\x20cannot\x20handle\x20large\x20datasets.",
+        "Fixed\x20data\x20structures",
+        "Ease\x20of\x20use",
+        "It\x20is\x20unsuitable\x20for\x20batch\x20processing.",
+        "six",
+        "It\x20describes\x20how\x20data\x20is\x20physically\x20stored.",
+        "Select",
+        "RGB",
+        "Underflow",
+        "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20which\x20of\x20the\x20following\x20is\x20a\x20network\x20layer\x20protocol?",
+        "Which\x20of\x20the\x20following\x20is\x20a\x20key\x20advantage\x20of\x20Apache\x20Spark\x20compared\x20to\x20MapReduce?",
+        "The\x20File\x20Transfer\x20Protocol\x20(FTP)",
+        "To\x20store\x20the\x20database",
+        "All\x20of\x20this",
+        "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aWhich\x20of\x20the\x20following\x20represents\x20the\x20foreign\x20key\x20in\x20the\x20Employees\x20table?",
+        "A*BC+/D",
+        "xyz+*pq*r+s*+",
+        "Spark\x20uses\x20disk\x20storage\x20exclusively.",
+        "complex",
+        "Any\x20update\x20is\x20performed\x20once\x20and\x20is\x20available\x20to\x20all\x20users",
+        "Enhanced\x20data\x20normalization",
+        "\x20out\x20of\x20",
+        "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aThere\x20is\x20a\x20one-to-many\x20relationship\x20between\x20the\x20Departments\x20and\x20Employees\x20tables.",
+        "Telephone\x20networks\x20operate\x20in\x20this\x20mode.",
+        "1117203zwdovp",
+        "To\x20transfer\x20data\x20from\x20one\x20element\x20to\x20another",
+        "Spark\x20allows\x20faster\x20batch\x20analysis\x20in\x20real-time\x20applications.",
+        "Any\x20set\x20of\x20digits\x20or\x20alphabets\x20are\x20generally\x20referred\x20to\x20as\x20______.",
+        "Why\x20is\x20MapReduce\x20still\x20studied\x20despite\x20newer\x20frameworks?",
+        "The\x20referential\x20integrity\x20constraint\x20ensures\x20that:",
+        "A\x20state",
+        "Two\x20stacks\x20are\x20needed",
+        "timer",
+        "database",
+        "True",
+        "Data\x20Structures\x20Quiz\x20",
+        "Spark\x20allows\x20data\x20processing\x20in\x20real\x20time.",
+        "It\x20complicates\x20high-speed\x20data\x20access.",
+        "AB+CD*E-*F*G/",
+        "It\x20primarily\x20relies\x20on\x20HDFS\x20for\x20storage.",
+        "Interconnect\x20Control\x20Message\x20Protocol",
+        "(ABD+^EF-/G+)",
+        "MapReduce\x20is\x20faster\x20due\x20to\x20disk-based\x20processing.",
+        "What\x20feature\x20does\x20Apache\x20Spark\x20provide\x20that\x20MapReduce\x20lacks?",
+        "+\x20pq\x20-\x20*rt",
+        "Data\x20transfer\x20between\x20two\x20asynchronous\x20processes",
+        "Which\x20platform\x20can\x20index\x20and\x20serve\x20search\x20queries\x20on\x20Hadoop\x20clusters?",
+        "Small\x20size",
+        "MapReduce\x20is\x20more\x20memory-efficient.",
+        "All\x20of\x20the\x20mentioned",
+        "Spark\x20Streaming",
+        "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20a\x20port\x20number\x20is\x20the\x20identifier\x20at\x20the.........",
+        "floor",
+        "Logical\x20data\x20independence\x20allows\x20changes\x20to\x20the\x20logical\x20schema\x20without\x20affecting\x20external\x20schemas.",
+        "Semi-structured\x20Data",
+        "Create",
+        "The\x20process\x20of\x20accessing\x20data\x20stored\x20in\x20a\x20serial\x20access\x20memory\x20is\x20similar\x20to\x20manipulating\x20data\x20on\x20a:",
+        "EmpID",
+        "User\x20flow",
+        "datastructures",
+        "Sharing\x20the\x20database",
+        "Conceptual\x20Level",
+        "time-limit",
+        "Wireless\x20Local\x20Area\x20Network",
+        "A\x20walkie-talkie\x20operates\x20in\x20________.",
+        "Data\x20redundancy",
+        "AB+CD*E-F**G/",
+        "The\x20network\x20layer\x20is\x20concerned\x20with........\x20of\x20data.",
+        "Hierarchical\x20Model",
+        "Time\x20Taken:\x20",
+        "Real-time\x20data\x20streaming",
+        "Defining\x20the\x20database",
+        "A\x20key\x20that\x20uniquely\x20identifies\x20a\x20tuple\x20and\x20may\x20contain\x20redundant\x20attributes",
+        "SIP",
+        "A\x20DBMS\x20allows\x20multiple\x20users\x20to\x20access\x20data\x20simultaneously.",
+        "Pixel\x20is\x20the\x20cluster\x20of\x20an\x20analog\x20image",
+        "Which\x20of\x20these\x20elements\x20is\x20not\x20involved\x20in\x20the\x20process\x20of\x20communication?",
+        "In\x20Hadoop,\x20what\x20is\x20\x27schema-on-read\x27\x20primarily\x20designed\x20for?",
+        "American\x20Scientific\x20Code\x20for\x20Information\x20Interchange",
+        "It\x20defines\x20the\x20relationships\x20among\x20data\x20entities.",
+        "Cover\x20a\x20large\x20geographical\x20area",
+        "standards",
+        "time-left",
+        "By\x20joining\x20the\x20Employees\x20table\x20with\x20the\x20DeptNo\x20column",
+        "Enforcing\x20predefined\x20data\x20structures",
+        "Medium",
+        "Excel",
+        "Process\x20of\x20removing\x20an\x20element\x20from\x20a\x20stack\x20is\x20called:",
+        "Exclusive\x20access\x20to\x20storage\x20nodes",
+        "Wide\x20area\x20network",
+        "Application\x20layer\x20offers\x20.........\x20service.",
+        "application,\x20transport,\x20and\x20network",
+        "Logical",
+        "A\x20local\x20area\x20network\x20(LAN)\x20is\x20defined\x20by\x20______.",
+        "toString",
+        "getElementById",
+        "datacommunction-quiz-selection",
+        "Internal\x20Level",
+        "bigdata\x20Quiz\x20",
+        "To\x20increase\x20data\x20redundancy",
+        "Batch\x20processing\x20only",
+        "Data\x20is\x20always\x20consistent\x20in\x20a\x20file-based\x20system.",
+        "network",
+        "Three",
+        "Which\x20of\x20the\x20following\x20tasks\x20is\x20not\x20typically\x20handled\x20by\x20a\x20Database\x20Administrator\x20(DBA)?",
+        "quiz-title",
+        "SMTP",
+        "A\x20______\x20set\x20of\x20rules\x20that\x20governs\x20data\x20communication\x20is\x20called\x20______.",
+        "The.........\x20layer\x20is\x20responsible\x20for\x20the\x20delivery\x20of\x20a\x20message\x20from\x20one\x20process\x20to\x20another.",
+        "The\x20description\x20of\x20the\x20database\x20structure",
+        "12GPjxSy",
+        "In\x20the\x20context\x20of\x20databases,\x20what\x20is\x20a\x20\x27database\x20state\x27?",
+        "Reversing\x20a\x20string",
+        "What\x20is\x20an\x20example\x20of\x20a\x20representational\x20data\x20model?",
+        "MapReduce\x20is\x20faster\x20than\x20both\x20Flink\x20and\x20Spark.",
+        "Reliability",
+        "Number\x20of\x20attributes\x20in\x20a\x20relation",
+        "Transport\x20layer",
+        "visible",
+        "It\x20provides\x20faster\x20iterative\x20processing\x20due\x20to\x20in-memory\x20processing.",
+        "operating\x20system\x20interface",
+        "Apache\x20Samza",
+        "transport\x20layer",
+        "A\x20tuple’s\x20primary\x20key\x20can\x20be\x20NULL",
+        "Which\x20of\x20the\x20following\x20is\x20a\x20small\x20single-site\x20network?",
+        "It\x20does\x20not\x20support\x20disk-based\x20storage.",
+        "To\x20allow\x20computers\x20to\x20communicate\x20with\x20each\x20other\x20anywhere\x20in\x20the\x20world",
+        "bigdata",
+        "It\x20relies\x20only\x20on\x20batch\x20processing.",
+        "Security",
+        "protocol",
+        "What\x20is\x20a\x20primary\x20reason\x20for\x20using\x20Spark\x20over\x20MapReduce\x20in\x20big\x20data\x20analytics?",
+        "physical",
+        "Data\x20independence",
+        "Which\x20of\x20the\x20following\x20is\x20NOT\x20a\x20characteristic\x20of\x20the\x20database\x20approach?",
+        "transport",
+        "Solr",
+        "session\x20layer",
+        "Interconnection",
+        "High\x20diversity\x20and\x20distribution",
+        "In\x20a\x20two-tier\x20client/server\x20architecture,\x20the\x20application\x20server\x20runs\x20application\x20programs\x20and\x20manages\x20business\x20rules.",
+        "Apache\x20Storm",
+        "600",
+        "a\x20segment\x20or\x20a\x20user\x20datagram",
+        "Which\x20operation\x20can\x20potentially\x20violate\x20referential\x20integrity?",
+        "pipe",
+        "Developing\x20applications",
+        "Data\x20is\x20consistent\x20across\x20different\x20files",
+        "Which\x20of\x20the\x20following\x20is\x20NOT\x20a\x20key\x20concept\x20in\x20the\x20relational\x20model?",
+        "time-options",
+        "Procedural\x20Language",
+        "None\x20of\x20these",
+        "In-memory\x20data\x20analytics",
+        "Which\x20data\x20structure\x20is\x20used\x20for\x20implementing\x20recursion?",
+        "answer",
+        "application,\x20presentation,\x20and\x20session",
+        "To\x20create\x20images",
+        "Sharing\x20a\x20database\x20can\x20only\x20be\x20done\x20by\x20a\x20single\x20user\x20at\x20a\x20time.",
+        "All\x20tasks\x20depend\x20on\x20each\x20other.",
+        "American\x20Standard\x20Code\x20for\x20Interchanging\x20Information",
+        "A\x20key\x20that\x20is\x20always\x20a\x20primary\x20key",
+        "application,\x20data-link,\x20and\x20physical",
+        "Domain",
+        "Tree",
+        "To\x20allow\x20computers\x20to\x20communicate\x20with\x20each\x20other\x20in\x20the\x20same\x20country",
+        "All\x20of\x20the\x20choices\x20are\x20correct",
+        "Only\x20MapReduce\x20processing",
+        "It\x20separates\x20user\x20interface\x20and\x20application\x20programs\x20from\x20the\x20database.",
+        "What\x20is\x20the\x20primary\x20purpose\x20of\x20data\x20abstraction\x20in\x20database\x20systems?",
+        "For\x20systems\x20requiring\x20high\x20security",
+        "None\x20of\x20the\x20mentioned",
+        "Manipulating\x20data",
+        "Focuses\x20on\x20low-level\x20data\x20flow\x20control",
+        "Please\x20enter\x20a\x20valid\x20number\x20of\x20minutes.",
+        "Performance",
+        "What\x20is\x20the\x20main\x20benefit\x20of\x20a\x20three-tier\x20architecture\x20in\x20database\x20systems?",
+        "A\x20topology\x20that\x20is\x20responsible\x20for\x20describing\x20the\x20geometric\x20arrangement\x20of\x20components\x20that\x20make\x20up\x20the\x20LAN\x20is\x20______.",
+        "User\x20passwords",
+        "A\x20______\x20is\x20the\x20person\x20who\x20transmits\x20a\x20message.",
+        "-18",
+        "LAN",
+        "remove",
+        "xyzp+**qr+s*+",
+        "Each\x20attribute\x20in\x20a\x20relation\x20must\x20be\x20unique",
+        "User\x20Datagram\x20Protocol\x20(UDP)",
+        "Half-duplex",
+        "What\x20is\x20the\x20value\x20of\x20the\x20postfix\x20expression\x206\x203\x202\x204\x20+\x20-\x20*\x20?",
+        "The\x20prefix\x20form\x20of\x20the\x20infix\x20expression\x20(p\x20+\x20q)\x20-\x20(r\x20*\x20t)\x20is:",
+        "Compiler\x20Syntax\x20Analyzer",
+        "A\x20file-based\x20system\x20is\x20more\x20efficient\x20than\x20a\x20database\x20in\x20handling\x20complex\x20data\x20relationships.",
+        "The\x20result\x20of\x20evaluating\x20the\x20postfix\x20expression\x2010\x205\x20+60\x206\x20/*8-\x20is:",
+        "Prioritizes\x20data\x20over\x20computational\x20power",
+        "A\x20key\x20that\x20contains\x20no\x20attributes",
+        "Bits",
+        "Flink\x20offers\x20native\x20processing\x20for\x20unbounded\x20data\x20streams.",
+        "In\x20a\x20stack,\x20if\x20a\x20user\x20tries\x20to\x20remove\x20an\x20element\x20from\x20an\x20empty\x20stack,\x20it\x20is\x20called:",
+        "The\x20Transmission\x20Control\x20Protocol\x20(TCP)",
+        "innerHTML",
+        "Relations\x20can\x20have\x20composite\x20attributes",
+        "In\x20a\x20three-tier\x20architecture,\x20what\x20is\x20the\x20role\x20of\x20the\x20application\x20server?",
+        "A\x20link-layer\x20switch\x20is\x20involved\x20in\x20.........\x20layers\x20of\x20the\x20TCP/IP\x20protocol\x20suite.",
+        "6ahOMau",
+        "physical\x20layer",
+        "message",
+        "correct",
+        "Apache\x20Tez",
+        "Log\x20file\x20analysis",
+        "What\x20is\x20a\x20primary\x20characteristic\x20of\x20big\x20data?",
+        "Network\x20virtual\x20terminal",
+        "Which\x20of\x20the\x20following\x20isn’t\x20a\x20type\x20of\x20transmission\x20mode?",
+        "Are\x20used\x20by\x20international\x20organizations",
+        "Network",
+        "Increased\x20data\x20redundancy",
+        "As\x20many\x20stacks\x20as\x20the\x20height\x20of\x20the\x20expression\x20tree\x20are\x20needed",
+        "What\x20is\x20the\x20main\x20difference\x20between\x20MapReduce\x20and\x20Spark\x20in\x20terms\x20of\x20data\x20processing\x20efficiency?",
+        "The\x20current\x20set\x20of\x20data\x20in\x20a\x20database\x20is\x20called\x20the\x20database\x20schema.",
+        "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aThe\x20combination\x20of\x20EmpID\x20and\x20DeptNo\x20can\x20serve\x20as\x20a\x20composite\x20key\x20in\x20the\x20Employees\x20table.",
+        "block",
+        "Improved\x20data\x20integrity",
+        "The\x20current\x20state\x20of\x20the\x20database",
+        "In\x20a\x20Hadoop\x20ecosystem,\x20how\x20does\x20Spark\x20differ\x20from\x20MapReduce\x20in\x20handling\x20data?",
+        "To\x20play\x20music",
+        "The\x20geometric\x20size\x20of\x20the\x20network",
+        "five",
+        "Pushing\x20an\x20element\x20into\x20a\x20stack\x20already\x20having\x20five\x20elements\x20and\x20a\x20size\x20limit\x20of\x205\x20will\x20cause:",
+        "Nodes",
+        "Metropolitan\x20Area\x20Network\x20(MAN)",
+        "Data\x20integrity\x20in\x20a\x20database\x20is\x20easier\x20to\x20achieve\x20than\x20in\x20a\x20file-based\x20system.",
+        "Array",
+        "Suppose\x20a\x20stack\x20is\x20implemented\x20with\x20a\x20linked\x20list\x20instead\x20of\x20an\x20array.\x20What\x20would\x20be\x20the\x20time\x20complexity\x20of\x20push\x20and\x20pop\x20operations?",
+        "Conceptual\x20Data\x20Model",
+        "Designing\x20the\x20database",
+        "Human\x20Resource",
+        "Iterative\x20processing",
+        "xyz*+pq*r+s*+",
+        "quiz-selection",
+        "question-info",
+        "Changes\x20to\x20the\x20internal\x20schema\x20without\x20affecting\x20the\x20logical\x20schema",
+        "The\x20maximum\x20number\x20of\x20symbols\x20that\x20will\x20appear\x20on\x20the\x20stack\x20at\x20one\x20time\x20during\x20the\x20conversion\x20of\x204\x20+\x203*(6*3-12)\x20from\x20infix\x20to\x20postfix\x20notation\x20is:",
+        "O(n)\x20for\x20insertion\x20and\x20O(n)\x20for\x20deletion",
+        "The\x20postfix\x20form\x20of\x20A*B+C/D\x20is:",
+        "2981090BkOpto",
+        "Branch",
+        "TCP",
+        "port\x20to\x20port\x20delivery",
+        "Point\x20to\x20point",
+        "Data\x20stored\x20in\x20different\x20formats",
+        "In\x20TCP/IP,\x20a\x20logical\x20connection\x20between\x20an\x20entity\x20at\x20the\x20network\x20layer\x20can\x20be\x20made\x20with\x20another\x20entity\x20at\x20the\x20............\x20layer.",
+        "Spark\x20does\x20not\x20support\x20large-scale\x20data\x20processing.",
+        "The\x20data\x20link\x20layer\x20takes\x20the\x20packets\x20from......\x20and\x20encapsulates\x20them\x20into\x20frames\x20for\x20transmission.",
+        "bytes",
+        "High\x20performance",
+        "142",
+        "The\x20function\x20of\x20the\x20data\x20transmission\x20element\x20is\x20______.",
+        "Processes\x20data\x20in\x20a\x20relational\x20format\x20only",
+        "bits",
+        "xyz*+pq*r+s+*",
+        "Updating\x20a\x20foreign\x20key\x20does\x20not\x20affect\x20referential\x20integrity.",
+        "It\x20is\x20not\x20possible\x20to\x20retrieve\x20the\x20department\x20name\x20from\x20the\x20existing\x20tables",
+        "The\x20result\x20of\x20evaluating\x20the\x20postfix\x20expression\x205\x204\x206\x20+\x20*\x204\x209\x203\x20/\x20+\x20*\x20is:",
+        "Which\x20data\x20structure\x20is\x20needed\x20to\x20convert\x20infix\x20notation\x20to\x20postfix\x20notation?",
+        "What\x20is\x20a\x20database?",
+        "wrong",
+        "Credit\x20card\x20transaction\x20validation",
+        "-A/B*C^DE",
+        "Faster\x20data\x20retrieval",
+        "Third\x20level",
+        "style",
+        "two",
+        "process\x20to\x20process\x20delivery",
+        "The\x20application\x20layer\x20in\x20the\x20TCP/IP\x20protocol\x20suite\x20is\x20usually\x20considered\x20to\x20be\x20the\x20combination\x20of\x20.......\x20layers\x20in\x20the\x20OSI\x20model.",
+        "DeptName",
+        "Web\x20access\x20network",
+        "frames",
+        "Internet\x20Control\x20Message\x20Protocol",
+        "The\x20primary\x20key\x20of\x20the\x20relation",
+        "The\x20cost\x20of\x20implementing\x20a\x20DBMS\x20is\x20usually\x20lower\x20than\x20using\x20a\x20file-based\x20system.",
+        "Salary",
+        "365508DJHMhj",
+        "The\x20User\x20Datagram\x20Protocol\x20(UDP)",
+        "The\x20Internet\x20Control\x20Message\x20Protocol\x20(ICMP)",
+        "finish-btn",
+        "In\x20a\x20valid\x20database\x20state,\x20all\x20defined\x20integrity\x20constraints\x20must\x20be\x20satisfied.",
+        "round",
+        "Empty\x20collection",
+        "The\x20main\x20benefit\x20of\x20a\x20three-tier\x20architecture\x20is\x20increased\x20data\x20redundancy.",
+        "Multipoint",
+        "Overflow",
+        "Real-time\x20data\x20processing\x20and\x20analysis",
+        "question-box",
+        "It\x20limits\x20schema\x20flexibility.",
+        "channel",
+    ];
+    _0x2fa1 = function () {
+        return _0x2c6c72;
+    };
+    return _0x2fa1();
+}
+(function (_0x34c14e, _0x4e9aa9) {
+    const _0x41c740 = _0x35a4,
+        _0x240969 = _0x34c14e();
+    while (!![]) {
+        try {
+            const _0x233c14 =
+                -parseInt(_0x41c740(0x2e7)) / 0x1 +
+                -parseInt(_0x41c740(0x2c2)) / 0x2 +
+                (parseInt(_0x41c740(0x1e9)) / 0x3) * (parseInt(_0x41c740(0x23f)) / 0x4) +
+                (parseInt(_0x41c740(0x3db)) / 0x5) * (parseInt(_0x41c740(0x29a)) / 0x6) +
+                -parseInt(_0x41c740(0x311)) / 0x7 +
+                (-parseInt(_0x41c740(0x300)) / 0x8) * (-parseInt(_0x41c740(0x3ee)) / 0x9) +
+                (-parseInt(_0x41c740(0x321)) / 0xa) * (-parseInt(_0x41c740(0x2fa)) / 0xb);
+            if (_0x233c14 === _0x4e9aa9) break;
+            else _0x240969["push"](_0x240969["shift"]());
+        } catch (_0x26ad95) {
+            _0x240969["push"](_0x240969["shift"]());
         }
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-        function chooseDatabaseQuiz(variant) {
-            databaseQuizVariant = variant;
-            totalQuestions = getDatabaseQuestions().length;
-            document.getElementById('quiz-title').innerText = `Database Quiz ${variant}`;
-            document.getElementById('database-quiz-selection').classList.add('hidden');
-            document.getElementById('time-options').classList.remove('hidden');
+    }
+})(_0x2fa1, 0xc02a1);
+let score = 0x0,
+    totalQuestions,
+    currentQuestionIndex = 0x0,
+    timeLimit,
+    timerInterval,
+    userAnswers = [],
+    startTime,
+    selectedQuiz,
+    databaseQuizVariant = 0x1,
+    dataStructureQuizVariant = 0x1,
+    dcQuizVariant = 0x1,
+    bigdataQuizVariant = 0x1;
+const databaseQuestions1 = [
+        { question: _0x4c2b31(0x2d6), options: [_0x4c2b31(0x197), _0x4c2b31(0x3d0), _0x4c2b31(0x360), "A\x20storage\x20medium\x20for\x20documents"], answer: 0x1 },
+        { question: _0x4c2b31(0x183), options: [_0x4c2b31(0x1c7), _0x4c2b31(0x218), _0x4c2b31(0x313), "Browsing\x20the\x20internet"], answer: 0x1 },
+        { question: _0x4c2b31(0x32f), options: [_0x4c2b31(0x26d), _0x4c2b31(0x307), _0x4c2b31(0x2ae), _0x4c2b31(0x312)], answer: 0x1 },
+        { question: _0x4c2b31(0x3a1), options: [_0x4c2b31(0x35b), _0x4c2b31(0x18b), _0x4c2b31(0x3b0), _0x4c2b31(0x3d1)], answer: 0x2 },
+        { question: "What\x20does\x20data\x20consistency\x20in\x20a\x20database\x20imply?", options: [_0x4c2b31(0x2c7), _0x4c2b31(0x264), _0x4c2b31(0x1e4), _0x4c2b31(0x353)], answer: 0x2 },
+        { question: "What\x20does\x20a\x20database\x20catalog\x20contain?", options: [_0x4c2b31(0x3a9), _0x4c2b31(0x38f), _0x4c2b31(0x282), "System\x20logs"], answer: 0x1 },
+        { question: _0x4c2b31(0x1c2), options: [_0x4c2b31(0x27c), _0x4c2b31(0x20d), "Protecting\x20the\x20database", _0x4c2b31(0x35d)], answer: 0x3 },
+        { question: _0x4c2b31(0x3b7), options: [_0x4c2b31(0x37a), _0x4c2b31(0x31f), "The\x20ability\x20to\x20share\x20data\x20among\x20users", "The\x20ability\x20to\x20create\x20backups"], answer: 0x1 },
+        { question: _0x4c2b31(0x320), options: [_0x4c2b31(0x1ac), "Data\x20Definition\x20Language\x20(DDL)", _0x4c2b31(0x1b0), _0x4c2b31(0x267)], answer: 0x1 },
+        { question: _0x4c2b31(0x1a9), options: [_0x4c2b31(0x2cc), "Complexity", _0x4c2b31(0x1d3), _0x4c2b31(0x200)], answer: 0x1 },
+        {
+            question: "Which\x20users\x20primarily\x20interact\x20with\x20the\x20database\x20to\x20satisfy\x20their\x20data\x20needs?",
+            options: ["Database\x20Designers", _0x4c2b31(0x3ff), "Database\x20Administrators", "Systems\x20Analysts"],
+            answer: 0x1,
+        },
+        { question: "Which\x20of\x20the\x20following\x20is\x20an\x20advantage\x20of\x20a\x20database\x20system?", options: [_0x4c2b31(0x212), _0x4c2b31(0x337), _0x4c2b31(0x2ab), _0x4c2b31(0x350)], answer: 0x2 },
+        { question: "What\x20is\x20a\x20\x27view\x27\x20in\x20the\x20context\x20of\x20databases?", options: [_0x4c2b31(0x3cf), "A\x20subset\x20of\x20the\x20database", _0x4c2b31(0x340), "A\x20query\x20language"], answer: 0x1 },
+        { question: _0x4c2b31(0x239), options: [_0x4c2b31(0x32d), _0x4c2b31(0x2b8), "Monitoring\x20database\x20use", _0x4c2b31(0x263)], answer: 0x3 },
+        { question: _0x4c2b31(0x325), options: [_0x4c2b31(0x31c), _0x4c2b31(0x314), _0x4c2b31(0x3a4), _0x4c2b31(0x27a)], answer: 0x1 },
+        { question: _0x4c2b31(0x236), options: [_0x4c2b31(0x1f3), "False"], answer: 0x1 },
+        { question: _0x4c2b31(0x21b), options: ["True", _0x4c2b31(0x1a3)], answer: 0x0 },
+        { question: _0x4c2b31(0x19d), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+        { question: "The\x20physical\x20structure\x20of\x20data\x20is\x20independent\x20of\x20application\x20programs\x20in\x20a\x20DBMS.", options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+        { question: _0x4c2b31(0x324), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x28e), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x3cc), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x26e), options: ["True", _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x2e5), options: [_0x4c2b31(0x1f3), "False"], answer: 0x1 },
+        { question: _0x4c2b31(0x2b4), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+    ],
+    databaseQuestions2 = [
+        { question: _0x4c2b31(0x279), options: [_0x4c2b31(0x336), "To\x20hide\x20details\x20of\x20physical\x20data\x20storage", _0x4c2b31(0x234), _0x4c2b31(0x1a7)], answer: 0x1 },
+        { question: _0x4c2b31(0x3f9), options: [_0x4c2b31(0x1d6), "It\x20is\x20used\x20for\x20database\x20implementation\x20in\x20DBMS.", _0x4c2b31(0x3d6), "It\x20focuses\x20on\x20data\x20retrieval\x20operations."], answer: 0x2 },
+        { question: _0x4c2b31(0x242), options: ["Entity-Relationship\x20Model", _0x4c2b31(0x215), _0x4c2b31(0x18c), _0x4c2b31(0x2b7)], answer: 0x1 },
+        { question: _0x4c2b31(0x393), options: ["The\x20actual\x20data\x20stored\x20in\x20the\x20database", _0x4c2b31(0x23e), _0x4c2b31(0x38e), _0x4c2b31(0x2ac)], answer: 0x1 },
+        { question: _0x4c2b31(0x240), options: ["The\x20schema\x20of\x20the\x20database", _0x4c2b31(0x306), "A\x20backup\x20of\x20the\x20database", _0x4c2b31(0x3bd)], answer: 0x1 },
+        { question: _0x4c2b31(0x34e), options: [_0x4c2b31(0x3f0), "To\x20ensure\x20data\x20integrity", "To\x20make\x20searching\x20for\x20records\x20efficient", "To\x20store\x20data\x20physically"], answer: 0x2 },
+        { question: "Which\x20level\x20of\x20the\x20three-schema\x20architecture\x20describes\x20the\x20physical\x20storage\x20structure?", options: [_0x4c2b31(0x3cd), _0x4c2b31(0x1cd), _0x4c2b31(0x232), _0x4c2b31(0x20e)], answer: 0x2 },
+        { question: _0x4c2b31(0x2f6), options: [_0x4c2b31(0x3d8), _0x4c2b31(0x3b5), _0x4c2b31(0x1a6), _0x4c2b31(0x1ce)], answer: 0x1 },
+        { question: _0x4c2b31(0x371), options: [_0x4c2b31(0x3a6), _0x4c2b31(0x2be), "Changes\x20to\x20the\x20database\x20state\x20without\x20affecting\x20the\x20schema", _0x4c2b31(0x1bd)], answer: 0x1 },
+        {
+            question: "What\x20characterizes\x20a\x20two-tier\x20client/server\x20architecture?",
+            options: ["It\x20has\x20three\x20distinct\x20layers\x20of\x20processing.", _0x4c2b31(0x278), _0x4c2b31(0x34a), "It\x20is\x20primarily\x20used\x20for\x20web\x20applications."],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x298), options: [_0x4c2b31(0x1dd), _0x4c2b31(0x372), _0x4c2b31(0x370), "To\x20handle\x20data\x20backups"], answer: 0x2 },
+        { question: _0x4c2b31(0x280), options: [_0x4c2b31(0x2a5), "Simplified\x20database\x20design", "Improved\x20security\x20and\x20easier\x20application\x20updates", _0x4c2b31(0x2da)], answer: 0x2 },
+        { question: _0x4c2b31(0x257), options: [_0x4c2b31(0x345), _0x4c2b31(0x256), _0x4c2b31(0x194), _0x4c2b31(0x1d2)], answer: 0x3 },
+        { question: "What\x20does\x20a\x20schema\x20diagram\x20typically\x20display?", options: [_0x4c2b31(0x369), _0x4c2b31(0x3fd), _0x4c2b31(0x1a2), _0x4c2b31(0x2ac)], answer: 0x2 },
+        {
+            question: "Which\x20of\x20the\x20following\x20best\x20describes\x20the\x20physical\x20data\x20model?",
+            options: [_0x4c2b31(0x3c4), _0x4c2b31(0x184), "It\x20is\x20used\x20for\x20designing\x20user\x20interfaces.", _0x4c2b31(0x220)],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x33a), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x19a), options: [_0x4c2b31(0x1f3), "False"], answer: 0x1 },
+        { question: _0x4c2b31(0x2a8), options: ["True", "False"], answer: 0x1 },
+        { question: "The\x20internal\x20level\x20of\x20the\x20three-schema\x20architecture\x20describes\x20the\x20physical\x20storage\x20structure.", options: [_0x4c2b31(0x1f3), "False"], answer: 0x0 },
+        { question: _0x4c2b31(0x206), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+        { question: "Physical\x20data\x20independence\x20allows\x20changes\x20to\x20the\x20database\x20state\x20without\x20affecting\x20the\x20schema.", options: ["True", _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x25d), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x2ee), options: [_0x4c2b31(0x1f3), "False"], answer: 0x1 },
+        { question: "A\x20schema\x20diagram\x20typically\x20displays\x20the\x20actual\x20data\x20in\x20the\x20database.", options: ["True", _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x192), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+    ],
+    databaseQuestions3 = [
+        { question: _0x4c2b31(0x265), options: ["Tuple", "Degree", _0x4c2b31(0x1b5), _0x4c2b31(0x273)], answer: 0x2 },
+        { question: "What\x20does\x20the\x20degree\x20of\x20a\x20relation\x20refer\x20to?", options: [_0x4c2b31(0x189), _0x4c2b31(0x245), _0x4c2b31(0x2e4), "The\x20number\x20of\x20foreign\x20keys\x20in\x20a\x20relation"], answer: 0x1 },
+        { question: _0x4c2b31(0x34c), options: ["A\x20set\x20of\x20tables\x20in\x20the\x20database", _0x4c2b31(0x1c5), _0x4c2b31(0x310), "A\x20unique\x20identifier\x20for\x20a\x20row"], answer: 0x1 },
+        { question: "What\x20is\x20a\x20super\x20key\x20in\x20a\x20relational\x20database?", options: [_0x4c2b31(0x2fb), _0x4c2b31(0x219), _0x4c2b31(0x271), _0x4c2b31(0x291)], answer: 0x1 },
+        { question: _0x4c2b31(0x3a3), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x261), options: [_0x4c2b31(0x1d7), _0x4c2b31(0x392), _0x4c2b31(0x346), _0x4c2b31(0x33c)], answer: 0x2 },
+        { question: _0x4c2b31(0x1ee), options: [_0x4c2b31(0x24c), "Foreign\x20key\x20values\x20must\x20exist\x20in\x20the\x20referenced\x20relation\x20or\x20be\x20NULL", _0x4c2b31(0x288), _0x4c2b31(0x297)], answer: 0x1 },
+        { question: _0x4c2b31(0x3e0), options: [_0x4c2b31(0x36f), "Composite\x20attributes", _0x4c2b31(0x1c8), "Atomic\x20values"], answer: 0x1 },
+        { question: "In\x20the\x20relational\x20model,\x20each\x20attribute\x20in\x20a\x20relation\x20must\x20have\x20a\x20unique\x20name.", options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+        { question: "Foreign\x20key\x20can\x20be\x20repeat\x20value.", options: [_0x4c2b31(0x1f3), "False"], answer: 0x0 },
+        { question: _0x4c2b31(0x2ff), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: _0x4c2b31(0x2eb), options: ["True", _0x4c2b31(0x1a3)], answer: 0x0 },
+        { question: _0x4c2b31(0x2d2), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        { question: "Unique\x20key\x20can\x20be\x20null.", options: [_0x4c2b31(0x1f3), "False"], answer: 0x0 },
+        { question: _0x4c2b31(0x3c8), options: ["7", "8", "9", "6"], answer: 0x3 },
+        { question: _0x4c2b31(0x1a1), options: ["7", "8", "6", "9"], answer: 0x2 },
+        {
+            question:
+                "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aWhat\x20is\x20the\x20primary\x20key\x20in\x20the\x20Employees\x20table?",
+            options: [_0x4c2b31(0x20a), _0x4c2b31(0x2e6), _0x4c2b31(0x1c9), "DeptNo"],
+            answer: 0x0,
+        },
+        { question: _0x4c2b31(0x1df), options: [_0x4c2b31(0x20a), "DeptNo", _0x4c2b31(0x2e0), _0x4c2b31(0x2e6)], answer: 0x1 },
+        {
+            question:
+                "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aHow\x20can\x20the\x20department\x20name\x20where\x20a\x20specific\x20employee\x20works\x20be\x20retrieved?",
+            options: [_0x4c2b31(0x224), "By\x20using\x20the\x20EmpID\x20column", _0x4c2b31(0x1a4), _0x4c2b31(0x2d3)],
+            answer: 0x0,
+        },
+        { question: _0x4c2b31(0x17c), options: ["Sales", _0x4c2b31(0x2b9), _0x4c2b31(0x1be), _0x4c2b31(0x37f)], answer: 0x3 },
+        { question: _0x4c2b31(0x391), options: ["True", "False"], answer: 0x1 },
+        {
+            question:
+                "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aEach\x20employee\x20must\x20belong\x20to\x20a\x20department,\x20so\x20the\x20DeptNo\x20field\x20in\x20the\x20Employees\x20table\x20cannot\x20be\x20NULL.",
+            options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)],
+            answer: 0x0,
+        },
+        { question: _0x4c2b31(0x1e7), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x0 },
+        {
+            question:
+                "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aA\x20new\x20department\x20can\x20be\x20added\x20to\x20the\x20Departments\x20table\x20without\x20any\x20employees\x20being\x20assigned\x20to\x20it\x20initially.",
+            options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)],
+            answer: 0x0,
+        },
+        { question: _0x4c2b31(0x2a9), options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)], answer: 0x1 },
+        {
+            question:
+                "In\x20the\x20Employees\x20table\x20(emp):\x20|\x20EmpID\x20|\x20EmpName\x20\x20\x20\x20\x20\x20|\x20Salary\x20|\x20DeptNo\x20|\x20\x0a|-------|--------------|--------|--------|\x20\x0a|\x201234\x20\x20|\x20Ahmed\x20Salem\x20\x20|\x202000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202456\x20\x20|\x20Maha\x20Karim\x20\x20\x20|\x203000\x20\x20\x20|\x201\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204658\x20\x20|\x20Sherif\x20Maged\x20|\x202500\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x209840\x20\x20|\x20Yasser\x20Amin\x20\x20|\x204000\x20\x20\x20|\x202\x20\x20\x20\x20\x20\x20|\x20\x0a|\x203945\x20\x20|\x20Magda\x20Farid\x20\x20|\x205000\x20\x20\x20|\x203\x20\x20\x20\x20\x20\x20|\x20\x0aIn\x20the\x20Departments\x20table\x20(Dep):\x20|\x20DeptNo\x20|\x20DeptName\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|--------|-----------------|\x20\x0a|\x201\x20\x20\x20\x20\x20\x20|\x20Sales\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x202\x20\x20\x20\x20\x20\x20|\x20Human\x20Resource\x20\x20|\x20\x0a|\x203\x20\x20\x20\x20\x20\x20|\x20Finance\x20\x20\x20\x20\x20\x20\x20\x20\x20|\x20\x0a|\x204\x20\x20\x20\x20\x20\x20|\x20Warehouses\x20\x20\x20\x20\x20\x20|\x20\x0aThe\x20DeptNo\x20column\x20in\x20the\x20Employees\x20table\x20is\x20a\x20primary\x20key.",
+            options: [_0x4c2b31(0x1f3), _0x4c2b31(0x1a3)],
+            answer: 0x1,
+        },
+    ],
+    dataStructureQuestions = [
+        { question: "Process\x20of\x20inserting\x20an\x20element\x20in\x20a\x20stack\x20is\x20called:", options: [_0x4c2b31(0x208), _0x4c2b31(0x3da), _0x4c2b31(0x334), _0x4c2b31(0x338)], answer: 0x1 },
+        { question: _0x4c2b31(0x228), options: [_0x4c2b31(0x208), "Push", _0x4c2b31(0x334), _0x4c2b31(0x338)], answer: 0x3 },
+        { question: _0x4c2b31(0x294), options: [_0x4c2b31(0x1d9), _0x4c2b31(0x2ed), _0x4c2b31(0x2f0), _0x4c2b31(0x186)], answer: 0x0 },
+        { question: _0x4c2b31(0x2b1), options: [_0x4c2b31(0x1d9), _0x4c2b31(0x20b), "Overflow", "Crash"], answer: 0x2 },
+        {
+            question: "Which\x20of\x20the\x20following\x20is\x20not\x20an\x20application\x20of\x20stack?",
+            options: [_0x4c2b31(0x1b9), "Tracking\x20of\x20local\x20variables\x20at\x20run\x20time", _0x4c2b31(0x28d), _0x4c2b31(0x1fe)],
+            answer: 0x3,
+        },
+        { question: "The\x20maximum\x20number\x20of\x20parentheses\x20that\x20appear\x20on\x20the\x20stack\x20at\x20any\x20one\x20time\x20when\x20analyzing\x20(()(())(()))\x20is:", options: ["1", "2", "3", _0x4c2b31(0x39d)], answer: 0x2 },
+        { question: _0x4c2b31(0x28b), options: ["1", "40", "74", _0x4c2b31(0x284)], answer: 0x3 },
+        { question: _0x4c2b31(0x2bf), options: ["1", "2", "3", "4"], answer: 0x3 },
+        { question: _0x4c2b31(0x1d0), options: ["Stack", _0x4c2b31(0x399), _0x4c2b31(0x2b5), _0x4c2b31(0x274)], answer: 0x0 },
+        { question: _0x4c2b31(0x39b), options: ["AB+CD*E-FG/**", _0x4c2b31(0x213), _0x4c2b31(0x1f7), "AB+CDE*-*F*G/"], answer: 0x2 },
+        { question: _0x4c2b31(0x209), options: [_0x4c2b31(0x3bf), _0x4c2b31(0x3e7), _0x4c2b31(0x2b5), _0x4c2b31(0x323)], answer: 0x3 },
+        { question: _0x4c2b31(0x2c1), options: [_0x4c2b31(0x3c1), _0x4c2b31(0x17d), _0x4c2b31(0x1e0), _0x4c2b31(0x32b)], answer: 0x1 },
+        { question: _0x4c2b31(0x2d5), options: ["Stack", _0x4c2b31(0x399), _0x4c2b31(0x2c3), "Tree"], answer: 0x0 },
+        { question: _0x4c2b31(0x34f), options: [_0x4c2b31(0x30b), _0x4c2b31(0x180), _0x4c2b31(0x2d9), _0x4c2b31(0x1b2)], answer: 0x2 },
+        { question: _0x4c2b31(0x28c), options: [_0x4c2b31(0x1fd), "-+pqr*t", _0x4c2b31(0x404), _0x4c2b31(0x19e)], answer: 0x2 },
+        { question: _0x4c2b31(0x26a), options: [_0x4c2b31(0x33e), _0x4c2b31(0x399), _0x4c2b31(0x2b5), _0x4c2b31(0x323)], answer: 0x3 },
+        { question: _0x4c2b31(0x2d4), options: [_0x4c2b31(0x25f), "350", "650", "588"], answer: 0x1 },
+        { question: _0x4c2b31(0x327), options: [_0x4c2b31(0x3ca), _0x4c2b31(0x1fa), _0x4c2b31(0x3f8), _0x4c2b31(0x354)], answer: 0x0 },
+        { question: _0x4c2b31(0x1cc), options: [_0x4c2b31(0x2bb), _0x4c2b31(0x2d1), _0x4c2b31(0x1e1), _0x4c2b31(0x287)], answer: 0x0 },
+        { question: _0x4c2b31(0x3d2), options: [_0x4c2b31(0x241), "Evaluation\x20of\x20postfix\x20expression", _0x4c2b31(0x37e), "Job\x20scheduling"], answer: 0x3 },
+        { question: _0x4c2b31(0x28f), options: [_0x4c2b31(0x3a7), _0x4c2b31(0x387), _0x4c2b31(0x2cd), "71"], answer: 0x2 },
+        { question: _0x4c2b31(0x30d), options: [_0x4c2b31(0x367), _0x4c2b31(0x17f), _0x4c2b31(0x349), "ABDC"], answer: 0x1 },
+        { question: _0x4c2b31(0x2b6), options: [_0x4c2b31(0x303), "O(1)\x20for\x20insertion\x20and\x20O(1)\x20for\x20deletion", _0x4c2b31(0x3f4), _0x4c2b31(0x2c0)], answer: 0x1 },
+        { question: _0x4c2b31(0x31d), options: [_0x4c2b31(0x2a6), _0x4c2b31(0x3dc), _0x4c2b31(0x1f0), "A\x20Turing\x20machine\x20is\x20needed\x20in\x20the\x20general\x20case"], answer: 0x1 },
+    ],
+    dataStructureQuestions2 = [],
+    dataStructureQuestions3 = [],
+    dcQuestions1 = [
+        { question: "Communication\x20between\x20a\x20computer\x20and\x20keyboard\x20involves\x20transmission.", options: [_0x4c2b31(0x193), _0x4c2b31(0x191), _0x4c2b31(0x388), _0x4c2b31(0x28a)], answer: 0x0 },
+        { question: _0x4c2b31(0x2a2), options: ["Half-duplex", _0x4c2b31(0x388), _0x4c2b31(0x193), _0x4c2b31(0x255)], answer: 0x3 },
+        { question: _0x4c2b31(0x37b), options: [_0x4c2b31(0x28a), _0x4c2b31(0x193), _0x4c2b31(0x385), _0x4c2b31(0x388)], answer: 0x1 },
+        { question: _0x4c2b31(0x195), options: ["Full-duplex", _0x4c2b31(0x385), _0x4c2b31(0x193), _0x4c2b31(0x28a)], answer: 0x3 },
+        { question: _0x4c2b31(0x1e8), options: [_0x4c2b31(0x193), _0x4c2b31(0x385), _0x4c2b31(0x388), "Half-duplex"], answer: 0x2 },
+        { question: _0x4c2b31(0x211), options: [_0x4c2b31(0x28a), "Full-duplex", "Simplex", _0x4c2b31(0x385)], answer: 0x0 },
+        { question: _0x4c2b31(0x30c), options: ["Half-duplex", _0x4c2b31(0x268), _0x4c2b31(0x193), _0x4c2b31(0x388)], answer: 0x2 },
+        { question: "Data\x20can\x20flow\x20in\x20both\x20directions\x20all\x20the\x20time\x20in\x20a\x20_____\x20mode.", options: [_0x4c2b31(0x388), "None\x20of\x20these", _0x4c2b31(0x193), _0x4c2b31(0x28a)], answer: 0x0 },
+        { question: _0x4c2b31(0x301), options: [_0x4c2b31(0x352), _0x4c2b31(0x3b9), _0x4c2b31(0x3b3), _0x4c2b31(0x381)], answer: 0x0 },
+        { question: _0x4c2b31(0x3f6), options: [_0x4c2b31(0x3ce), _0x4c2b31(0x3a5), _0x4c2b31(0x253), "route"], answer: 0x1 },
+        { question: _0x4c2b31(0x21d), options: [_0x4c2b31(0x262), _0x4c2b31(0x3df), "message", _0x4c2b31(0x2f4)], answer: 0x0 },
+        { question: _0x4c2b31(0x23c), options: [_0x4c2b31(0x38a), _0x4c2b31(0x222), "RFCs", _0x4c2b31(0x3fe)], answer: 0x0 },
+        { question: _0x4c2b31(0x283), options: ["Receiver", _0x4c2b31(0x3c9), _0x4c2b31(0x32e), "Transmission\x20medium"], answer: 0x1 },
+        { question: _0x4c2b31(0x347), options: [_0x4c2b31(0x226), _0x4c2b31(0x3c9), _0x4c2b31(0x32e), "All\x20of\x20the\x20choices\x20are\x20correct"], answer: 0x3 },
+        { question: _0x4c2b31(0x2ce), options: [_0x4c2b31(0x1ea), _0x4c2b31(0x38d), _0x4c2b31(0x389), "To\x20separate\x20the\x20signal\x20hidden\x20in\x20the\x20noise"], answer: 0x0 },
+        { question: _0x4c2b31(0x1ec), options: [_0x4c2b31(0x3d3), _0x4c2b31(0x36c), _0x4c2b31(0x292), _0x4c2b31(0x364)], answer: 0x0 },
+        { question: _0x4c2b31(0x39f), options: [_0x4c2b31(0x3b1), _0x4c2b31(0x30e), _0x4c2b31(0x357), _0x4c2b31(0x21c)], answer: 0x0 },
+        { question: _0x4c2b31(0x332), options: [_0x4c2b31(0x1d8), _0x4c2b31(0x2fc), _0x4c2b31(0x35f), _0x4c2b31(0x1a8)], answer: 0x0 },
+        { question: _0x4c2b31(0x39c), options: ["American\x20Standard\x20Code\x20for\x20Information\x20Interchange", _0x4c2b31(0x21f), _0x4c2b31(0x3c3), _0x4c2b31(0x270)], answer: 0x0 },
+        { question: "The\x20largest\x20geographic\x20area\x20a\x20wide\x20area\x20network\x20(WAN)\x20can\x20span\x20is\x20______.", options: ["A\x20town", _0x4c2b31(0x1ef), _0x4c2b31(0x19f), _0x4c2b31(0x1cb)], answer: 0x3 },
+        { question: "A\x20data\x20communication\x20system\x20spanning\x20states,\x20countries,\x20or\x20the\x20whole\x20world\x20is\x20a\x20______.", options: ["WAN", _0x4c2b31(0x285), "MAN", _0x4c2b31(0x1bf)], answer: 0x0 },
+        { question: _0x4c2b31(0x305), options: [_0x4c2b31(0x1b6), "Web\x20area\x20network", _0x4c2b31(0x22a), _0x4c2b31(0x2e1)], answer: 0x2 },
+        {
+            question: "What\x20is\x20the\x20purpose\x20of\x20a\x20WAN?",
+            options: [_0x4c2b31(0x36a), _0x4c2b31(0x24f), _0x4c2b31(0x275), "To\x20allow\x20computers\x20to\x20communicate\x20with\x20each\x20other\x20in\x20the\x20home"],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x3a2), options: [_0x4c2b31(0x221), "Use\x20cables,\x20telephone\x20lines,\x20satellites,\x20and\x20radio\x20waves\x20to\x20connect", _0x4c2b31(0x2a3), _0x4c2b31(0x401)], answer: 0x3 },
+        { question: _0x4c2b31(0x185), options: [_0x4c2b31(0x30a), "Wide\x20Area\x20Network\x20(WAN)", _0x4c2b31(0x2b3)], answer: 0x1 },
+        { question: _0x4c2b31(0x3c7), options: [_0x4c2b31(0x18e), _0x4c2b31(0x3af), "Efficiency", _0x4c2b31(0x3fc)], answer: 0x0 },
+        { question: _0x4c2b31(0x22e), options: [_0x4c2b31(0x2af), _0x4c2b31(0x188), _0x4c2b31(0x380), "The\x20topology\x20of\x20the\x20network"], answer: 0x1 },
+        { question: _0x4c2b31(0x1c1), options: [_0x4c2b31(0x210), _0x4c2b31(0x30f), "Wired\x20Local\x20Area\x20Network", "Wireless\x20Local\x20Ambiguity\x20Network"], answer: 0x0 },
+        { question: "Which\x20of\x20the\x20following\x20is\x20not\x20one\x20of\x20the\x20network\x20criteria?", options: [_0x4c2b31(0x27f), _0x4c2b31(0x244), _0x4c2b31(0x252), _0x4c2b31(0x276)], answer: 0x3 },
+        { question: _0x4c2b31(0x24d), options: [_0x4c2b31(0x285), _0x4c2b31(0x33d), _0x4c2b31(0x37d), "WAN"], answer: 0x0 },
+        { question: _0x4c2b31(0x1ad), options: [_0x4c2b31(0x2a4), "Topology", _0x4c2b31(0x3f5), _0x4c2b31(0x25b)], answer: 0x1 },
+        { question: "Three\x20or\x20more\x20devices\x20share\x20a\x20link\x20in\x20a\x20______\x20connection.", options: ["Unipoint", _0x4c2b31(0x2ef), _0x4c2b31(0x2c6), _0x4c2b31(0x193)], answer: 0x1 },
+        { question: "______\x20topology\x20requires\x20multiple\x20connections.", options: [_0x4c2b31(0x335), _0x4c2b31(0x326), _0x4c2b31(0x359), _0x4c2b31(0x3f1)], answer: 0x3 },
+        { question: "The\x20participating\x20computers\x20in\x20a\x20network\x20are\x20referred\x20to\x20as\x20______.", options: [_0x4c2b31(0x1c6), _0x4c2b31(0x3fe), _0x4c2b31(0x2b2), _0x4c2b31(0x3b2)], answer: 0x2 },
+        { question: _0x4c2b31(0x281), options: ["Complex", _0x4c2b31(0x18a), _0x4c2b31(0x22d), _0x4c2b31(0x37c)], answer: 0x1 },
+        { question: "Which\x20network\x20topology\x20requires\x20a\x20central\x20controller\x20or\x20hub?", options: ["Star", "Mesh", _0x4c2b31(0x359), _0x4c2b31(0x3f1)], answer: 0x0 },
+    ],
+    dcQuestions2 = [
+        { question: _0x4c2b31(0x366), options: [_0x4c2b31(0x237), _0x4c2b31(0x258), _0x4c2b31(0x1b4), _0x4c2b31(0x255)], answer: 0x1 },
+        {
+            question: "In\x20TCP/IP,\x20a\x20message\x20at\x20the\x20transport\x20layer\x20is\x20encapsulated\x20in\x20a\x20packet\x20at\x20the\x20____\x20layer.",
+            options: [_0x4c2b31(0x237), _0x4c2b31(0x258), _0x4c2b31(0x1b4), "physical"],
+            answer: 0x0,
+        },
+        { question: _0x4c2b31(0x3e4), options: [_0x4c2b31(0x237), _0x4c2b31(0x258), _0x4c2b31(0x1b4), _0x4c2b31(0x255)], answer: 0x2 },
+        {
+            question: "In\x20TCP/IP,\x20a\x20message\x20belonging\x20to\x20the\x20transport\x20layer\x20is\x20decapsulated\x20from\x20a\x20packet\x20at\x20the\x20____\x20layer.",
+            options: ["network", _0x4c2b31(0x258), _0x4c2b31(0x1b4), _0x4c2b31(0x255)],
+            answer: 0x1,
+        },
+        {
+            question: "Which\x20layer\x20does\x20the\x20data\x20link\x20layer\x20take\x20packets\x20from\x20and\x20encapsulate\x20them\x20into\x20frames\x20for\x20transmission?",
+            options: [_0x4c2b31(0x24b), _0x4c2b31(0x3d7), _0x4c2b31(0x38c), _0x4c2b31(0x29b)],
+            answer: 0x2,
+        },
+        { question: "How\x20many\x20levels\x20of\x20addressing\x20is\x20provided\x20in\x20TCP/IP\x20protocol?", options: [_0x4c2b31(0x408), _0x4c2b31(0x3ec), _0x4c2b31(0x238), _0x4c2b31(0x3e3)], answer: 0x3 },
+        { question: _0x4c2b31(0x344), options: [_0x4c2b31(0x368), _0x4c2b31(0x19b), _0x4c2b31(0x1e3), _0x4c2b31(0x36e)], answer: 0x2 },
+        { question: _0x4c2b31(0x214), options: [_0x4c2b31(0x3c2), _0x4c2b31(0x2e2), _0x4c2b31(0x2d0), _0x4c2b31(0x2cb)], answer: 0x0 },
+        { question: "The\x20packet\x20of\x20information\x20at\x20the\x20application\x20layer\x20is\x20called........", options: [_0x4c2b31(0x3c2), _0x4c2b31(0x2e2), _0x4c2b31(0x29c), _0x4c2b31(0x35a)], answer: 0x2 },
+        { question: _0x4c2b31(0x2ca), options: ["network\x20layer", _0x4c2b31(0x29b), _0x4c2b31(0x24b), _0x4c2b31(0x3d7)], answer: 0x0 },
+        { question: "The\x20TCP/IP\x20protocol\x20suite\x20consists\x20of........\x20layers.", options: [_0x4c2b31(0x2dd), "three", _0x4c2b31(0x2b0), _0x4c2b31(0x1d5)], answer: 0x2 },
+        { question: _0x4c2b31(0x32a), options: [_0x4c2b31(0x2dd), _0x4c2b31(0x330), _0x4c2b31(0x2b0), _0x4c2b31(0x32c)], answer: 0x1 },
+        { question: _0x4c2b31(0x299), options: ["two", _0x4c2b31(0x330), _0x4c2b31(0x2b0), _0x4c2b31(0x32c)], answer: 0x0 },
+        { question: _0x4c2b31(0x3bb), options: ["a\x20message", "a\x20datagram", _0x4c2b31(0x260), _0x4c2b31(0x409)], answer: 0x2 },
+        { question: _0x4c2b31(0x23d), options: [_0x4c2b31(0x255), "transport", "network", "application"], answer: 0x1 },
+        { question: _0x4c2b31(0x2f9), options: ["open\x20system\x20interconnection", _0x4c2b31(0x249), _0x4c2b31(0x1ae), _0x4c2b31(0x382)], answer: 0x0 },
+        { question: _0x4c2b31(0x402), options: ["4", "5", "6", "7"], answer: 0x3 },
+        { question: _0x4c2b31(0x1ba), options: [_0x4c2b31(0x25a), "transport\x20layer", _0x4c2b31(0x3d7), _0x4c2b31(0x38c)], answer: 0x0 },
+        { question: _0x4c2b31(0x198), options: ["session\x20layer", _0x4c2b31(0x319), _0x4c2b31(0x3d7), _0x4c2b31(0x1b3)], answer: 0x3 },
+        { question: _0x4c2b31(0x35c), options: [_0x4c2b31(0x3d7), _0x4c2b31(0x246), "Session\x20layer", "Link\x20layer"], answer: 0x2 },
+        {
+            question: "Which\x20one\x20of\x20the\x20following\x20protocol\x20delivers/stores\x20mail\x20to\x20receiver\x20server?",
+            options: [_0x4c2b31(0x1c0), "post\x20office\x20protocol", "hypertext\x20transfer\x20protocol", _0x4c2b31(0x348)],
+            answer: 0x0,
+        },
+        {
+            question: "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20which\x20of\x20the\x20following\x20is\x20an\x20application\x20layer\x20protocol?",
+            options: [_0x4c2b31(0x2e8), _0x4c2b31(0x3a0), "The\x20Transmission\x20Control\x20Protocol(TCP)", _0x4c2b31(0x1dc)],
+            answer: 0x3,
+        },
+        { question: _0x4c2b31(0x3b8), options: ["The\x20Internet\x20Protocol\x20(IP)", _0x4c2b31(0x2e9), "The\x20Address\x20Resolution\x20Protocol\x20(ARP)", _0x4c2b31(0x295)], answer: 0x3 },
+        { question: _0x4c2b31(0x1da), options: [_0x4c2b31(0x36b), "The\x20Internet\x20Protocol\x20(IP)", _0x4c2b31(0x3d5), _0x4c2b31(0x289)], answer: 0x1 },
+        { question: _0x4c2b31(0x3ef), options: ["physical", _0x4c2b31(0x1b4), _0x4c2b31(0x258), "network"], answer: 0x1 },
+        { question: _0x4c2b31(0x3ae), options: ["programs", _0x4c2b31(0x3c6), "protocols", _0x4c2b31(0x2d0)], answer: 0x3 },
+        { question: _0x4c2b31(0x204), options: ["application\x20layer", "network\x20layer", _0x4c2b31(0x24b), _0x4c2b31(0x29b)], answer: 0x2 },
+        {
+            question: "In\x20the\x20TCP/IP\x20protocol\x20suite,\x20a\x20logical\x20address\x20is\x20the\x20identifier\x20at\x20the........",
+            options: [_0x4c2b31(0x38c), _0x4c2b31(0x24b), "data-link\x20layer", _0x4c2b31(0x3d7)],
+            answer: 0x0,
+        },
+        { question: "The\x20Internet\x20Protocol\x20(IP)\x20is\x20......\x20protocol.", options: [_0x4c2b31(0x3e9), _0x4c2b31(0x309), _0x4c2b31(0x2f7)], answer: 0x0 },
+        { question: _0x4c2b31(0x2df), options: [_0x4c2b31(0x26c), _0x4c2b31(0x22c), _0x4c2b31(0x272), "network,\x20data-link,\x20and\x20physical"], answer: 0x0 },
+        { question: _0x4c2b31(0x2c8), options: [_0x4c2b31(0x237), "transport", _0x4c2b31(0x1b4), _0x4c2b31(0x255)], answer: 0x0 },
+        { question: _0x4c2b31(0x3c5), options: [_0x4c2b31(0x237), _0x4c2b31(0x258), _0x4c2b31(0x1b4), _0x4c2b31(0x255)], answer: 0x2 },
+        { question: "Which\x20is\x20not\x20a\x20application\x20layer\x20protocol?", options: [_0x4c2b31(0x379), _0x4c2b31(0x23b), _0x4c2b31(0x3ed), _0x4c2b31(0x2c4)], answer: 0x3 },
+        { question: _0x4c2b31(0x22b), options: [_0x4c2b31(0x34d), _0x4c2b31(0x2fe), _0x4c2b31(0x27b), "Both\x20End\x20to\x20end\x20and\x20Process\x20to\x20process"], answer: 0x3 },
+        { question: _0x4c2b31(0x403), options: [_0x4c2b31(0x2a1), _0x4c2b31(0x202), "File\x20transfer,\x20access,\x20and\x20management", _0x4c2b31(0x3fa)], answer: 0x1 },
+        { question: _0x4c2b31(0x17e), options: [_0x4c2b31(0x379), _0x4c2b31(0x23b), _0x4c2b31(0x3ed), _0x4c2b31(0x21a)], answer: 0x1 },
+        { question: _0x4c2b31(0x333), options: ["bit-by-bit\x20delivery", _0x4c2b31(0x2de), _0x4c2b31(0x1b1), _0x4c2b31(0x2c5)], answer: 0x0 },
+        { question: _0x4c2b31(0x316), options: [_0x4c2b31(0x3d7), _0x4c2b31(0x24b), _0x4c2b31(0x38c), _0x4c2b31(0x375)], answer: 0x0 },
+        { question: "Which\x20level\x20is\x20the\x20network\x20layer\x20in\x20the\x20OSI\x20model?", options: [_0x4c2b31(0x2db), _0x4c2b31(0x3ba), "Second\x20level", "Fifth\x20layer"], answer: 0x0 },
+        { question: _0x4c2b31(0x383), options: [_0x4c2b31(0x322), _0x4c2b31(0x2e3), _0x4c2b31(0x1f9), _0x4c2b31(0x315)], answer: 0x1 },
+    ],
+    bigdataQuestions1 = [
+        { question: _0x4c2b31(0x2a0), options: ["Small\x20volume", _0x4c2b31(0x3bc), "Unchanging\x20structure", _0x4c2b31(0x25c)], answer: 0x3 },
+        { question: _0x4c2b31(0x1fc), options: [_0x4c2b31(0x3e2), _0x4c2b31(0x2ba), "NoSQL\x20capabilities", _0x4c2b31(0x181)], answer: 0x1 },
+        { question: "Which\x20of\x20the\x20following\x20is\x20NOT\x20typically\x20associated\x20with\x20Hadoop?", options: [_0x4c2b31(0x3b6), _0x4c2b31(0x2fd), _0x4c2b31(0x362), "Batch\x20processing"], answer: 0x0 },
+        { question: "What\x20does\x20YARN\x20enable\x20in\x20Hadoop\x202?", options: [_0x4c2b31(0x277), _0x4c2b31(0x358), _0x4c2b31(0x229), _0x4c2b31(0x3f2)], answer: 0x1 },
+        { question: _0x4c2b31(0x1ed), options: [_0x4c2b31(0x304), _0x4c2b31(0x1a0), "It\x20cannot\x20scale\x20for\x20large\x20datasets.", _0x4c2b31(0x3e8)], answer: 0x1 },
+        { question: _0x4c2b31(0x21e), options: ["Structured\x20data\x20analysis", _0x4c2b31(0x217), _0x4c2b31(0x361), _0x4c2b31(0x225)], answer: 0x2 },
+        { question: _0x4c2b31(0x342), options: [_0x4c2b31(0x203), _0x4c2b31(0x29e), _0x4c2b31(0x331), _0x4c2b31(0x390)], answer: 0x3 },
+        { question: _0x4c2b31(0x1cf), options: [_0x4c2b31(0x34b), _0x4c2b31(0x29f), _0x4c2b31(0x2d8), _0x4c2b31(0x3e2)], answer: 0x2 },
+        { question: _0x4c2b31(0x318), options: [_0x4c2b31(0x373), "To\x20aggregate\x20intermediate\x20outputs", _0x4c2b31(0x1b7), "To\x20convert\x20data\x20into\x20structured\x20format"], answer: 0x1 },
+        { question: _0x4c2b31(0x1ff), options: ["Spark\x20SQL", _0x4c2b31(0x25e), _0x4c2b31(0x259), _0x4c2b31(0x396)], answer: 0x2 },
+        {
+            question: "Which\x20of\x20the\x20following\x20is\x20a\x20primary\x20advantage\x20of\x20data\x20locality\x20in\x20Hadoop?",
+            options: ["Increased\x20storage\x20capacity", _0x4c2b31(0x351), _0x4c2b31(0x1e5), _0x4c2b31(0x36d)],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x2ad), options: [_0x4c2b31(0x196), _0x4c2b31(0x1fb), _0x4c2b31(0x1d1), _0x4c2b31(0x2f8)], answer: 0x0 },
+        { question: "What\x20is\x20the\x20primary\x20use\x20of\x20Apache\x20Flink?", options: [_0x4c2b31(0x235), _0x4c2b31(0x269), _0x4c2b31(0x2f1), _0x4c2b31(0x3dd)], answer: 0x2 },
+        { question: _0x4c2b31(0x317), options: [_0x4c2b31(0x29e), _0x4c2b31(0x24a), _0x4c2b31(0x1c3), _0x4c2b31(0x1a5)], answer: 0x1 },
+        { question: _0x4c2b31(0x328), options: [_0x4c2b31(0x26f), _0x4c2b31(0x394), "Tasks\x20must\x20be\x20rerun\x20in\x20sequence.", _0x4c2b31(0x31b)], answer: 0x1 },
+        {
+            question: "Which\x20of\x20the\x20following\x20types\x20of\x20data\x20is\x20NOT\x20ideal\x20for\x20RDBMS?",
+            options: ["Highly\x20normalized\x20data", "Frequently\x20updated\x20data", "Structured\x20XML\x20data", _0x4c2b31(0x407)],
+            answer: 0x3,
+        },
+        { question: _0x4c2b31(0x3f3), options: [_0x4c2b31(0x406), _0x4c2b31(0x39a), _0x4c2b31(0x339), _0x4c2b31(0x2cf)], answer: 0x1 },
+        { question: _0x4c2b31(0x3cb), options: [_0x4c2b31(0x27d), _0x4c2b31(0x302), _0x4c2b31(0x290), "Relies\x20on\x20data\x20locality\x20for\x20efficiency"], answer: 0x3 },
+        { question: _0x4c2b31(0x31a), options: [_0x4c2b31(0x3aa), _0x4c2b31(0x1f6), "It\x20reduces\x20data\x20diversity.", _0x4c2b31(0x2f3)], answer: 0x1 },
+        {
+            question: "Which\x20is\x20a\x20key\x20differentiator\x20of\x20Spark\x20compared\x20to\x20MapReduce\x20for\x20machine\x20learning\x20tasks?",
+            options: [_0x4c2b31(0x1e2), _0x4c2b31(0x1f5), _0x4c2b31(0x201), _0x4c2b31(0x3fb)],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x1db), options: ["It\x20relies\x20solely\x20on\x20disk\x20storage.", _0x4c2b31(0x248), _0x4c2b31(0x1b8), "It\x20exclusively\x20uses\x20HDFS\x20for\x20data\x20storage."], answer: 0x1 },
+        {
+            question: "When\x20comparing\x20Flink\x20to\x20MapReduce,\x20what\x20is\x20a\x20main\x20advantage\x20of\x20Flink\x20in\x20data\x20processing?",
+            options: [_0x4c2b31(0x374), _0x4c2b31(0x355), _0x4c2b31(0x3de), _0x4c2b31(0x3c0)],
+            answer: 0x1,
+        },
+        {
+            question: _0x4c2b31(0x2a7),
+            options: ["MapReduce\x20is\x20faster\x20due\x20to\x20its\x20interactive\x20data\x20processing.", _0x4c2b31(0x386), _0x4c2b31(0x363), "MapReduce\x20is\x20faster\x20because\x20it\x20uses\x20caching."],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x3be), options: [_0x4c2b31(0x251), "It\x20supports\x20continuous\x20data\x20streaming\x20with\x20low\x20latency.", _0x4c2b31(0x1f8), "It\x20depends\x20on\x20non-interactive\x20analysis."], answer: 0x1 },
+        { question: _0x4c2b31(0x398), options: ["Spark\x20does\x20not\x20support\x20continuous\x20streaming.", _0x4c2b31(0x293), _0x4c2b31(0x243), _0x4c2b31(0x1af)], answer: 0x1 },
+        { question: _0x4c2b31(0x376), options: [_0x4c2b31(0x1bc), _0x4c2b31(0x35e), _0x4c2b31(0x3e1), _0x4c2b31(0x2c9)], answer: 0x2 },
+        {
+            question: "What\x20is\x20a\x20major\x20drawback\x20of\x20MapReduce\x20compared\x20to\x20Spark\x20in\x20handling\x20iterative\x20algorithms?",
+            options: ["MapReduce\x20cannot\x20process\x20large\x20data\x20sets.", _0x4c2b31(0x3b4), _0x4c2b31(0x24e), _0x4c2b31(0x1d4)],
+            answer: 0x1,
+        },
+        { question: _0x4c2b31(0x182), options: [_0x4c2b31(0x1bb), "MapReduce\x20is\x20more\x20efficient\x20in\x20processing\x20large\x20files.", _0x4c2b31(0x397), _0x4c2b31(0x400)], answer: 0x0 },
+        {
+            question: "In\x20which\x20way\x20does\x20Flink\x20outperform\x20Spark\x20for\x20stateful\x20stream\x20processing?",
+            options: [_0x4c2b31(0x341), _0x4c2b31(0x190), "Flink\x20relies\x20heavily\x20on\x20batch\x20processing.", _0x4c2b31(0x1eb)],
+            answer: 0x0,
+        },
+        { question: _0x4c2b31(0x254), options: [_0x4c2b31(0x39e), _0x4c2b31(0x19c), _0x4c2b31(0x405), _0x4c2b31(0x343)], answer: 0x1 },
+        { question: "HTML", options: [_0x4c2b31(0x2f5), "Semi-structured\x20Data", "Unstructured\x20Data", "Cannot\x20be\x20classified"], answer: 0x1 },
+        { question: _0x4c2b31(0x31e), options: [_0x4c2b31(0x2f5), _0x4c2b31(0x207), _0x4c2b31(0x33b), "Cannot\x20be\x20classified"], answer: 0x1 },
+        { question: _0x4c2b31(0x227), options: [_0x4c2b31(0x2f5), _0x4c2b31(0x207), _0x4c2b31(0x33b), "Cannot\x20be\x20classified"], answer: 0x0 },
+        { question: _0x4c2b31(0x3f7), options: [_0x4c2b31(0x2f5), "Semi-structured\x20Data", _0x4c2b31(0x33b), _0x4c2b31(0x187)], answer: 0x1 },
+        { question: "Images", options: [_0x4c2b31(0x2f5), _0x4c2b31(0x207), _0x4c2b31(0x33b), _0x4c2b31(0x187)], answer: 0x2 },
+        { question: "Python\x20(for\x20code)", options: [_0x4c2b31(0x2f5), _0x4c2b31(0x207), "Unstructured\x20Data", _0x4c2b31(0x1de)], answer: 0x2 },
+    ];
+function selectQuiz(_0x2ed919) {
+    const _0x3d2293 = _0x4c2b31;
+    selectedQuiz = _0x2ed919;
+    if (_0x2ed919 === _0x3d2293(0x1f2)) document[_0x3d2293(0x230)](_0x3d2293(0x2bc))[_0x3d2293(0x38b)][_0x3d2293(0x395)](_0x3d2293(0x329)), document[_0x3d2293(0x230)](_0x3d2293(0x199))[_0x3d2293(0x38b)][_0x3d2293(0x286)](_0x3d2293(0x329));
+    else {
+        if (_0x2ed919 === "datastructures") document[_0x3d2293(0x230)](_0x3d2293(0x2bc))[_0x3d2293(0x38b)][_0x3d2293(0x395)]("hidden"), document["getElementById"](_0x3d2293(0x1c4))[_0x3d2293(0x38b)][_0x3d2293(0x286)]("hidden");
+        else {
+            if (_0x2ed919 === "dc") document[_0x3d2293(0x230)](_0x3d2293(0x2bc))[_0x3d2293(0x38b)][_0x3d2293(0x395)]("hidden"), document[_0x3d2293(0x230)](_0x3d2293(0x231))[_0x3d2293(0x38b)][_0x3d2293(0x286)]("hidden");
+            else
+                _0x2ed919 === _0x3d2293(0x250) &&
+                    (document["getElementById"]("quiz-selection")[_0x3d2293(0x38b)][_0x3d2293(0x395)](_0x3d2293(0x329)), document[_0x3d2293(0x230)](_0x3d2293(0x17b))[_0x3d2293(0x38b)][_0x3d2293(0x286)](_0x3d2293(0x329)));
         }
-
-
-        function getDatabaseQuestions() {
-            if (databaseQuizVariant === 1) return databaseQuestions1;
-            if (databaseQuizVariant === 2) return databaseQuestions2;
-            if (databaseQuizVariant === 3) return databaseQuestions3;
+    }
+}
+function chooseDatabaseQuiz(_0x50f49f) {
+    const _0x36aa4e = _0x4c2b31;
+    (databaseQuizVariant = _0x50f49f),
+        (totalQuestions = getDatabaseQuestions()[_0x36aa4e(0x3a8)]),
+        (document[_0x36aa4e(0x230)]("quiz-title")[_0x36aa4e(0x3ab)] = "Database\x20Quiz\x20" + _0x50f49f),
+        document[_0x36aa4e(0x230)](_0x36aa4e(0x199))["classList"][_0x36aa4e(0x395)](_0x36aa4e(0x329)),
+        document[_0x36aa4e(0x230)](_0x36aa4e(0x266))[_0x36aa4e(0x38b)][_0x36aa4e(0x286)]("hidden");
+}
+function getDatabaseQuestions() {
+    if (databaseQuizVariant === 0x1) return databaseQuestions1;
+    if (databaseQuizVariant === 0x2) return databaseQuestions2;
+    if (databaseQuizVariant === 0x3) return databaseQuestions3;
+}
+function chooseDataStructuresQuiz(_0x1d75ad) {
+    const _0x2f7983 = _0x4c2b31;
+    (dataStructureQuizVariant = _0x1d75ad),
+        (totalQuestions = getDataStructureQuestions()["length"]),
+        (document[_0x2f7983(0x230)](_0x2f7983(0x23a))[_0x2f7983(0x3ab)] = _0x2f7983(0x1f4) + _0x1d75ad),
+        document[_0x2f7983(0x230)]("data-structure-quiz-selection")[_0x2f7983(0x38b)]["add"](_0x2f7983(0x329)),
+        document[_0x2f7983(0x230)](_0x2f7983(0x266))[_0x2f7983(0x38b)][_0x2f7983(0x286)](_0x2f7983(0x329));
+}
+function getDataStructureQuestions() {
+    if (dataStructureQuizVariant === 0x1) return dataStructureQuestions;
+    if (dataStructureQuizVariant === 0x2) return dataStructureQuestions2;
+    if (dataStructureQuizVariant === 0x3) return dataStructureQuestions3;
+}
+function chooseDCQuiz(_0x2d944b) {
+    const _0x5727b0 = _0x4c2b31;
+    (dcQuizVariant = _0x2d944b),
+        (totalQuestions = getDCQuestions()[_0x5727b0(0x3a8)]),
+        (document[_0x5727b0(0x230)]("quiz-title")[_0x5727b0(0x3ab)] = "DC\x20Quiz\x20" + _0x2d944b),
+        document[_0x5727b0(0x230)](_0x5727b0(0x231))[_0x5727b0(0x38b)][_0x5727b0(0x395)](_0x5727b0(0x329)),
+        document[_0x5727b0(0x230)](_0x5727b0(0x266))["classList"]["remove"](_0x5727b0(0x329));
+}
+function getDCQuestions() {
+    if (dcQuizVariant === 0x1) return dcQuestions1;
+    if (dcQuizVariant === 0x2) return dcQuestions2;
+}
+function choosebigdataQuiz(_0x163b86) {
+    const _0x1de73f = _0x4c2b31;
+    (bigdataQuizVariant = _0x163b86),
+        (totalQuestions = getbigdataQuestions()[_0x1de73f(0x3a8)]),
+        (document[_0x1de73f(0x230)](_0x1de73f(0x23a))["innerText"] = _0x1de73f(0x233) + _0x163b86),
+        document[_0x1de73f(0x230)]("bigdata-quiz-selection")[_0x1de73f(0x38b)][_0x1de73f(0x395)](_0x1de73f(0x329)),
+        document[_0x1de73f(0x230)]("time-options")[_0x1de73f(0x38b)][_0x1de73f(0x286)](_0x1de73f(0x329));
+}
+function getbigdataQuestions() {
+    if (bigdataQuizVariant === 0x1) return bigdataQuestions1;
+    if (bigdataQuizVariant === 0x2) return bigdataQuestions2;
+}
+function showTimeInput() {
+    const _0x46dd01 = _0x4c2b31;
+    document[_0x46dd01(0x230)](_0x46dd01(0x266))["classList"][_0x46dd01(0x395)](_0x46dd01(0x329)), document[_0x46dd01(0x230)](_0x46dd01(0x3d4))[_0x46dd01(0x38b)][_0x46dd01(0x286)](_0x46dd01(0x329));
+}
+function setTimeLimit() {
+    const _0x548ece = _0x4c2b31,
+        _0x2d382d = parseInt(document[_0x548ece(0x230)](_0x548ece(0x20f))["value"]);
+    if (isNaN(_0x2d382d) || _0x2d382d < 0x1) {
+        alert(_0x548ece(0x27e));
+        return;
+    }
+    if (_0x2d382d > 0x78) return alert(_0x548ece(0x33f)), ![];
+    (timeLimit = _0x2d382d * 0x3c), updateTimerDisplay(timeLimit), (document["getElementById"](_0x548ece(0x1f1))["style"]["visibility"] = _0x548ece(0x247)), startQuizWithTimer();
+}
+function startQuizWithoutTime() {
+    startQuiz();
+}
+function startQuizWithTimer() {
+    startQuiz(), (startTime = new Date()), (timerInterval = setInterval(updateTimer, 0x3e8));
+}
+function startQuiz() {
+    const _0x5b4e92 = _0x4c2b31;
+    document[_0x5b4e92(0x230)](_0x5b4e92(0x266))[_0x5b4e92(0x38b)]["add"]("hidden"),
+        document[_0x5b4e92(0x230)]("time-input")["classList"][_0x5b4e92(0x395)]("hidden"),
+        document[_0x5b4e92(0x230)](_0x5b4e92(0x2bd))[_0x5b4e92(0x38b)][_0x5b4e92(0x286)](_0x5b4e92(0x329)),
+        document["getElementById"](_0x5b4e92(0x2f2))["classList"][_0x5b4e92(0x286)](_0x5b4e92(0x329)),
+        loadQuestion();
+}
+function loadQuestion() {
+    const _0x24c80d = _0x4c2b31;
+    let _0x4d9f53;
+    if (selectedQuiz === _0x24c80d(0x1f2)) _0x4d9f53 = getDatabaseQuestions();
+    else {
+        if (selectedQuiz === _0x24c80d(0x20c)) _0x4d9f53 = getDataStructureQuestions();
+        else {
+            if (selectedQuiz === "dc") _0x4d9f53 = getDCQuestions();
+            else selectedQuiz === _0x24c80d(0x250) && (_0x4d9f53 = getbigdataQuestions());
         }
-
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-        function chooseDataStructuresQuiz(variant) {
-            dataStructureQuizVariant = variant;
-            totalQuestions = getDataStructureQuestions().length;
-            document.getElementById('quiz-title').innerText = `Data Structures Quiz ${variant}`;
-            document.getElementById('data-structure-quiz-selection').classList.add('hidden');
-            document.getElementById('time-options').classList.remove('hidden');
+    }
+    (document[_0x24c80d(0x230)](_0x24c80d(0x3ad))[_0x24c80d(0x3ab)] = currentQuestionIndex + 0x1),
+        (document[_0x24c80d(0x230)](_0x24c80d(0x377))[_0x24c80d(0x3ab)] = totalQuestions),
+        (document["getElementById"](_0x24c80d(0x18f))[_0x24c80d(0x3ab)] = _0x4d9f53[currentQuestionIndex]["question"]);
+    const _0x3fd441 = document[_0x24c80d(0x18d)](_0x24c80d(0x1ca));
+    _0x3fd441[_0x24c80d(0x3ac)]((_0x5e777c, _0xf25171) => {
+        const _0x42de7b = _0x24c80d;
+        (_0x5e777c[_0x42de7b(0x3ab)] = _0x4d9f53[currentQuestionIndex]["options"][_0xf25171]), _0x5e777c[_0x42de7b(0x38b)][_0x42de7b(0x286)](_0x42de7b(0x29d), _0x42de7b(0x2d7));
+    }),
+        document[_0x24c80d(0x230)](_0x24c80d(0x384))[_0x24c80d(0x38b)][_0x24c80d(0x395)]("hidden"),
+        document["getElementById"]("finish-btn")["classList"][_0x24c80d(0x395)]("hidden");
+}
+function checkAnswer(_0x4441a1) {
+    const _0x41f6b7 = _0x4c2b31;
+    let _0x2771f3;
+    if (selectedQuiz === "database") _0x2771f3 = getDatabaseQuestions();
+    else {
+        if (selectedQuiz === _0x41f6b7(0x20c)) _0x2771f3 = getDataStructureQuestions();
+        else {
+            if (selectedQuiz === "dc") _0x2771f3 = getDCQuestions();
+            else selectedQuiz === "bigdata" && (_0x2771f3 = getbigdataQuestions());
         }
-
-        function getDataStructureQuestions() {
-            if (dataStructureQuizVariant === 1) return dataStructureQuestions;
-            if (dataStructureQuizVariant === 2) return dataStructureQuestions2;
-            if (dataStructureQuizVariant === 3) return dataStructureQuestions3;
+    }
+    const _0x19fa28 = _0x2771f3[currentQuestionIndex][_0x41f6b7(0x26b)];
+    userAnswers[currentQuestionIndex] = _0x4441a1;
+    const _0x41075b = document["querySelectorAll"](_0x41f6b7(0x1ca));
+    _0x41075b["forEach"]((_0x34d930, _0x1e96f4) => {
+        const _0x1aad87 = _0x41f6b7;
+        _0x34d930[_0x1aad87(0x38b)][_0x1aad87(0x286)](_0x1aad87(0x29d), _0x1aad87(0x2d7));
+        if (_0x1e96f4 === _0x19fa28) _0x34d930[_0x1aad87(0x38b)][_0x1aad87(0x395)](_0x1aad87(0x29d));
+        else _0x1e96f4 === _0x4441a1 && _0x34d930[_0x1aad87(0x38b)][_0x1aad87(0x395)](_0x1aad87(0x2d7));
+    }),
+        _0x4441a1 === _0x19fa28 && score++,
+        currentQuestionIndex < totalQuestions - 0x1
+            ? document[_0x41f6b7(0x230)]("next-btn")[_0x41f6b7(0x38b)][_0x41f6b7(0x286)](_0x41f6b7(0x329))
+            : document[_0x41f6b7(0x230)]("finish-btn")[_0x41f6b7(0x38b)][_0x41f6b7(0x286)](_0x41f6b7(0x329));
+}
+function nextQuestion() {
+    currentQuestionIndex++, loadQuestion();
+}
+function showResult() {
+    const _0x3bfe3f = _0x4c2b31;
+    document[_0x3bfe3f(0x230)]("question-info")[_0x3bfe3f(0x38b)][_0x3bfe3f(0x395)](_0x3bfe3f(0x329)),
+        document["getElementById"](_0x3bfe3f(0x2f2))[_0x3bfe3f(0x38b)][_0x3bfe3f(0x395)](_0x3bfe3f(0x329)),
+        document[_0x3bfe3f(0x230)](_0x3bfe3f(0x365))[_0x3bfe3f(0x38b)][_0x3bfe3f(0x286)](_0x3bfe3f(0x329));
+    const _0x1611d7 = Math[_0x3bfe3f(0x2ec)]((score / totalQuestions) * 0x64);
+    (document[_0x3bfe3f(0x230)]("result")["innerText"] = "Your\x20Score:\x20" + score + _0x3bfe3f(0x1e6) + totalQuestions + "\x20(" + _0x1611d7 + "%)"),
+        document["getElementById"](_0x3bfe3f(0x2ea))[_0x3bfe3f(0x38b)][_0x3bfe3f(0x395)]("hidden");
+    if (timeLimit) {
+        const _0x39aa81 = Math[_0x3bfe3f(0x205)]((new Date() - startTime) / 0x3e8),
+            _0x419e38 = Math[_0x3bfe3f(0x205)](_0x39aa81 / 0x3c),
+            _0x15b0b8 = _0x39aa81 % 0x3c;
+        (document[_0x3bfe3f(0x230)](_0x3bfe3f(0x356))[_0x3bfe3f(0x2dc)][_0x3bfe3f(0x3eb)] = _0x3bfe3f(0x2aa)),
+            (document[_0x3bfe3f(0x230)](_0x3bfe3f(0x356))[_0x3bfe3f(0x3ab)] = _0x3bfe3f(0x216) + _0x419e38 + "m\x20" + _0x15b0b8 + "s"),
+            clearInterval(timerInterval);
+    }
+    (document[_0x3bfe3f(0x230)](_0x3bfe3f(0x378))["style"][_0x3bfe3f(0x3eb)] = _0x3bfe3f(0x2aa)), (document[_0x3bfe3f(0x230)](_0x3bfe3f(0x308))[_0x3bfe3f(0x2dc)][_0x3bfe3f(0x3eb)] = "block");
+}
+function startNewQuiz() {
+    const _0x177dd3 = _0x4c2b31;
+    location[_0x177dd3(0x3d9)]();
+}
+function _0x35a4(_0x16abc5, _0x4a91b4) {
+    const _0x2fa1c0 = _0x2fa1();
+    return (
+        (_0x35a4 = function (_0x35a428, _0x3afebe) {
+            _0x35a428 = _0x35a428 - 0x17b;
+            let _0xf36c0b = _0x2fa1c0[_0x35a428];
+            return _0xf36c0b;
+        }),
+        _0x35a4(_0x16abc5, _0x4a91b4)
+    );
+}
+function updateTimer() {
+    timeLimit--, timeLimit <= 0x0 && (clearInterval(timerInterval), showResult()), updateTimerDisplay(timeLimit);
+}
+function updateTimerDisplay(_0x5c6f82) {
+    const _0x46585e = _0x4c2b31,
+        _0x4c902c = Math[_0x46585e(0x205)](_0x5c6f82 / 0x3c),
+        _0x4bae69 = _0x5c6f82 % 0x3c;
+    document["getElementById"](_0x46585e(0x223))[_0x46585e(0x3ab)] = _0x4c902c[_0x46585e(0x22f)]()[_0x46585e(0x3e6)](0x2, "0") + ":" + _0x4bae69[_0x46585e(0x22f)]()["padStart"](0x2, "0");
+}
+function backToHome() {
+    const _0x3651e1 = _0x4c2b31;
+    location[_0x3651e1(0x3d9)]();
+}
+document[_0x4c2b31(0x230)](_0x4c2b31(0x308))["classList"]["remove"](_0x4c2b31(0x329));
+function reviewAnswers() {
+    const _0x23967 = _0x4c2b31;
+    let _0x121d24;
+    if (selectedQuiz === _0x23967(0x1f2)) _0x121d24 = getDatabaseQuestions();
+    else {
+        if (selectedQuiz === _0x23967(0x20c)) _0x121d24 = getDataStructureQuestions();
+        else {
+            if (selectedQuiz === "dc") _0x121d24 = getDCQuestions();
+            else selectedQuiz === _0x23967(0x250) && (_0x121d24 = getbigdataQuestions());
         }
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-        function chooseDCQuiz(variant) {
-            dcQuizVariant = variant;
-            totalQuestions = getDCQuestions().length;
-            document.getElementById('quiz-title').innerText = `DC Quiz ${variant}`;
-            document.getElementById('datacommunction-quiz-selection').classList.add('hidden');
-            document.getElementById('time-options').classList.remove('hidden');
-
-        }
-
-        function getDCQuestions() {
-            if (dcQuizVariant === 1) return dcQuestions1;
-            if (dcQuizVariant === 2) return dcQuestions2;
-            // if (dcQuizVariant === 3) return dcQuestions3;
-        }
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-        function showTimeInput() {
-            document.getElementById('time-options').classList.add('hidden');
-            document.getElementById('time-input').classList.remove('hidden');
-        }
-
-        function setTimeLimit() {
-            const minutes = parseInt(document.getElementById('time-limit').value);
-            if (isNaN(minutes) || minutes < 1) {
-                alert("Please enter a valid number of minutes.");
-                return;
-            }
-            if (minutes > 120) {
-                alert("Please enter a number between 1-120 minutes.");
-                return false;
-            }
-            timeLimit = minutes * 60;
-            updateTimerDisplay(timeLimit);
-            document.getElementById('timer').style.visibility = "visible";
-            startQuizWithTimer();
-        }
-
-        function startQuizWithoutTime() {
-            startQuiz();
-        }
-
-        function startQuizWithTimer() {
-            startQuiz();
-            startTime = new Date();
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        function startQuiz() {
-            document.getElementById('time-options').classList.add('hidden');
-            document.getElementById('time-input').classList.add('hidden');
-            document.getElementById('question-info').classList.remove('hidden');
-            document.getElementById('question-box').classList.remove('hidden');
-            loadQuestion();
-        }
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-        function loadQuestion() {
-            let quiz;
-            if (selectedQuiz === 'database') {
-                quiz = getDatabaseQuestions();
-            } else if (selectedQuiz === 'datastructures') {
-                quiz = getDataStructureQuestions();
-            } else if (selectedQuiz === 'dc') {
-                quiz = getDCQuestions();
-            }
-
-            document.getElementById('current-question').innerText = currentQuestionIndex + 1;
-            document.getElementById('total-questions').innerText = totalQuestions;
-            document.getElementById('question').innerText = quiz[currentQuestionIndex].question;
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.innerText = quiz[currentQuestionIndex].options[index];
-                option.classList.remove('correct', 'wrong');
-            });
-            document.getElementById('next-btn').classList.add('hidden');
-            document.getElementById('finish-btn').classList.add('hidden');
-        }
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-        function checkAnswer(selectedIndex) {
-            let quiz;
-
-            if (selectedQuiz === 'database') {
-                quiz = getDatabaseQuestions();
-            } else if (selectedQuiz === 'datastructures') {
-                quiz = getDataStructureQuestions();
-            } else if (selectedQuiz === 'dc') {
-                quiz = getDCQuestions();
-            }
-
-            const correctIndex = quiz[currentQuestionIndex].answer;
-
-            userAnswers[currentQuestionIndex] = selectedIndex;
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.classList.remove('correct', 'wrong');
-                if (index === correctIndex) {
-                    option.classList.add('correct');
-                } else if (index === selectedIndex) {
-                    option.classList.add('wrong');
-                }
-            });
-
-            if (selectedIndex === correctIndex) {
-                score++;
-            }
-
-            if (currentQuestionIndex < totalQuestions - 1) {
-                document.getElementById('next-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('finish-btn').classList.remove('hidden');
-            }
-        }
-
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            loadQuestion();
-        }
-
-        function showResult() {
-            document.getElementById('question-info').classList.add('hidden');
-            document.getElementById('question-box').classList.add('hidden');
-            document.getElementById('result').classList.remove('hidden');
-
-            const percentage = Math.round((score / totalQuestions) * 100);
-            document.getElementById('result').innerText = `Your Score: ${score} out of ${totalQuestions} (${percentage}%)`;
-
-            document.getElementById('finish-btn').classList.add('hidden');
-
-            if (timeLimit) {
-                const timeTaken = Math.floor((new Date() - startTime) / 1000);
-                const minutes = Math.floor(timeTaken / 60);
-                const seconds = timeTaken % 60;
-                document.getElementById('time-taken').style.display = 'block';
-                document.getElementById('time-taken').innerText = `Time Taken: ${minutes}m ${seconds}s`;
-                clearInterval(timerInterval);
-            }
-
-            document.getElementById('start-new-quiz').style.display = 'block';
-            document.getElementById('review-btn').style.display = 'block';
-        }
-
-
-        function startNewQuiz() {
-            location.reload();
-        }
-
-        function updateTimer() {
-            timeLimit--;
-            if (timeLimit <= 0) {
-                clearInterval(timerInterval);
-                showResult();
-            }
-            updateTimerDisplay(timeLimit);
-        }
-
-        function updateTimerDisplay(timeLimit) {
-            const minutes = Math.floor(timeLimit / 60);
-            const seconds = timeLimit % 60;
-            document.getElementById('time-left').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function backToHome() {
-            location.reload();
-        }
-        document.getElementById('review-btn').classList.remove('hidden');
-
-
-
-
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-        function reviewAnswers() {
-            let quiz;
-            if (selectedQuiz === 'database') {
-                quiz = getDatabaseQuestions();
-            } else if (selectedQuiz === 'datastructures') {
-                quiz = getDataStructureQuestions();
-            } else if (selectedQuiz === 'dc') {
-                quiz = getDCQuestions();
-            }
-
-            let reviewMessage = '<div class="review-container">';
-            for (let i = 0; i < totalQuestions; i++) {
-                let userAnswerIndex = userAnswers[i];
-                let correctAnswerIndex = quiz[i].answer;
-
-                reviewMessage += `
-            <div class="review-question">
-                <p><strong>Question ${i + 1}:</strong> ${quiz[i].question}</p>
-                <p><strong>Your Answer:</strong> ${quiz[i].options[userAnswerIndex] || '<em>No answer</em>'}</p>
-                <p><strong>Correct Answer:</strong> ${quiz[i].options[correctAnswerIndex]}</p>
-            </div>
-        `;
-            }
-
-            reviewMessage += '</div>';
-            document.getElementById('review-answers').innerHTML = reviewMessage;
-            document.getElementById('review-answers').style.display = 'block';
-        }
-
+    }
+    let _0xc24a49 = "<div\x20class=\x22review-container\x22>";
+    for (let _0x386dec = 0x0; _0x386dec < totalQuestions; _0x386dec++) {
+        let _0x343a5f = userAnswers[_0x386dec],
+            _0x38a1e8 = _0x121d24[_0x386dec][_0x23967(0x26b)];
+        _0xc24a49 +=
+            "\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22review-question\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Question\x20" +
+            (_0x386dec + 0x1) +
+            ":</strong>\x20" +
+            _0x121d24[_0x386dec][_0x23967(0x18f)] +
+            _0x23967(0x3e5) +
+            (_0x121d24[_0x386dec]["options"][_0x343a5f] || _0x23967(0x40a)) +
+            _0x23967(0x1ab) +
+            _0x121d24[_0x386dec]["options"][_0x38a1e8] +
+            "</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20";
+    }
+    (_0xc24a49 += _0x23967(0x1aa)), (document[_0x23967(0x230)]("review-answers")[_0x23967(0x296)] = _0xc24a49), (document[_0x23967(0x230)](_0x23967(0x3ea))[_0x23967(0x2dc)][_0x23967(0x3eb)] = _0x23967(0x2aa));
+}
 
 
     </script>
