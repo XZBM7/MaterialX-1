@@ -268,11 +268,97 @@
         .review-question em {
             color: #dc3545;
         }
+     
+   
+        .custom-checkbox {
+            width: 120px;
+            height: 40px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .custom-checkbox input#status {
+            display: none;
+        }
+
+        .custom-checkbox input#status + label {
+            height: 100%;
+            width: 100%;
+        }
+
+        .custom-checkbox input#status + label > .status-switch {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #5879fa;
+            color: white;
+            transition: all 0.5s ease;
+            padding: 2px;
+            border-radius: 10px;
+            border: 1px solid white;
+            left: -80px;
+        }
+
+        .custom-checkbox input#status + label > .status-switch:before,
+        .custom-checkbox input#status + label > .status-switch:after {
+            border-radius: 2px;
+            height: calc(100% - 4px);
+            width: calc(50% - 2px);
+            display: flex;
+            align-items: center;
+            position: absolute;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .custom-checkbox input#status + label > .status-switch:before {
+            background-color: white;
+            color: #355e9c;
+            box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+            left: 2px;
+            z-index: 10;
+            content: attr(data-unchecked);
+            border-radius: 10px;
+        }
+
+        .custom-checkbox input#status + label > .status-switch:after {
+            right: 0;
+            content: attr(data-checked);
+        }
+
+        .custom-checkbox input#status:checked + label > .status-switch {
+            background-color: #5879fa;
+        }
+
+        .custom-checkbox input#status:checked + label > .status-switch:after {
+            left: 0;
+            content: attr(data-unchecked);
+        }
+
+        .custom-checkbox input#status:checked + label > .status-switch:before {
+            color: #355e9c;
+            left: 50%;
+            content: attr(data-checked);
+        }
+
+        body.dark-mode {
+            background-color: #f1f3f5;
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
-    <div class="quiz-container">
+    <div class="custom-checkbox">
+        <input id="status" type="checkbox" name="status">
+        <label for="status">
+            <div class="status-switch" data-unchecked="DarkOn" data-checked="DarkOff"></div>
+        </label>
+    </div>
+        <div class="quiz-container">
         <h1 id="quiz-title">Select Quiz</h1>
         <div id="quiz-selection">
             <button class="time-option" onclick="selectQuiz('database')">Database-1</button>
@@ -396,7 +482,23 @@
     <div id="review-answers" style="display:none;"></div>
 
     <script>
+        
+        const checkbox = document.getElementById("status");
 
+if (localStorage.getItem("darkMode") === "enabled") {
+    document.body.classList.add("dark-mode");
+    checkbox.checked = true;
+}
+
+checkbox.addEventListener("change", function () {
+    if (checkbox.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "enabled");
+    } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "disabled");
+    }
+});
         let score = 0;
         let totalQuestions;
         let currentQuestionIndex = 0;
@@ -4975,7 +5077,7 @@
 
 
         const biQuestions1 = [
-            [
+            
                 {
                     question: "What is the main goal of Business Intelligence (BI)?",
                     options: ["Increase storage capacity", "Enable interactive access to data for analysis", "Reduce data redundancy", "Enhance transaction processing"],
@@ -5153,12 +5255,12 @@
                 }
             ]
 
-        ]
+        
 
 
 
         const biQuestions2 =
-            [
+            
 
                 [
                     {
@@ -5311,7 +5413,7 @@
                         "options": ["True", "False"],
                         "answer": 1
                     }
-                ]
+                
             ]
 
 
