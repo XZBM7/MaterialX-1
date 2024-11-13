@@ -268,7 +268,6 @@
         .review-question em {
             color: #dc3545;
         }
-       
     </style>
 </head>
 
@@ -290,7 +289,11 @@
             <h3>Select Database Quiz:</h3>
             <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database-1 Quiz 1</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database-1 Quiz 2</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database Quiz 3</button>
+            <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database-1 Quiz 3</button>
+            <button class="time-option" onclick="chooseDatabaseQuiz(4)">Database-1 LEC 1,2,3</button>
+
+
+
         </div>
 
         <div id="data-structure-quiz-selection" class="hidden">
@@ -343,16 +346,17 @@
             <button class="time-option" onclick="chooseirQuiz(2)">IR LEC 3</button>
             <button class="time-option" onclick="chooseirQuiz(3)">IR LEC 4</button>
             <button class="time-option" onclick="chooseirQuiz(4)">IR LEC 1,2,3,4 </button>
-            <button class="time-option" onclick="chooseirQuiz(5)">IR More Q LEC 1,2,3,4 </button>
 
         </div>
 
 
         <div id="bi-quiz-selection" class="hidden">
             <h3>Select BI Quiz:</h3>
-            <button class="time-option" onclick="choosebiQuiz(1)">BI Quiz 1</button>
-            <!-- <button class="time-option" onclick="choosebiQuiz(2)">BI Quiz 2</button>
-            <button class="time-option" onclick="choosebiQuiz(3)">BI Quiz 3</button> -->
+            <button class="time-option" onclick="choosebiQuiz(1)">BI LEC 2</button>
+            <button class="time-option" onclick="choosebiQuiz(2)">BI LEC 3</button>
+            <button class="time-option" onclick="choosebiQuiz(3)">BI LEC 4</button>
+            <button class="time-option" onclick="choosebiQuiz(4)">BI LEC 5</button>
+
         </div>
 
 
@@ -1002,6 +1006,572 @@
         ];
 
 
+
+
+        const databaseQuestions4 = [
+
+            {
+                question: "What is a database?",
+                options: ["A collection of unrelated data", "A collection of related data", "A program that retrieves data", "A storage medium for documents"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is a function of a DBMS?",
+                options: ["Text editing", "Defining the database", "Printing documents", "Browsing the internet"],
+                answer: 1
+            },
+            {
+                question: "What is the primary purpose of a Database Management System (DBMS)?",
+                options: ["To create images", "To manage data efficiently", "To play music", "To manage emails"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is a disadvantage of file-based systems?",
+                options: ["Easy data sharing", "High data integrity", "Data duplication", "Automatic backup"],
+                answer: 2
+            },
+            {
+                question: "What does data consistency in a database imply?",
+                options: ["Data stored in different formats", "Data is consistent across different files", "Any update is performed once and is available to all users", "Multiple copies of data exist"],
+                answer: 2
+            },
+            {
+                question: "What does a database catalog contain?",
+                options: ["List of all employees", "Metadata", "User passwords", "System logs"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is not a DBMS function?",
+                options: ["Manipulating data", "Sharing the database", "Protecting the database", "Compiling code"],
+                answer: 3
+            },
+            {
+                question: "What is atomicity in the context of databases?",
+                options: ["The ability to store large files", "The ability to process transactions entirely or not at all", "The ability to share data among users", "The ability to create backups"],
+                answer: 1
+            },
+            {
+                question: "What type of language is used to specify the structure of a database?",
+                options: ["Data Manipulation Language (DML)", "Data Definition Language (DDL)", "Data Query Language (DQL)", "Procedural Language"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is a disadvantage of using a database?",
+                options: ["High performance", "Complexity", "Ease of use", "Small size"],
+                answer: 1
+            },
+            {
+                question: "Which users primarily interact with the database to satisfy their data needs?",
+                options: ["Database Designers", "End Users", "Database Administrators", "Systems Analysts"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is an advantage of a database system?",
+                options: ["Data redundancy", "Limited data sharing", "Improved data integrity", "Atomicity problems"],
+                answer: 2
+            },
+            {
+                question: "What is a 'view' in the context of databases?",
+                options: ["A different program", "A subset of the database", "A backup of the database", "A query language"],
+                answer: 1
+            },
+            {
+                question: "Which of the following tasks is not typically handled by a Database Administrator (DBA)?",
+                options: ["Authorizing access to the database", "Designing the database", "Monitoring database use", "Developing applications"],
+                answer: 3
+            },
+            {
+                question: "When is it more desirable to use regular files instead of a database?",
+                options: ["For complex, ever-changing applications", "For embedded systems with limited storage capacity", "For large multi-user environments", "For systems requiring high security"],
+                answer: 1
+            },
+            {
+                question: "Data is always consistent in a file-based system.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A DBMS allows multiple users to access data simultaneously.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "A database application is a program that interacts with the database.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "The physical structure of data is independent of application programs in a DBMS.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "In a database, data redundancy is increased to improve performance.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A file-based system is more efficient than a database in handling complex data relationships.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A DBMS does not provide any security mechanisms to protect data.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "Sharing a database can only be done by a single user at a time.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The cost of implementing a DBMS is usually lower than using a file-based system.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "Data integrity in a database is easier to achieve than in a file-based system.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                "question": "Which of the following is NOT a key concept in the relational model?",
+                "options": [
+                    "Tuple",
+                    "Degree",
+                    "Hierarchical node",
+                    "Domain"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "What does the degree of a relation refer to?",
+                "options": [
+                    "Number of tuples in a relation",
+                    "Number of attributes in a relation",
+                    "The primary key of the relation",
+                    "The number of foreign keys in a relation"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the relational model, a domain is:",
+                "options": [
+                    "A set of tables in the database",
+                    "A set of allowable values for one or more attributes",
+                    "The primary key of a table",
+                    "A unique identifier for a row"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "What is a super key in a relational database?",
+                "options": [
+                    "A key that contains foreign keys only",
+                    "A key that uniquely identifies a tuple and may contain redundant attributes",
+                    "A key that is always a primary key",
+                    "A key that contains no attributes"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Primary key can be null.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Which operation can potentially violate referential integrity?",
+                "options": [
+                    "Select",
+                    "Insert",
+                    "Delete",
+                    "Update"
+                ],
+                "answer": 2
+            },
+            {
+                "question": "The referential integrity constraint ensures that:",
+                "options": [
+                    "A tuple’s primary key can be NULL",
+                    "Foreign key values must exist in the referenced relation or be NULL",
+                    "Each attribute in a relation must be unique",
+                    "Relations can have composite attributes"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Which of the following is NOT allowed in a relational model?",
+                "options": [
+                    "NULL values",
+                    "Composite attributes",
+                    "Unique keys",
+                    "Atomic values"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the relational model, each attribute in a relation must have a unique name.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Foreign key can be repeat value.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Super keys always contain redundant attributes.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In a valid database state, all defined integrity constraints must be satisfied.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "Updating a foreign key does not affect referential integrity.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "Unique key can be null.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": " the property information table:\n\n| PropertyNo | Address           | Type  | Rooms | Rent | OwnerNo |\n|------------|-------------------|-------|-------|------|---------|\n| PA14       | 16 Holhead House   | House | 6     | 650  | C046    |\n| PL94       | 6 Argyll St.       | Flat  | 4     | 400  | C087    |\n| PG4        | 6 Lawrence St.     | Flat  | 3     | 350  | C040    |\n| PG36       | 2 Manor Rd         | Flat  | 3     | 375  | C093    |\n| PG21       | 18 Dale Rd         | House | 5     | 600  | C087    |\n| PG16       | 5 Novar Dr.        | Flat  | 4     | 450  | C093    |\n\nDegree of relation is:",
+                "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "6"
+                ],
+                "answer": 3
+            },
+            {
+                question: " the property information table:\n\n| PropertyNo | Address           | Type  | Rooms | Rent | OwnerNo |\n|------------|-------------------|-------|-------|------|---------|\n| PA14       | 16 Holhead House   | House | 6     | 650  | C046    |\n| PL94       | 6 Argyll St.       | Flat  | 4     | 400  | C087    |\n| PG4        | 6 Lawrence St.     | Flat  | 3     | 350  | C040    |\n| PG36       | 2 Manor Rd         | Flat  | 3     | 375  | C093    |\n| PG21       | 18 Dale Rd         | House | 5     | 600  | C087    |\n| PG16       | 5 Novar Dr.        | Flat  | 4     | 450  | C093    |\n\nCardinality of relation :",
+                options: [
+                    "7",
+                    "8",
+                    "6",
+                    "9"
+                ],
+                answer: 2
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhat is the primary key in the Employees table?",
+                "options": [
+                    "EmpID",
+                    "Salary",
+                    "EmpName",
+                    "DeptNo"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhich of the following represents the foreign key in the Employees table?",
+                "options": [
+                    "EmpID",
+                    "DeptNo",
+                    "DeptName",
+                    "Salary"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nHow can the department name where a specific employee works be retrieved?",
+                "options": [
+                    "By joining the Employees table with the DeptNo column",
+                    "By using the EmpID column",
+                    "By searching in the Departments table using DeptName only",
+                    "It is not possible to retrieve the department name from the existing tables"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nWhich of the following departments has no employees according to the tables?",
+                "options": [
+                    "Sales",
+                    "Human Resource",
+                    "Finance",
+                    "Warehouses"
+                ],
+                "answer": 3
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThere can be more than one employee with the same EmpID in the Employees table.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nEach employee must belong to a department, so the DeptNo field in the Employees table cannot be NULL.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThere is a one-to-many relationship between the Departments and Employees tables.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nA new department can be added to the Departments table without any employees being assigned to it initially.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 0
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThe combination of EmpID and DeptNo can serve as a composite key in the Employees table.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                "question": "In the Employees table (emp): | EmpID | EmpName      | Salary | DeptNo | \n|-------|--------------|--------|--------| \n| 1234  | Ahmed Salem  | 2000   | 1      | \n| 2456  | Maha Karim   | 3000   | 1      | \n| 4658  | Sherif Maged | 2500   | 2      | \n| 9840  | Yasser Amin  | 4000   | 2      | \n| 3945  | Magda Farid  | 5000   | 3      | \nIn the Departments table (Dep): | DeptNo | DeptName        | \n|--------|-----------------| \n| 1      | Sales           | \n| 2      | Human Resource  | \n| 3      | Finance         | \n| 4      | Warehouses      | \nThe DeptNo column in the Employees table is a primary key.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "answer": 1
+            },
+            {
+                question: "What is the primary purpose of data abstraction in database systems?",
+                options: [
+                    "To improve data storage efficiency",
+                    "To hide details of physical data storage",
+                    "To increase data redundancy",
+                    "To enhance data retrieval speed"
+                ],
+                answer: 1
+            },
+            {
+                question: "Which of the following describes a conceptual data model?",
+                options: [
+                    "It describes how data is physically stored.",
+                    "It is used for database implementation in DBMS.",
+                    "It describes the database structure in an understandable way for most users.",
+                    "It focuses on data retrieval operations."
+                ],
+                answer: 2
+            },
+            {
+                question: "What is an example of a representational data model?",
+                options: [
+                    "Entity-Relationship Model",
+                    "Hierarchical Model",
+                    "Physical Data Model",
+                    "Conceptual Data Model"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does the term 'database schema' refer to?",
+                options: [
+                    "The actual data stored in the database",
+                    "The description of the database structure",
+                    "The physical storage of data",
+                    "The current state of the database"
+                ],
+                answer: 1
+            },
+            {
+                question: "In the context of databases, what is a 'database state'?",
+                options: [
+                    "The schema of the database",
+                    "The current set of data in the database",
+                    "A backup of the database",
+                    "The data model used"
+                ],
+                answer: 1
+            },
+            {
+                question: "What is the primary function of an access path in a database?",
+                options: [
+                    "To define the schema of the database",
+                    "To ensure data integrity",
+                    "To make searching for records efficient",
+                    "To store data physically"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which level of the three-schema architecture describes the physical storage structure?",
+                options: [
+                    "External Level",
+                    "Logical Level",
+                    "Internal Level",
+                    "Conceptual Level"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is logical data independence?",
+                options: [
+                    "The ability to change physical storage without affecting the logical schema",
+                    "The ability to change the logical schema without affecting external schemas",
+                    "The ability to change external schemas without affecting the logical schema",
+                    "The ability to change data types in the database"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does physical data independence allow?",
+                options: [
+                    "Changes to the logical schema without affecting external schemas",
+                    "Changes to the internal schema without affecting the logical schema",
+                    "Changes to the database state without affecting the schema",
+                    "Changes to the external schema without affecting the internal schema"
+                ],
+                answer: 1
+            },
+            {
+                question: "What characterizes a two-tier client/server architecture?",
+                options: [
+                    "It has three distinct layers of processing.",
+                    "It separates user interface and application programs from the database.",
+                    "It allows for multiple databases to be accessed simultaneously.",
+                    "It is primarily used for web applications."
+                ],
+                answer: 1
+            },
+            {
+                question: "In a three-tier architecture, what is the role of the application server?",
+                options: [
+                    "To store the database",
+                    "To manage user interfaces",
+                    "To run application programs and manage business rules",
+                    "To handle data backups"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is the main benefit of a three-tier architecture in database systems?",
+                options: [
+                    "Increased data redundancy",
+                    "Simplified database design",
+                    "Improved security and easier application updates",
+                    "Faster data retrieval"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which of the following is NOT a characteristic of the database approach?",
+                options: [
+                    "Use of a catalog for schema storage",
+                    "Data independence",
+                    "Support for multiple user views",
+                    "Fixed data structures"
+                ],
+                answer: 3
+            },
+            {
+                question: "What does a schema diagram typically display?",
+                options: [
+                    "The actual data in the database",
+                    "The complete physical storage details",
+                    "Names of record types and some constraints",
+                    "The current state of the database"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which of the following best describes the physical data model?",
+                options: [
+                    "It focuses on user interactions with the database.",
+                    "It describes how data is stored as files in the computer.",
+                    "It is used for designing user interfaces.",
+                    "It defines the relationships among data entities."
+                ],
+                answer: 1
+            },
+
+            {
+                question: "Data abstraction in database systems aims to improve data storage efficiency.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The entity-relationship model is an example of a representational data model.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The current set of data in a database is called the database schema.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The internal level of the three-schema architecture describes the physical storage structure.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "Logical data independence allows changes to the logical schema without affecting external schemas.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "Physical data independence allows changes to the database state without affecting the schema.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "In a two-tier client/server architecture, the application server runs application programs and manages business rules.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The main benefit of a three-tier architecture is increased data redundancy.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "A schema diagram typically displays the actual data in the database.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "The physical data model focuses on how data is stored as files in the computer.",
+                options: ["True", "False"],
+                answer: 0
+            }
+
+        ];
 
 
 
@@ -3915,6 +4485,7 @@
 
 
         const irQuestions2 = [
+
             {
                 "question": "True or False: Tokenization involves dividing text into individual units called tokens.",
                 "options": ["True", "False"],
@@ -4173,6 +4744,7 @@
 
 
 
+
         const irQuestions3 = [
             {
                 question: "True or False: Tokenization is the process of breaking text into smaller units called tokens, which are often individual words.",
@@ -4393,116 +4965,6 @@
 
 
 
-        const irQuestions5 = [
-            {
-                question: "_______ is the class of all tokens containing the same character sequence.",
-                options: ["A token", "A type", "A term", "None of the above"],
-                answer: 1
-            },
-            {
-                question: "_______ reduces variant forms to base form using natural language processing techniques.",
-                options: ["A stemmer", "A lemmatizer", "Both of them", "None of them"],
-                answer: 1
-            },
-            {
-                question: "Given this query: Natural AND language AND processing. Let the document frequencies for natural, language, and processing be 10, 30, and 20 respectively. The best order for query processing is _______________.",
-                options: [
-                    "Intersect posting lists of natural and language then intersect the intermediate result with processing",
-                    "Intersect posting lists of language and processing then intersect the intermediate result with language",
-                    "Intersect posting lists of natural and processing then intersect the intermediate result with language",
-                    "None of the above"
-                ],
-                answer: 2
-            },
-            {
-                question: "Reducing all letters to lower case is a common strategy to perform _________.",
-                options: ["Stemming", "Lemmatization", "Case-Folding", "Normalization"],
-                answer: 2
-            },
-            {
-                question: "___________ is the fraction of relevant documents in a collection that are retrieved.",
-                options: ["Precision", "Recall", "F-measure"],
-                answer: 1
-            },
-            {
-                question: "_______ is a normalized type that is included in the IR system’s dictionary.",
-                options: ["Token", "Type", "Term", "Keyword"],
-                answer: 2
-            },
-            {
-                question: "Information retrieval systems can operate at three prominent scales: web search, personal information retrieval, and enterprise search.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "Index granularity is the process of determining what the document unit will be used for indexing.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "Information retrieval is finding material of structured nature that satisfies the user information need.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "Grepping through text is a practical solution to process proximity queries.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The dictionary of an inverted index is commonly kept in memory, while posting lists are normally kept on disk.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "K-grams is one of the possible approaches for segmenting character sequences.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "Stemmers use language-specific rules.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "The step of converting a byte sequence in a document into a sequence of characters is performed after tokenization.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The general trend in IR systems has moved over time from using large stop lists to very small stop lists to no stop list.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "More skip pointers lead to long skip spans and few successful skips.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "QUERY is the topic about which the user desires to know more, while information need is what the user conveys to the IR system in an attempt to communicate the QUERY.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "English stemmers improve recall for some queries but harm precision on others.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "Tokenization is the process of canonicalizing tokens so that matches occur despite differences in character sequences.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "One of the advantages of a term-document incidence matrix is that it is usually very sparse.",
-                options: ["True", "False"],
-                answer: 1
-            }
-        ]
-
-
-
 
 
 
@@ -4513,184 +4975,641 @@
 
 
         const biQuestions1 = [
-            {
-                question: "What is the main goal of Business Intelligence (BI)?",
-                options: ["Increase storage capacity", "Enable interactive access to data for analysis", "Reduce data redundancy", "Enhance transaction processing"],
-                answer: 1
-            },
-            {
-                question: "BI initially emerged from:",
-                options: ["CRM systems", "MIS reporting systems in the 1970s", "Online transaction processing", "Cloud computing"],
-                answer: 1
-            },
-            {
-                question: "Which component is not part of the BI architecture?",
-                options: ["Data Warehouse", "Business Analytics", "Customer Relationship Management", "Business Performance Management"],
-                answer: 2
-            },
-            {
-                question: "The main purpose of a data warehouse is to:",
-                options: ["Store transactional data", "Perform real-time updates", "Store and organize historical data", "Optimize inventory management"],
-                answer: 2
-            },
-            {
-                question: "OLTP stands for:",
-                options: ["On-Line Transaction Processing", "Operational Level Technology Processing", "On-Level Technology Performance", "Offline Transaction Process"],
-                answer: 0
-            },
-            {
-                question: "What does OLAP primarily support?",
-                options: ["Real-time updates", "Routine transaction processing", "Complex queries and data analysis", "Inventory management"],
-                answer: 2
-            },
-            {
-                question: "Which of the following describes Normalization?",
-                options: ["Merging data to reduce storage", "Arranging data to eliminate redundancy", "Combining multiple tables for faster retrieval", "Creating backup copies of data"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is NOT an identified style of BI by MicroStrategy, Corp.?",
-                options: ["Cube analysis", "Data mining", "Ad-hoc queries", "Enterprise resource planning"],
-                answer: 3
-            },
-            {
-                question: "Descriptive Analytics is primarily concerned with:",
-                options: ["Predicting future outcomes", "Optimizing current processes", "Understanding past and present trends", "Automating business operations"],
-                answer: 2
-            },
-            {
-                question: "Which analytics type aims to predict future customer behavior?",
-                options: ["Descriptive", "Predictive", "Prescriptive", "Diagnostic"],
-                answer: 1
-            },
-            {
-                question: "Which analytics type focuses on making decisions to improve system performance?",
-                options: ["Predictive", "Descriptive", "Prescriptive", "Diagnostic"],
-                answer: 2
-            },
-            {
-                question: "A BI dashboard is an example of which BI component?",
-                options: ["Data Warehouse", "Business Analytics", "User Interface", "Data Mining"],
-                answer: 2
-            },
-            {
-                question: "Which term describes the process of optimizing a database to remove redundancy?",
-                options: ["Denormalization", "Aggregation", "Normalization", "Fragmentation"],
-                answer: 2
-            },
-            {
-                question: "Which BI component measures and monitors Key Performance Indicators (KPIs)?",
-                options: ["Data Warehouse", "Business Analytics", "Business Performance Management (BPM)", "User Interface"],
-                answer: 2
-            },
-            {
-                question: "Which of the following is a benefit of BI?",
-                options: ["Reduced data storage", "Faster, more accurate reporting", "Increased data redundancy", "Increased transaction processing speed"],
-                answer: 1
-            },
-            {
-                question: "In which decade was the term “Business Intelligence” (BI) coined?",
-                options: ["1970s", "1980s", "1990s", "2000s"],
-                answer: 1
-            },
-            {
-                question: "Which is primarily responsible for handling a company’s routine ongoing transactions?",
-                options: ["OLAP", "Data Warehouse", "OLTP", "CRM"],
-                answer: 2
-            },
-            {
-                question: "Which of these processes combines tables to make data retrieval faster?",
-                options: ["Normalization", "Denormalization", "Data Mining", "Aggregation"],
-                answer: 1
-            },
-            {
-                question: "Data Scientist skills often include:",
-                options: ["Business process automation", "Basic Excel and SQL skills", "Advanced statistics and machine learning", "Inventory management"],
-                answer: 2
-            },
-            {
-                question: "A data analyst primarily works with:",
-                options: ["Predictive analytics", "Business process management", "Data compilation and reporting", "Automated decision systems"],
-                answer: 2
-            },
-            {
-                question: "What does “DSS” stand for in BI terminology?",
-                options: ["Data Science Systems", "Decision Support Systems", "Data Service System", "Decision Security Service"],
-                answer: 1
-            },
-            {
-                question: "Which BI style allows for 'slice-and-dice' analysis?",
-                options: ["Cube analysis", "Enterprise reporting", "Ad-hoc queries", "Data mining"],
-                answer: 0
-            },
-            {
-                question: "In BI, “real-time view of corporate performance” is primarily provided by:",
-                options: ["Ad-hoc reporting", "OLAP systems", "Online Transaction Processing", "Dashboards and portals"],
-                answer: 3
-            },
-            {
-                question: "What technology became prominent in BI by 2005?",
-                options: ["Cloud storage", "Artificial Intelligence", "Data visualization", "Simple databases"],
-                answer: 2
-            },
-            {
-                question: "Data integrity is harder to maintain in:",
-                options: ["OLAP systems", "Normalized tables", "Denormalized structures", "Real-time dashboards"],
-                answer: 2
-            },
-            {
-                question: "True or False: BI helps decision-makers analyze both historical and current data.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "True or False: OLTP systems are primarily used for complex, ad-hoc analysis.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "True or False: Denormalization reduces data redundancy.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "True or False: Predictive analytics aims to optimize current business performance.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "True or False: The user interface in BI architecture is typically used for storage.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "True or False: Data scientists usually require programming skills in languages like Python or R.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "True or False: Descriptive analytics helps in understanding trends and causes in data.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "True or False: Data warehouses are used mainly for transaction processing.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "True or False: In normalization, data is structured to reduce redundancy and improve integrity.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "True or False: Dashboards provide a static view of business performance metrics.",
-                options: ["True", "False"],
-                answer: 1
-            }
-
+            [
+                {
+                    question: "What is the main goal of Business Intelligence (BI)?",
+                    options: ["Increase storage capacity", "Enable interactive access to data for analysis", "Reduce data redundancy", "Enhance transaction processing"],
+                    answer: 1
+                },
+                {
+                    question: "BI initially emerged from:",
+                    options: ["CRM systems", "MIS reporting systems in the 1970s", "Online transaction processing", "Cloud computing"],
+                    answer: 1
+                },
+                {
+                    question: "Which component is not part of the BI architecture?",
+                    options: ["Data Warehouse", "Business Analytics", "Customer Relationship Management", "Business Performance Management"],
+                    answer: 2
+                },
+                {
+                    question: "The main purpose of a data warehouse is to:",
+                    options: ["Store transactional data", "Perform real-time updates", "Store and organize historical data", "Optimize inventory management"],
+                    answer: 2
+                },
+                {
+                    question: "OLTP stands for:",
+                    options: ["On-Line Transaction Processing", "Operational Level Technology Processing", "On-Level Technology Performance", "Offline Transaction Process"],
+                    answer: 0
+                },
+                {
+                    question: "What does OLAP primarily support?",
+                    options: ["Real-time updates", "Routine transaction processing", "Complex queries and data analysis", "Inventory management"],
+                    answer: 2
+                },
+                {
+                    question: "Which of the following describes Normalization?",
+                    options: ["Merging data to reduce storage", "Arranging data to eliminate redundancy", "Combining multiple tables for faster retrieval", "Creating backup copies of data"],
+                    answer: 1
+                },
+                {
+                    question: "Which of the following is NOT an identified style of BI by MicroStrategy, Corp.?",
+                    options: ["Cube analysis", "Data mining", "Ad-hoc queries", "Enterprise resource planning"],
+                    answer: 3
+                },
+                {
+                    question: "Descriptive Analytics is primarily concerned with:",
+                    options: ["Predicting future outcomes", "Optimizing current processes", "Understanding past and present trends", "Automating business operations"],
+                    answer: 2
+                },
+                {
+                    question: "Which analytics type aims to predict future customer behavior?",
+                    options: ["Descriptive", "Predictive", "Prescriptive", "Diagnostic"],
+                    answer: 1
+                },
+                {
+                    question: "Which analytics type focuses on making decisions to improve system performance?",
+                    options: ["Predictive", "Descriptive", "Prescriptive", "Diagnostic"],
+                    answer: 2
+                },
+                {
+                    question: "A BI dashboard is an example of which BI component?",
+                    options: ["Data Warehouse", "Business Analytics", "User Interface", "Data Mining"],
+                    answer: 2
+                },
+                {
+                    question: "Which term describes the process of optimizing a database to remove redundancy?",
+                    options: ["Denormalization", "Aggregation", "Normalization", "Fragmentation"],
+                    answer: 2
+                },
+                {
+                    question: "Which BI component measures and monitors Key Performance Indicators (KPIs)?",
+                    options: ["Data Warehouse", "Business Analytics", "Business Performance Management (BPM)", "User Interface"],
+                    answer: 2
+                },
+                {
+                    question: "Which of the following is a benefit of BI?",
+                    options: ["Reduced data storage", "Faster, more accurate reporting", "Increased data redundancy", "Increased transaction processing speed"],
+                    answer: 1
+                },
+                {
+                    question: "In which decade was the term “Business Intelligence” (BI) coined?",
+                    options: ["1970s", "1980s", "1990s", "2000s"],
+                    answer: 1
+                },
+                {
+                    question: "Which is primarily responsible for handling a company’s routine ongoing transactions?",
+                    options: ["OLAP", "Data Warehouse", "OLTP", "CRM"],
+                    answer: 2
+                },
+                {
+                    question: "Which of these processes combines tables to make data retrieval faster?",
+                    options: ["Normalization", "Denormalization", "Data Mining", "Aggregation"],
+                    answer: 1
+                },
+                {
+                    question: "Data Scientist skills often include:",
+                    options: ["Business process automation", "Basic Excel and SQL skills", "Advanced statistics and machine learning", "Inventory management"],
+                    answer: 2
+                },
+                {
+                    question: "A data analyst primarily works with:",
+                    options: ["Predictive analytics", "Business process management", "Data compilation and reporting", "Automated decision systems"],
+                    answer: 2
+                },
+                {
+                    question: "What does “DSS” stand for in BI terminology?",
+                    options: ["Data Science Systems", "Decision Support Systems", "Data Service System", "Decision Security Service"],
+                    answer: 1
+                },
+                {
+                    question: "Which BI style allows for 'slice-and-dice' analysis?",
+                    options: ["Cube analysis", "Enterprise reporting", "Ad-hoc queries", "Data mining"],
+                    answer: 0
+                },
+                {
+                    question: "In BI, “real-time view of corporate performance” is primarily provided by:",
+                    options: ["Ad-hoc reporting", "OLAP systems", "Online Transaction Processing", "Dashboards and portals"],
+                    answer: 3
+                },
+                {
+                    question: "What technology became prominent in BI by 2005?",
+                    options: ["Cloud storage", "Artificial Intelligence", "Data visualization", "Simple databases"],
+                    answer: 2
+                },
+                {
+                    question: "Data integrity is harder to maintain in:",
+                    options: ["OLAP systems", "Normalized tables", "Denormalized structures", "Real-time dashboards"],
+                    answer: 2
+                },
+                {
+                    question: "True or False: BI helps decision-makers analyze both historical and current data.",
+                    options: ["True", "False"],
+                    answer: 0
+                },
+                {
+                    question: "True or False: OLTP systems are primarily used for complex, ad-hoc analysis.",
+                    options: ["True", "False"],
+                    answer: 1
+                },
+                {
+                    question: "True or False: Denormalization reduces data redundancy.",
+                    options: ["True", "False"],
+                    answer: 1
+                },
+                {
+                    question: "True or False: Predictive analytics aims to optimize current business performance.",
+                    options: ["True", "False"],
+                    answer: 1
+                },
+                {
+                    question: "True or False: The user interface in BI architecture is typically used for storage.",
+                    options: ["True", "False"],
+                    answer: 1
+                },
+                {
+                    question: "True or False: Data scientists usually require programming skills in languages like Python or R.",
+                    options: ["True", "False"],
+                    answer: 0
+                },
+                {
+                    question: "True or False: Descriptive analytics helps in understanding trends and causes in data.",
+                    options: ["True", "False"],
+                    answer: 0
+                },
+                {
+                    question: "True or False: Data warehouses are used mainly for transaction processing.",
+                    options: ["True", "False"],
+                    answer: 1
+                },
+                {
+                    question: "True or False: In normalization, data is structured to reduce redundancy and improve integrity.",
+                    options: ["True", "False"],
+                    answer: 0
+                },
+                {
+                    question: "True or False: Dashboards provide a static view of business performance metrics.",
+                    options: ["True", "False"],
+                    answer: 1
+                }
+            ]
 
         ]
+
+
+
+        const biQuestions2 =
+            [
+
+                [
+                    {
+                        "question": "What is a primary purpose of a data warehouse?",
+                        "options": ["Real-time processing", "Decision support", "Web browsing", "Transaction processing"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "Which term describes data structured for analysis in data warehousing?",
+                        "options": ["OLTP", "Metadata", "OLAP", "E-commerce"],
+                        "answer": 2
+                    },
+                    {
+                        "question": "A data warehouse’s 'subject-oriented' nature primarily refers to:",
+                        "options": ["Storing daily transactions", "Organizing data by topics like sales and customers", "Enabling frequent data updates", "Supporting marketing activities only"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "In a data warehouse, integration ensures that:",
+                        "options": ["All data is in real-time", "Data is updated hourly", "Data from different sources have a consistent format", "All data is anonymized"],
+                        "answer": 2
+                    },
+                    {
+                        "question": "Time-variant data in a warehouse means:",
+                        "options": ["Data is always current", "Data shows historical trends", "Data changes every week", "Only current year data is stored"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "Which of the following is a characteristic of data warehousing?",
+                        "options": ["Nonvolatile data", "Real-time processing only", "High update frequency", "Unstructured data collection"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "What is a dependent data mart?",
+                        "options": ["A data source external to the data warehouse", "A subset of the warehouse derived directly from it", "A data storage for real-time analytics", "A non-integrated collection of reports"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "Which ETL process involves converting data to fit the warehouse structure?",
+                        "options": ["Extraction", "Transformation", "Load", "Integration"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "A key benefit of a data warehouse is:",
+                        "options": ["Increased data entry speeds", "Real-time data modifications", "Centralized data for decision-making", "Personalized data storage for each department"],
+                        "answer": 2
+                    },
+                    {
+                        "question": "Data in an Operational Data Store (ODS) is typically:",
+                        "options": ["Historical", "Updated in real-time", "Subject to regular archiving", "Deleted frequently"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "Which is a main component of a data warehouse?",
+                        "options": ["Database logs", "Middleware tools", "Social media plugins", "Data tables only"],
+                        "answer": 3
+                    },
+                    {
+                        "question": "Metadata in a data warehouse is used to:",
+                        "options": ["Store transaction data", "Describe the structure and rules for data use", "Automatically update all data", "Store unrelated information"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "In ETL, the process of loading means:",
+                        "options": ["Gathering new data", "Storing transformed data in the warehouse", "Editing raw data", "Validating data changes"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "Which is NOT a characteristic of a data warehouse?",
+                        "options": ["Time-variant data", "Integration of sources", "Volatile data", "Nonvolatile data"],
+                        "answer": 2
+                    },
+                    {
+                        "question": "What is Dimensional Modeling used for?",
+                        "options": ["Data cleaning", "Enhancing OLTP databases", "Structuring data for BI analysis", "Reducing storage requirements"],
+                        "answer": 2
+                    },
+                    {
+                        "question": "In a dimensional model, a 'fact' represents:",
+                        "options": ["Historical records only", "Business measurements like sales or expenses", "A type of metadata", "Data structure only"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "Dimensions in a data warehouse:",
+                        "options": ["Define the context for facts", "Are numerical measurements only", "Cannot be organized hierarchically", "Are temporary data only"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "Which component of the ETL process reads data from various sources?",
+                        "options": ["Extraction", "Transformation", "Load", "Cleansing"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "In a data warehouse, 'granularity' refers to:",
+                        "options": ["Data type restrictions", "The level of detail in data", "Database size", "Update frequency"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "A fact table typically consists of:",
+                        "options": ["Only primary keys", "Keys and measurements", "Metadata only", "Hierarchical dimensions"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "True or False: A data warehouse can change or update data once it is stored.",
+                        "options": ["True", "False"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "True or False: Dimensional modeling is a logical design technique for organizing data in BI.",
+                        "options": ["True", "False"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "True or False: Operational Data Stores (ODS) are used for short-term decision-making.",
+                        "options": ["True", "False"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "True or False: Metadata in a data warehouse is unimportant for business intelligence applications.",
+                        "options": ["True", "False"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "True or False: ETL stands for Extraction, Transaction, and Loading.",
+                        "options": ["True", "False"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "True or False: A data mart is smaller than an enterprise data warehouse and focuses on a single subject.",
+                        "options": ["True", "False"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "True or False: A nonvolatile data warehouse means data cannot be overwritten or changed after being added.",
+                        "options": ["True", "False"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "True or False: An independent data mart is created from an existing enterprise data warehouse.",
+                        "options": ["True", "False"],
+                        "answer": 1
+                    },
+                    {
+                        "question": "True or False: Data granularity is the degree to which data can be aggregated.",
+                        "options": ["True", "False"],
+                        "answer": 0
+                    },
+                    {
+                        "question": "True or False: Real-time data processing is a characteristic of all data warehouses.",
+                        "options": ["True", "False"],
+                        "answer": 1
+                    }
+                ]
+            ]
+
+
+
+
+
+
+
+
+
+        const biQuestions3 =
+            [
+                {
+                    "question": "Which schema type is known for having a central fact table connected to multiple dimension tables?",
+                    "options": ["Snowflake schema", "Star schema", "Galaxy schema", "Hybrid schema"],
+                    "answer": 1
+                },
+                {
+                    "question": "The main purpose of the fact table in a star schema is to:",
+                    "options": ["Store metadata about dimensions", "Contain measures and metrics for decision analysis", "Link dimension tables together", "Manage database transactions"],
+                    "answer": 1
+                },
+                {
+                    "question": "In a star schema, dimension tables are:",
+                    "options": ["Denormalized", "Normalized", "Linked to each other", "Used only for indexing"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which schema is more optimized for query performance and has simpler design requirements?",
+                    "options": ["Snowflake schema", "Hybrid schema", "Star schema", "Galaxy schema"],
+                    "answer": 2
+                },
+                {
+                    "question": "What is a characteristic of the snowflake schema?",
+                    "options": ["Denormalized dimension tables", "Dimension tables linked in a hierarchical structure", "Simpler design than the star schema", "High data redundancy"],
+                    "answer": 1
+                },
+                {
+                    "question": "A major advantage of the snowflake schema is:",
+                    "options": ["Lower disk space usage due to normalization", "Faster query response than star schema", "Reduced table complexity", "Direct links between fact tables"],
+                    "answer": 0
+                },
+                {
+                    "question": "In a star schema, the foreign keys in the fact table:",
+                    "options": ["Refer to other fact tables", "Link to the primary keys in dimension tables", "Are unused during queries", "Are only used for data integrity checks"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which of the following best describes 'data redundancy' in a star schema?",
+                    "options": ["All data is stored only once", "Duplicate data is minimized due to normalization", "Some data may be repeated across tables", "Tables contain only unique data entries"],
+                    "answer": 2
+                },
+                {
+                    "question": "The snowflake schema is considered more complex than the star schema because:",
+                    "options": ["It does not use foreign keys", "It normalizes dimensions, resulting in more tables", "It has no dimension tables", "It relies on real-time data updates"],
+                    "answer": 1
+                },
+                {
+                    "question": "What type of schema typically supports ad hoc querying and easy maintenance?",
+                    "options": ["Snowflake schema", "Star schema", "Hybrid schema", "ER schema"],
+                    "answer": 1
+                },
+                {
+                    "question": "In data warehousing, a 'conformed dimension' refers to:",
+                    "options": ["A unique dimension used in only one schema", "A dimension shared across multiple fact tables", "A measure in the fact table", "An index used to speed up queries"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which schema would be best suited for a data mart with simple one-to-many relationships?",
+                    "options": ["Star schema", "Snowflake schema", "Multidimensional schema", "ER schema"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of the following is a shared characteristic of both star and snowflake schemas?",
+                    "options": ["High data redundancy", "A central fact table surrounded by dimensions", "Use of normalized dimension tables only", "Faster updates for transactional systems"],
+                    "answer": 1
+                },
+                {
+                    "question": "In an enterprise setting, multiple fact tables connected to shared dimensions are typical of:",
+                    "options": ["A multi-fact star model", "A normalized schema", "An ER schema", "A hybrid snowflake model"],
+                    "answer": 0
+                },
+                {
+                    "question": "Entity-relationship (ER) modeling is generally more suited for:",
+                    "options": ["Analytical processing in data warehouses", "Transactional systems (OLTP)", "Dimensional modeling in BI", "Generating ad hoc reports"],
+                    "answer": 1
+                },
+                {
+                    "question": "Dimensional modeling is primarily used in:",
+                    "options": ["OLTP systems", "Business intelligence (BI) applications", "Real-time data processing", "Document databases"],
+                    "answer": 1
+                },
+                {
+                    "question": "In dimensional modeling, data redundancy is:",
+                    "options": ["Eliminated entirely", "Maintained to support complex analysis", "Considered an error to be corrected", "Caused by normalized dimension tables"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which type of schema would require the most joins during queries?",
+                    "options": ["Star schema", "Snowflake schema", "Hybrid schema", "Multi-fact schema"],
+                    "answer": 1
+                },
+                {
+                    "question": "The fact table in a dimensional model:",
+                    "options": ["Stores only unique keys", "Contains both foreign keys and measures", "Is only used for primary key data", "Uses only denormalized data"],
+                    "answer": 1
+                },
+                {
+                    "question": "In a snowflake schema, dimension tables:",
+                    "options": ["Are all denormalized", "Are split into multiple related tables", "Contain only foreign keys", "Must all link directly to the fact table"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: The snowflake schema has a simpler design than the star schema.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: In a star schema, dimension tables have a one-to-many relationship with the fact table.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: Dimensional modeling is best suited for transactional systems rather than business intelligence applications.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: The star schema is optimized for query performance by reducing the number of joins needed.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: Normalized dimension tables in a snowflake schema reduce data redundancy.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                }
+            ]
+
+
+
+
+
+
+
+        const biQuestions4 =
+            [
+                {
+                    "question": "Which term refers to the definition of what a single row in a fact table will represent?",
+                    "options": ["Dimension", "Measure", "Granularity", "Hierarchy"],
+                    "answer": 2
+                },
+                {
+                    "question": "In a fact table, what does the grain represent?",
+                    "options": ["Level of normalization", "Level of information detail", "Type of schema used", "Dimension hierarchy"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which type of fact table records data at each individual business event level?",
+                    "options": ["Periodic fact", "Transaction fact", "Accumulating fact", "Aggregate fact"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which fact table type is known for capturing the status of facts at regular time intervals?",
+                    "options": ["Transaction fact", "Periodic fact", "Accumulating fact", "Snapshot fact"],
+                    "answer": 3
+                },
+                {
+                    "question": "A transaction fact table typically grows very quickly because:",
+                    "options": ["It has a high level of granularity", "It stores data at a monthly level", "It only records totals", "It uses multiple dimensions"],
+                    "answer": 0
+                },
+                {
+                    "question": "An example of a periodic fact table would be:",
+                    "options": ["Recording each purchase at a store", "Summarizing daily account balances at month-end", "Calculating a final shipping date", "Tracking customer feedback scores"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which fact type captures all key events in a process from beginning to end, updating each step as it progresses?",
+                    "options": ["Transaction fact", "Periodic fact", "Accumulating fact", "Event fact"],
+                    "answer": 2
+                },
+                {
+                    "question": "Which of these characteristics applies to an accumulating fact table?",
+                    "options": ["Records one row per transaction", "Stores data for a defined process with multiple milestones", "Records only a snapshot at a single point in time", "Does not change once the row is created"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which of the following scenarios would most likely use an accumulating fact table?",
+                    "options": ["Tracking daily sales", "Monitoring insurance claim processing stages", "Logging website visits", "Recording monthly inventory"],
+                    "answer": 1
+                },
+                {
+                    "question": "Additive measures in fact tables allow for:",
+                    "options": ["Summing values across all dimensions", "Summing values across only some dimensions", "Dividing values across dimensions", "Storing non-numeric data"],
+                    "answer": 0
+                },
+                {
+                    "question": "A measure like 'account balance' that cannot be summed across time is known as:",
+                    "options": ["Additive", "Semi-additive", "Non-additive", "Derived"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which type of fact cannot be added across any dimensions due to its nature, often involving ratios or percentages?",
+                    "options": ["Additive fact", "Semi-additive fact", "Non-additive fact", "Snapshot fact"],
+                    "answer": 2
+                },
+                {
+                    "question": "Which is a characteristic of derived facts in a fact table?",
+                    "options": ["Derived facts are always additive", "Derived facts require complex relationships", "Derived facts are calculated from other measures", "Derived facts are stored as textual data only"],
+                    "answer": 2
+                },
+                {
+                    "question": "An example of a derived fact could be:",
+                    "options": ["Profit margin percentage", "Total sales amount after applying a discount", "The transaction date", "Customer ID"],
+                    "answer": 0
+                },
+                {
+                    "question": "Textual facts in a fact table generally store:",
+                    "options": ["Dates only", "Quantitative data", "Descriptive data or flags", "Calculations of additive facts"],
+                    "answer": 2
+                },
+                {
+                    "question": "What type of measure can be summed across all dimensions?",
+                    "options": ["Additive", "Non-additive", "Semi-additive", "Derived"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which measure type is challenging to aggregate across all dimensions?",
+                    "options": ["Additive measure", "Semi-additive measure", "Derived measure", "Non-additive measure"],
+                    "answer": 1
+                },
+                {
+                    "question": "The grain of a fact table affects which of the following?",
+                    "options": ["Number of dimensions available", "Schema type used", "Querying speed only", "Reporting hierarchy only"],
+                    "answer": 0
+                },
+                {
+                    "question": "What does a transaction fact table primarily capture?",
+                    "options": ["The entire life cycle of a process", "Data snapshots over time", "Individual business events or transactions", "Summaries for each quarter"],
+                    "answer": 2
+                },
+                {
+                    "question": "Which of these fact types would you use to analyze monthly sales trends?",
+                    "options": ["Transaction fact", "Periodic fact", "Accumulating fact", "Snapshot fact"],
+                    "answer": 3
+                },
+                {
+                    "question": "Which type of fact table is often used to track event milestones such as 'order placed,' 'order shipped,' and 'order delivered'?",
+                    "options": ["Periodic fact", "Transaction fact", "Accumulating fact", "Snapshot fact"],
+                    "answer": 2
+                },
+                {
+                    "question": "In data warehousing, what does granularity refer to?",
+                    "options": ["Database storage format", "Level of data detail in the fact table", "Data redundancy in dimension tables", "Frequency of data updates"],
+                    "answer": 1
+                },
+                {
+                    "question": "In which fact table type is each new transaction represented by a single row?",
+                    "options": ["Transaction fact", "Periodic fact", "Accumulating fact", "Aggregate fact"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which fact type is best for representing the latest status of a fact as of a certain date?",
+                    "options": ["Transaction fact", "Periodic fact", "Accumulating fact", "Snapshot fact"],
+                    "answer": 3
+                },
+                {
+                    "question": "In data modeling, what term refers to facts created from performing calculations on other fact measures?",
+                    "options": ["Additive facts", "Derived facts", "Non-additive facts", "Semi-additive facts"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: Granularity in a fact table always refers to the amount of data in each column.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: A transaction fact table is known for storing a record for the entire process lifecycle.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: Periodic fact tables capture snapshots of data for specific time intervals.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: Semi-additive measures can be aggregated across all dimensions, including time.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: Accumulating fact tables are often used to analyze processes with clear stages or milestones.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                }
+            ]
 
 
 
@@ -4755,6 +5674,8 @@
             if (databaseQuizVariant === 1) return databaseQuestions1;
             if (databaseQuizVariant === 2) return databaseQuestions2;
             if (databaseQuizVariant === 3) return databaseQuestions3;
+            if (databaseQuizVariant === 4) return databaseQuestions4;
+
         }
 
 
@@ -4923,6 +5844,9 @@
         function getbiQuestions() {
             if (biQuizVariant === 1) return biQuestions1;
             if (biQuizVariant === 2) return biQuestions2;
+            if (biQuizVariant === 3) return biQuestions3;
+            if (biQuizVariant === 4) return biQuestions4;
+
         }
 
 
