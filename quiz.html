@@ -268,8 +268,8 @@
         .review-question em {
             color: #dc3545;
         }
-     
-   
+
+
         .custom-checkbox {
             width: 120px;
             height: 40px;
@@ -283,12 +283,12 @@
             display: none;
         }
 
-        .custom-checkbox input#status + label {
+        .custom-checkbox input#status+label {
             height: 100%;
             width: 100%;
         }
 
-        .custom-checkbox input#status + label > .status-switch {
+        .custom-checkbox input#status+label>.status-switch {
             cursor: pointer;
             width: 100%;
             height: 100%;
@@ -302,8 +302,8 @@
             left: -80px;
         }
 
-        .custom-checkbox input#status + label > .status-switch:before,
-        .custom-checkbox input#status + label > .status-switch:after {
+        .custom-checkbox input#status+label>.status-switch:before,
+        .custom-checkbox input#status+label>.status-switch:after {
             border-radius: 2px;
             height: calc(100% - 4px);
             width: calc(50% - 2px);
@@ -314,7 +314,7 @@
             transition: all 0.3s ease;
         }
 
-        .custom-checkbox input#status + label > .status-switch:before {
+        .custom-checkbox input#status+label>.status-switch:before {
             background-color: white;
             color: #355e9c;
             box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -324,21 +324,21 @@
             border-radius: 10px;
         }
 
-        .custom-checkbox input#status + label > .status-switch:after {
+        .custom-checkbox input#status+label>.status-switch:after {
             right: 0;
             content: attr(data-checked);
         }
 
-        .custom-checkbox input#status:checked + label > .status-switch {
+        .custom-checkbox input#status:checked+label>.status-switch {
             background-color: #5879fa;
         }
 
-        .custom-checkbox input#status:checked + label > .status-switch:after {
+        .custom-checkbox input#status:checked+label>.status-switch:after {
             left: 0;
             content: attr(data-unchecked);
         }
 
-        .custom-checkbox input#status:checked + label > .status-switch:before {
+        .custom-checkbox input#status:checked+label>.status-switch:before {
             color: #355e9c;
             left: 50%;
             content: attr(data-checked);
@@ -358,7 +358,7 @@
             <div class="status-switch" data-unchecked="DarkOn" data-checked="DarkOff"></div>
         </label>
     </div>
-        <div class="quiz-container">
+    <div class="quiz-container">
         <h1 id="quiz-title">Select Quiz</h1>
         <div id="quiz-selection">
             <button class="time-option" onclick="selectQuiz('database')">Database-1</button>
@@ -377,6 +377,9 @@
             <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database-1 Quiz 2</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database-1 Quiz 3</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(4)">Database-1 LEC 1,2,3</button>
+            <button class="time-option" onclick="chooseDatabaseQuiz(5)">Database-1 (SQL Server)</button>
+
+
 
 
 
@@ -482,23 +485,23 @@
     <div id="review-answers" style="display:none;"></div>
 
     <script>
-        
+
         const checkbox = document.getElementById("status");
 
-if (localStorage.getItem("darkMode") === "enabled") {
-    document.body.classList.add("dark-mode");
-    checkbox.checked = true;
-}
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+            checkbox.checked = true;
+        }
 
-checkbox.addEventListener("change", function () {
-    if (checkbox.checked) {
-        document.body.classList.add("dark-mode");
-        localStorage.setItem("darkMode", "enabled");
-    } else {
-        document.body.classList.remove("dark-mode");
-        localStorage.setItem("darkMode", "disabled");
-    }
-});
+        checkbox.addEventListener("change", function () {
+            if (checkbox.checked) {
+                document.body.classList.add("dark-mode");
+                localStorage.setItem("darkMode", "enabled");
+            } else {
+                document.body.classList.remove("dark-mode");
+                localStorage.setItem("darkMode", "disabled");
+            }
+        });
         let score = 0;
         let totalQuestions;
         let currentQuestionIndex = 0;
@@ -1677,6 +1680,772 @@ checkbox.addEventListener("change", function () {
 
 
 
+        const databaseQuestion5 =
+            [
+                {
+                    "question": "Which SQL statement is used to retrieve data from a database?",
+                    "options": ["SELECT", "INSERT", "DELETE", "UPDATE"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which clause is used to filter records in a query?",
+                    "options": ["ORDER BY", "WHERE", "GROUP BY", "JOIN"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the correct syntax to create a new database?",
+                    "options": ["CREATE DATABASE database_name", "NEW DATABASE database_name", "MAKE DATABASE database_name", "DATABASE CREATE database_name"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of these is a valid data type in SQL Server?",
+                    "options": ["number", "int", "string", "chararray"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which command is used to remove a table from a database?",
+                    "options": ["DELETE", "DROP TABLE", "REMOVE", "CLEAR"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the COUNT() function do?",
+                    "options": ["Counts rows", "Sums numeric columns", "Returns maximum value", "Counts columns"],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the DISTINCT keyword do?",
+                    "options": ["Returns unique values", "Filters rows", "Groups data", "Joins tables"],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the primary key?",
+                    "options": ["A column with duplicate values", "A unique identifier for rows", "A foreign key", "An encrypted column"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which function returns the current date and time?",
+                    "options": ["NOW()", "GETDATE()", "CURDATE()", "SYSDATE()"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the default value of the IDENTITY property in SQL Server?",
+                    "options": ["(1, 0)", "(0, 1)", "(1, 1)", "(0, 0)"],
+                    "answer": 2
+                },
+                {
+                    "question": "Which of the following is used to add a row to a table?",
+                    "options": ["INSERT", "ADD", "MERGE", "PUSH"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL keyword is used to sort the result set?",
+                    "options": ["ORDER BY", "SORT BY", "ARRANGE BY", "GROUP BY"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which operator is used for pattern matching?",
+                    "options": ["=", "LIKE", "IN", "EXISTS"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the JOIN keyword do?",
+                    "options": ["Filters data", "Combines rows from multiple tables", "Deletes rows", "Groups data"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which of these is not a valid SQL statement?",
+                    "options": ["CREATE", "SELECT", "REMOVE", "INSERT"],
+                    "answer": 2
+                },
+                {
+                    "question": "What does NULL mean in SQL?",
+                    "options": ["Zero", "Empty string", "Missing or undefined value", "False"],
+                    "answer": 2
+                },
+                {
+                    "question": "Which SQL function is used to find the largest value?",
+                    "options": ["MIN", "MAX", "COUNT", "AVG"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of the ALTER TABLE command?",
+                    "options": ["To add or modify table structure", "To delete a table", "To rename a table", "To change data in a table"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which keyword is used to remove duplicate rows?",
+                    "options": ["UNIQUE", "DISTINCT", "FILTER", "DELETE"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the output of SELECT 10 % 3 in SQL Server?",
+                    "options": ["0", "1", "3", "10"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL clause is used to group records that have the same values?",
+                    "options": ["ORDER BY", "GROUP BY", "WHERE", "HAVING"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which command is used to update existing records in a table?",
+                    "options": ["ALTER", "UPDATE", "MODIFY", "SET"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the HAVING clause do in SQL?",
+                    "options": ["Filters grouped data", "Filters individual rows", "Sorts data", "Joins tables"],
+                    "answer": 0
+                },
+                {
+                    "question": "What is a foreign key in a database?",
+                    "options": ["A unique column", "A column that links to another table", "A table identifier", "An index"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of the TRUNCATE TABLE command?",
+                    "options": ["Remove a table", "Delete all rows in a table", "Remove specific rows", "Clear all columns in a table"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL operator tests for the existence of rows in a subquery?",
+                    "options": ["EXISTS", "IN", "ANY", "ALL"],
+                    "answer": 0
+                },
+                {
+                    "question": "What is a view in SQL?",
+                    "options": ["A temporary table", "A virtual table", "A stored procedure", "A database schema"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL keyword is used to combine the results of two queries?",
+                    "options": ["JOIN", "UNION", "MERGE", "INTERSECT"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of indexing in SQL?",
+                    "options": ["To store data", "To speed up data retrieval", "To prevent duplicate data", "To secure data"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the UNIQUE constraint do?",
+                    "options": ["Allows null values", "Ensures all values are different", "Links tables together", "Defines a foreign key"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which command removes all rows from a table without logging individual row deletions?",
+                    "options": ["DELETE", "TRUNCATE", "DROP", "CLEAR"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL function is used to calculate the average value of a numeric column?",
+                    "options": ["SUM", "COUNT", "AVG", "MAX"],
+                    "answer": 2
+                },
+                {
+                    "question": "Which SQL keyword is used to rename a column in the result set?",
+                    "options": ["RENAME", "AS", "ALTER", "SET"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the LEFT JOIN operation do?",
+                    "options": [
+                        "Returns all rows from the left table and matching rows from the right table",
+                        "Returns rows that exist in both tables",
+                        "Returns rows from the right table only",
+                        "Returns all rows from both tables"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL keyword is used to test if a value matches a specific list of values?",
+                    "options": ["LIKE", "IN", "BETWEEN", "EXISTS"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the DATEDIFF function do?",
+                    "options": [
+                        "Calculates the difference between two dates",
+                        "Returns the current date",
+                        "Adds days to a date",
+                        "Formats a date value"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the CONCAT function do in SQL?",
+                    "options": [
+                        "Joins multiple strings into one",
+                        "Splits a string into parts",
+                        "Converts a string to uppercase",
+                        "Reverses a string"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL statement is used to limit the number of rows returned?",
+                    "options": ["LIMIT", "TOP", "FETCH", "ROWNUM"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of these is a DDL (Data Definition Language) command?",
+                    "options": ["SELECT", "INSERT", "CREATE", "UPDATE"],
+                    "answer": 2
+                },
+                {
+                    "question": "What is the purpose of the DEFAULT constraint in SQL?",
+                    "options": [
+                        "To ensure all values are unique",
+                        "To specify a default value if no value is provided",
+                        "To define a primary key",
+                        "To enforce a relationship between tables"
+                    ],
+                    "answer": 1
+                },
+
+                {
+                    "question": "Which SQL function is used to return the number of rows in a table?",
+                    "options": ["SUM", "COUNT", "ROWNUM", "LENGTH"],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the INNER JOIN operation do?",
+                    "options": [
+                        "Combines rows from two tables only when there is a match in both tables",
+                        "Returns all rows from the left table",
+                        "Returns all rows from the right table",
+                        "Returns all rows from both tables regardless of matching"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is a primary key in a database?",
+                    "options": [
+                        "A column with duplicate values",
+                        "A unique identifier for each record",
+                        "A link between two tables",
+                        "An index for fast retrieval"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL keyword is used to remove a table from the database?",
+                    "options": ["DELETE", "REMOVE", "DROP", "TRUNCATE"],
+                    "answer": 2
+                },
+                {
+                    "question": "What does the DISTINCT keyword do in a SELECT statement?",
+                    "options": [
+                        "Sorts the rows by a column",
+                        "Filters out duplicate rows",
+                        "Groups rows based on a condition",
+                        "Joins multiple tables"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL clause is used to filter rows after grouping data?",
+                    "options": ["WHERE", "HAVING", "GROUP BY", "ORDER BY"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of the ORDER BY clause in SQL?",
+                    "options": [
+                        "To group records with the same values",
+                        "To filter rows based on a condition",
+                        "To sort the result set in ascending or descending order",
+                        "To limit the number of rows returned"
+                    ],
+                    "answer": 2
+                },
+                {
+                    "question": "What does the BETWEEN operator do in SQL?",
+                    "options": [
+                        "Filters rows within a specific range",
+                        "Joins two tables",
+                        "Returns rows matching a specific pattern",
+                        "Adds a condition to the query"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL clause is used to specify the condition for filtering rows in a SELECT query?",
+                    "options": ["HAVING", "WHERE", "FROM", "GROUP BY"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the difference between DELETE and TRUNCATE commands?",
+                    "options": [
+                        "DELETE removes rows selectively; TRUNCATE removes all rows",
+                        "DELETE removes all rows; TRUNCATE is selective",
+                        "DELETE removes the table; TRUNCATE clears specific columns",
+                        "DELETE clears the table structure; TRUNCATE removes duplicates"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL function returns the maximum value in a column?",
+                    "options": ["MAX", "MIN", "SUM", "COUNT"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which command is used to add a new column to an existing table?",
+                    "options": ["ADD", "ALTER", "INSERT", "UPDATE"],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of a composite key?",
+                    "options": [
+                        "To link two tables together",
+                        "To enforce a unique identifier using multiple columns",
+                        "To store multiple rows in a single column",
+                        "To speed up query performance"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL command is used to combine rows from multiple tables based on a related column?",
+                    "options": ["JOIN", "UNION", "MERGE", "INTERSECT"],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL wildcard '%' represent in a LIKE statement?",
+                    "options": [
+                        "Zero or more characters",
+                        "A single character",
+                        "A digit only",
+                        "A range of characters"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of the UNIQUE constraint in SQL?",
+                    "options": [
+                        "To ensure all values in a column are different",
+                        "To specify a default value",
+                        "To allow duplicate values",
+                        "To define a primary key"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL clause is used to return rows with no NULL values in a specific column?",
+                    "options": ["NOT NULL", "IS NOT NULL", "NO NULL", "EXCLUDE NULL"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL aggregate function is used to find the total sum of a numeric column?",
+                    "options": ["SUM", "COUNT", "AVG", "MAX"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL keyword is used to check if a value is null?",
+                    "options": ["IS NULL", "IS EMPTY", "CHECK NULL", "NULL"],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of a FOREIGN KEY constraint?",
+                    "options": [
+                        "To link two tables together",
+                        "To enforce unique values in a column",
+                        "To define a default value",
+                        "To set a primary key"
+                    ],
+                    "answer": 0
+                },
+
+                {
+                    "question": "What is the purpose of the GROUP BY clause in SQL?",
+                    "options": [
+                        "To filter rows based on a condition",
+                        "To group rows with the same values in specified columns",
+                        "To sort the result set in ascending or descending order",
+                        "To combine rows from multiple tables"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the UNION operator do in SQL?",
+                    "options": [
+                        "Combines the results of two queries and removes duplicates",
+                        "Joins two tables based on a related column",
+                        "Combines rows within the same table",
+                        "Returns only matching rows from two queries"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL clause is used to limit the number of rows returned by a query?",
+                    "options": ["LIMIT", "WHERE", "OFFSET", "ROWNUM"],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the HAVING clause do in SQL?",
+                    "options": [
+                        "Filters grouped rows based on a condition",
+                        "Filters rows before grouping",
+                        "Sorts rows in the result set",
+                        "Combines results of two queries"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL keyword is used to update data in a table?",
+                    "options": ["MODIFY", "ALTER", "UPDATE", "REPLACE"],
+                    "answer": 2
+                },
+                {
+                    "question": "What is the purpose of the INDEX in a database?",
+                    "options": [
+                        "To enforce unique values in a column",
+                        "To improve the speed of data retrieval",
+                        "To define the structure of a table",
+                        "To remove duplicate rows"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of the DEFAULT constraint in SQL?",
+                    "options": [
+                        "To enforce unique values",
+                        "To provide a fallback value if none is specified",
+                        "To link tables together",
+                        "To set a primary key"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the SQL keyword IS NOT NULL do?",
+                    "options": [
+                        "Filters rows with non-NULL values",
+                        "Filters rows with NULL values",
+                        "Removes NULL values from the table",
+                        "Replaces NULL values with defaults"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of the SQL AVG function?",
+                    "options": [
+                        "To calculate the total sum of a column",
+                        "To find the average value of a numeric column",
+                        "To count the number of rows in a table",
+                        "To return the highest value in a column"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the TRUNCATE command do in SQL?",
+                    "options": [
+                        "Deletes all rows from a table without logging individual row deletions",
+                        "Removes specific rows based on a condition",
+                        "Deletes the table from the database",
+                        "Clears duplicate rows from a table"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL COUNT function do?",
+                    "options": [
+                        "Counts the number of rows in a table",
+                        "Counts the number of non-NULL values in a column",
+                        "Counts the distinct values in a column",
+                        "Counts the total number of columns"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which type of join returns all rows when there is a match in one of the tables?",
+                    "options": [
+                        "INNER JOIN",
+                        "LEFT JOIN",
+                        "RIGHT JOIN",
+                        "FULL OUTER JOIN"
+                    ],
+                    "answer": 3
+                },
+                {
+                    "question": "What is the main function of a foreign key in SQL?",
+                    "options": [
+                        "To ensure uniqueness of values in a column",
+                        "To link two tables together",
+                        "To ensure no NULL values in a column",
+                        "To store large amounts of data"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which of the following is a correct syntax for creating a new table in SQL?",
+                    "options": [
+                        "CREATE NEW TABLE table_name",
+                        "CREATE TABLE table_name ()",
+                        "TABLE CREATE table_name",
+                        "MAKE TABLE table_name"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which SQL keyword is used to remove a table from the database?",
+                    "options": [
+                        "REMOVE",
+                        "DROP",
+                        "DELETE",
+                        "CLEAR"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the purpose of the SQL UNION ALL operator?",
+                    "options": [
+                        "Combines the results of two queries, including duplicates",
+                        "Removes duplicates from the result set",
+                        "Joins multiple tables based on foreign keys",
+                        "Returns only matching rows from both queries"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of the SQL DISTINCT keyword?",
+                    "options": [
+                        "Filters out NULL values",
+                        "Ensures rows are unique",
+                        "Combines multiple rows",
+                        "Sorts rows in ascending order"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which clause is used to sort the results of a SQL query?",
+                    "options": [
+                        "ORDER BY",
+                        "GROUP BY",
+                        "SORT BY",
+                        "FILTER BY"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the function of the SQL SUBSTRING() function?",
+                    "options": [
+                        "Returns a specified portion of a string",
+                        "Replaces part of a string with another string",
+                        "Finds the length of a string",
+                        "Converts a string to uppercase"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which operator is used to find values that match a pattern in SQL?",
+                    "options": [
+                        "LIKE",
+                        "MATCH",
+                        "IN",
+                        "EXISTS"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL clause is used to group rows that have the same values?",
+                    "options": [
+                        "GROUP BY",
+                        "ORDER BY",
+                        "DISTINCT",
+                        "HAVING"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL AVG() function do?",
+                    "options": [
+                        "Calculates the average value of a column",
+                        "Calculates the sum of a column",
+                        "Counts the number of rows",
+                        "Finds the maximum value in a column"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which keyword is used to define a primary key in SQL?",
+                    "options": [
+                        "PRIMARY KEY",
+                        "FOREIGN KEY",
+                        "UNIQUE",
+                        "NOT NULL"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL command is used to remove all rows from a table without deleting the table?",
+                    "options": [
+                        "DELETE",
+                        "TRUNCATE",
+                        "REMOVE",
+                        "DROP"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the default sorting order for the ORDER BY clause in SQL?",
+                    "options": [
+                        "Ascending",
+                        "Descending",
+                        "Random",
+                        "No sorting"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL function is used to return the current date and time?",
+                    "options": [
+                        "GETDATE()",
+                        "CURRENT_DATE()",
+                        "NOW()",
+                        "SYSDATE()"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL INSERT INTO statement do?",
+                    "options": [
+                        "Inserts new data into a table",
+                        "Retrieves data from a table",
+                        "Updates existing data in a table",
+                        "Deletes data from a table"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of the SQL BETWEEN operator?",
+                    "options": [
+                        "Filters data within a specific range",
+                        "Joins two tables together",
+                        "Filters data based on multiple conditions",
+                        "Matches a specific pattern"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of the following is a valid SQL data type for storing text?",
+                    "options": [
+                        "VARCHAR",
+                        "TEXT",
+                        "CHAR",
+                        "STRING"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL LIMIT clause do?",
+                    "options": [
+                        "Limits the number of rows returned by a query",
+                        "Limits the size of data in a column",
+                        "Sets the maximum value of a column",
+                        "Restricts access to certain rows"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is a foreign key used for in SQL?",
+                    "options": [
+                        "To create a relationship between two tables",
+                        "To enforce uniqueness in a column",
+                        "To store duplicate values",
+                        "To optimize query performance"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which function is used to return the highest value in a column in SQL?",
+                    "options": [
+                        "MAX()",
+                        "MIN()",
+                        "COUNT()",
+                        "AVG()"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL DROP command do?",
+                    "options": [
+                        "Deletes a table or database",
+                        "Removes all rows from a table",
+                        "Deletes a column from a table",
+                        "Updates a table schema"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL statement is used to modify existing records in a table?",
+                    "options": [
+                        "UPDATE",
+                        "MODIFY",
+                        "EDIT",
+                        "ALTER"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the function of the SQL ISNULL() function?",
+                    "options": [
+                        "Replaces NULL values with a specified value",
+                        "Checks if a column value is NULL",
+                        "Counts the number of NULL values in a column",
+                        "Converts NULL values to zero"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of these is a valid SQL constraint to ensure that values in a column are unique?",
+                    "options": [
+                        "UNIQUE",
+                        "PRIMARY KEY",
+                        "NOT NULL",
+                        "FOREIGN KEY"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL clause is used to filter the records before applying aggregation?",
+                    "options": [
+                        "WHERE",
+                        "HAVING",
+                        "GROUP BY",
+                        "FILTER"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL operator is used to compare a value to a list of values?",
+                    "options": [
+                        "IN",
+                        "LIKE",
+                        "BETWEEN",
+                        "IS NULL"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL clause is used to sort the result set in a specific order?",
+                    "options": [
+                        "ORDER BY",
+                        "GROUP BY",
+                        "HAVING",
+                        "DISTINCT"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the use of the SQL EXCEPT operator?",
+                    "options": [
+                        "Returns the difference between two result sets",
+                        "Combines two result sets",
+                        "Returns records that match in both result sets",
+                        "Removes duplicates from a result set"
+                    ],
+                    "answer": 0
+                }
+
+            ];
 
 
 
@@ -5077,343 +5846,343 @@ checkbox.addEventListener("change", function () {
 
 
         const biQuestions1 = [
-            
-                {
-                    question: "What is the main goal of Business Intelligence (BI)?",
-                    options: ["Increase storage capacity", "Enable interactive access to data for analysis", "Reduce data redundancy", "Enhance transaction processing"],
-                    answer: 1
-                },
-                {
-                    question: "BI initially emerged from:",
-                    options: ["CRM systems", "MIS reporting systems in the 1970s", "Online transaction processing", "Cloud computing"],
-                    answer: 1
-                },
-                {
-                    question: "Which component is not part of the BI architecture?",
-                    options: ["Data Warehouse", "Business Analytics", "Customer Relationship Management", "Business Performance Management"],
-                    answer: 2
-                },
-                {
-                    question: "The main purpose of a data warehouse is to:",
-                    options: ["Store transactional data", "Perform real-time updates", "Store and organize historical data", "Optimize inventory management"],
-                    answer: 2
-                },
-                {
-                    question: "OLTP stands for:",
-                    options: ["On-Line Transaction Processing", "Operational Level Technology Processing", "On-Level Technology Performance", "Offline Transaction Process"],
-                    answer: 0
-                },
-                {
-                    question: "What does OLAP primarily support?",
-                    options: ["Real-time updates", "Routine transaction processing", "Complex queries and data analysis", "Inventory management"],
-                    answer: 2
-                },
-                {
-                    question: "Which of the following describes Normalization?",
-                    options: ["Merging data to reduce storage", "Arranging data to eliminate redundancy", "Combining multiple tables for faster retrieval", "Creating backup copies of data"],
-                    answer: 1
-                },
-                {
-                    question: "Which of the following is NOT an identified style of BI by MicroStrategy, Corp.?",
-                    options: ["Cube analysis", "Data mining", "Ad-hoc queries", "Enterprise resource planning"],
-                    answer: 3
-                },
-                {
-                    question: "Descriptive Analytics is primarily concerned with:",
-                    options: ["Predicting future outcomes", "Optimizing current processes", "Understanding past and present trends", "Automating business operations"],
-                    answer: 2
-                },
-                {
-                    question: "Which analytics type aims to predict future customer behavior?",
-                    options: ["Descriptive", "Predictive", "Prescriptive", "Diagnostic"],
-                    answer: 1
-                },
-                {
-                    question: "Which analytics type focuses on making decisions to improve system performance?",
-                    options: ["Predictive", "Descriptive", "Prescriptive", "Diagnostic"],
-                    answer: 2
-                },
-                {
-                    question: "A BI dashboard is an example of which BI component?",
-                    options: ["Data Warehouse", "Business Analytics", "User Interface", "Data Mining"],
-                    answer: 2
-                },
-                {
-                    question: "Which term describes the process of optimizing a database to remove redundancy?",
-                    options: ["Denormalization", "Aggregation", "Normalization", "Fragmentation"],
-                    answer: 2
-                },
-                {
-                    question: "Which BI component measures and monitors Key Performance Indicators (KPIs)?",
-                    options: ["Data Warehouse", "Business Analytics", "Business Performance Management (BPM)", "User Interface"],
-                    answer: 2
-                },
-                {
-                    question: "Which of the following is a benefit of BI?",
-                    options: ["Reduced data storage", "Faster, more accurate reporting", "Increased data redundancy", "Increased transaction processing speed"],
-                    answer: 1
-                },
-                {
-                    question: "In which decade was the term “Business Intelligence” (BI) coined?",
-                    options: ["1970s", "1980s", "1990s", "2000s"],
-                    answer: 1
-                },
-                {
-                    question: "Which is primarily responsible for handling a company’s routine ongoing transactions?",
-                    options: ["OLAP", "Data Warehouse", "OLTP", "CRM"],
-                    answer: 2
-                },
-                {
-                    question: "Which of these processes combines tables to make data retrieval faster?",
-                    options: ["Normalization", "Denormalization", "Data Mining", "Aggregation"],
-                    answer: 1
-                },
-                {
-                    question: "Data Scientist skills often include:",
-                    options: ["Business process automation", "Basic Excel and SQL skills", "Advanced statistics and machine learning", "Inventory management"],
-                    answer: 2
-                },
-                {
-                    question: "A data analyst primarily works with:",
-                    options: ["Predictive analytics", "Business process management", "Data compilation and reporting", "Automated decision systems"],
-                    answer: 2
-                },
-                {
-                    question: "What does “DSS” stand for in BI terminology?",
-                    options: ["Data Science Systems", "Decision Support Systems", "Data Service System", "Decision Security Service"],
-                    answer: 1
-                },
-                {
-                    question: "Which BI style allows for 'slice-and-dice' analysis?",
-                    options: ["Cube analysis", "Enterprise reporting", "Ad-hoc queries", "Data mining"],
-                    answer: 0
-                },
-                {
-                    question: "In BI, “real-time view of corporate performance” is primarily provided by:",
-                    options: ["Ad-hoc reporting", "OLAP systems", "Online Transaction Processing", "Dashboards and portals"],
-                    answer: 3
-                },
-                {
-                    question: "What technology became prominent in BI by 2005?",
-                    options: ["Cloud storage", "Artificial Intelligence", "Data visualization", "Simple databases"],
-                    answer: 2
-                },
-                {
-                    question: "Data integrity is harder to maintain in:",
-                    options: ["OLAP systems", "Normalized tables", "Denormalized structures", "Real-time dashboards"],
-                    answer: 2
-                },
-                {
-                    question: "True or False: BI helps decision-makers analyze both historical and current data.",
-                    options: ["True", "False"],
-                    answer: 0
-                },
-                {
-                    question: "True or False: OLTP systems are primarily used for complex, ad-hoc analysis.",
-                    options: ["True", "False"],
-                    answer: 1
-                },
-                {
-                    question: "True or False: Denormalization reduces data redundancy.",
-                    options: ["True", "False"],
-                    answer: 1
-                },
-                {
-                    question: "True or False: Predictive analytics aims to optimize current business performance.",
-                    options: ["True", "False"],
-                    answer: 1
-                },
-                {
-                    question: "True or False: The user interface in BI architecture is typically used for storage.",
-                    options: ["True", "False"],
-                    answer: 1
-                },
-                {
-                    question: "True or False: Data scientists usually require programming skills in languages like Python or R.",
-                    options: ["True", "False"],
-                    answer: 0
-                },
-                {
-                    question: "True or False: Descriptive analytics helps in understanding trends and causes in data.",
-                    options: ["True", "False"],
-                    answer: 0
-                },
-                {
-                    question: "True or False: Data warehouses are used mainly for transaction processing.",
-                    options: ["True", "False"],
-                    answer: 1
-                },
-                {
-                    question: "True or False: In normalization, data is structured to reduce redundancy and improve integrity.",
-                    options: ["True", "False"],
-                    answer: 0
-                },
-                {
-                    question: "True or False: Dashboards provide a static view of business performance metrics.",
-                    options: ["True", "False"],
-                    answer: 1
-                }
-            ]
 
-        
+            {
+                question: "What is the main goal of Business Intelligence (BI)?",
+                options: ["Increase storage capacity", "Enable interactive access to data for analysis", "Reduce data redundancy", "Enhance transaction processing"],
+                answer: 1
+            },
+            {
+                question: "BI initially emerged from:",
+                options: ["CRM systems", "MIS reporting systems in the 1970s", "Online transaction processing", "Cloud computing"],
+                answer: 1
+            },
+            {
+                question: "Which component is not part of the BI architecture?",
+                options: ["Data Warehouse", "Business Analytics", "Customer Relationship Management", "Business Performance Management"],
+                answer: 2
+            },
+            {
+                question: "The main purpose of a data warehouse is to:",
+                options: ["Store transactional data", "Perform real-time updates", "Store and organize historical data", "Optimize inventory management"],
+                answer: 2
+            },
+            {
+                question: "OLTP stands for:",
+                options: ["On-Line Transaction Processing", "Operational Level Technology Processing", "On-Level Technology Performance", "Offline Transaction Process"],
+                answer: 0
+            },
+            {
+                question: "What does OLAP primarily support?",
+                options: ["Real-time updates", "Routine transaction processing", "Complex queries and data analysis", "Inventory management"],
+                answer: 2
+            },
+            {
+                question: "Which of the following describes Normalization?",
+                options: ["Merging data to reduce storage", "Arranging data to eliminate redundancy", "Combining multiple tables for faster retrieval", "Creating backup copies of data"],
+                answer: 1
+            },
+            {
+                question: "Which of the following is NOT an identified style of BI by MicroStrategy, Corp.?",
+                options: ["Cube analysis", "Data mining", "Ad-hoc queries", "Enterprise resource planning"],
+                answer: 3
+            },
+            {
+                question: "Descriptive Analytics is primarily concerned with:",
+                options: ["Predicting future outcomes", "Optimizing current processes", "Understanding past and present trends", "Automating business operations"],
+                answer: 2
+            },
+            {
+                question: "Which analytics type aims to predict future customer behavior?",
+                options: ["Descriptive", "Predictive", "Prescriptive", "Diagnostic"],
+                answer: 1
+            },
+            {
+                question: "Which analytics type focuses on making decisions to improve system performance?",
+                options: ["Predictive", "Descriptive", "Prescriptive", "Diagnostic"],
+                answer: 2
+            },
+            {
+                question: "A BI dashboard is an example of which BI component?",
+                options: ["Data Warehouse", "Business Analytics", "User Interface", "Data Mining"],
+                answer: 2
+            },
+            {
+                question: "Which term describes the process of optimizing a database to remove redundancy?",
+                options: ["Denormalization", "Aggregation", "Normalization", "Fragmentation"],
+                answer: 2
+            },
+            {
+                question: "Which BI component measures and monitors Key Performance Indicators (KPIs)?",
+                options: ["Data Warehouse", "Business Analytics", "Business Performance Management (BPM)", "User Interface"],
+                answer: 2
+            },
+            {
+                question: "Which of the following is a benefit of BI?",
+                options: ["Reduced data storage", "Faster, more accurate reporting", "Increased data redundancy", "Increased transaction processing speed"],
+                answer: 1
+            },
+            {
+                question: "In which decade was the term “Business Intelligence” (BI) coined?",
+                options: ["1970s", "1980s", "1990s", "2000s"],
+                answer: 1
+            },
+            {
+                question: "Which is primarily responsible for handling a company’s routine ongoing transactions?",
+                options: ["OLAP", "Data Warehouse", "OLTP", "CRM"],
+                answer: 2
+            },
+            {
+                question: "Which of these processes combines tables to make data retrieval faster?",
+                options: ["Normalization", "Denormalization", "Data Mining", "Aggregation"],
+                answer: 1
+            },
+            {
+                question: "Data Scientist skills often include:",
+                options: ["Business process automation", "Basic Excel and SQL skills", "Advanced statistics and machine learning", "Inventory management"],
+                answer: 2
+            },
+            {
+                question: "A data analyst primarily works with:",
+                options: ["Predictive analytics", "Business process management", "Data compilation and reporting", "Automated decision systems"],
+                answer: 2
+            },
+            {
+                question: "What does “DSS” stand for in BI terminology?",
+                options: ["Data Science Systems", "Decision Support Systems", "Data Service System", "Decision Security Service"],
+                answer: 1
+            },
+            {
+                question: "Which BI style allows for 'slice-and-dice' analysis?",
+                options: ["Cube analysis", "Enterprise reporting", "Ad-hoc queries", "Data mining"],
+                answer: 0
+            },
+            {
+                question: "In BI, “real-time view of corporate performance” is primarily provided by:",
+                options: ["Ad-hoc reporting", "OLAP systems", "Online Transaction Processing", "Dashboards and portals"],
+                answer: 3
+            },
+            {
+                question: "What technology became prominent in BI by 2005?",
+                options: ["Cloud storage", "Artificial Intelligence", "Data visualization", "Simple databases"],
+                answer: 2
+            },
+            {
+                question: "Data integrity is harder to maintain in:",
+                options: ["OLAP systems", "Normalized tables", "Denormalized structures", "Real-time dashboards"],
+                answer: 2
+            },
+            {
+                question: "True or False: BI helps decision-makers analyze both historical and current data.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "True or False: OLTP systems are primarily used for complex, ad-hoc analysis.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "True or False: Denormalization reduces data redundancy.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "True or False: Predictive analytics aims to optimize current business performance.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "True or False: The user interface in BI architecture is typically used for storage.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "True or False: Data scientists usually require programming skills in languages like Python or R.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "True or False: Descriptive analytics helps in understanding trends and causes in data.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "True or False: Data warehouses are used mainly for transaction processing.",
+                options: ["True", "False"],
+                answer: 1
+            },
+            {
+                question: "True or False: In normalization, data is structured to reduce redundancy and improve integrity.",
+                options: ["True", "False"],
+                answer: 0
+            },
+            {
+                question: "True or False: Dashboards provide a static view of business performance metrics.",
+                options: ["True", "False"],
+                answer: 1
+            }
+        ]
+
+
 
 
 
         const biQuestions2 =
-            
 
-                [
-                    {
-                        "question": "What is a primary purpose of a data warehouse?",
-                        "options": ["Real-time processing", "Decision support", "Web browsing", "Transaction processing"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "Which term describes data structured for analysis in data warehousing?",
-                        "options": ["OLTP", "Metadata", "OLAP", "E-commerce"],
-                        "answer": 2
-                    },
-                    {
-                        "question": "A data warehouse’s 'subject-oriented' nature primarily refers to:",
-                        "options": ["Storing daily transactions", "Organizing data by topics like sales and customers", "Enabling frequent data updates", "Supporting marketing activities only"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "In a data warehouse, integration ensures that:",
-                        "options": ["All data is in real-time", "Data is updated hourly", "Data from different sources have a consistent format", "All data is anonymized"],
-                        "answer": 2
-                    },
-                    {
-                        "question": "Time-variant data in a warehouse means:",
-                        "options": ["Data is always current", "Data shows historical trends", "Data changes every week", "Only current year data is stored"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "Which of the following is a characteristic of data warehousing?",
-                        "options": ["Nonvolatile data", "Real-time processing only", "High update frequency", "Unstructured data collection"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "What is a dependent data mart?",
-                        "options": ["A data source external to the data warehouse", "A subset of the warehouse derived directly from it", "A data storage for real-time analytics", "A non-integrated collection of reports"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "Which ETL process involves converting data to fit the warehouse structure?",
-                        "options": ["Extraction", "Transformation", "Load", "Integration"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "A key benefit of a data warehouse is:",
-                        "options": ["Increased data entry speeds", "Real-time data modifications", "Centralized data for decision-making", "Personalized data storage for each department"],
-                        "answer": 2
-                    },
-                    {
-                        "question": "Data in an Operational Data Store (ODS) is typically:",
-                        "options": ["Historical", "Updated in real-time", "Subject to regular archiving", "Deleted frequently"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "Which is a main component of a data warehouse?",
-                        "options": ["Database logs", "Middleware tools", "Social media plugins", "Data tables only"],
-                        "answer": 3
-                    },
-                    {
-                        "question": "Metadata in a data warehouse is used to:",
-                        "options": ["Store transaction data", "Describe the structure and rules for data use", "Automatically update all data", "Store unrelated information"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "In ETL, the process of loading means:",
-                        "options": ["Gathering new data", "Storing transformed data in the warehouse", "Editing raw data", "Validating data changes"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "Which is NOT a characteristic of a data warehouse?",
-                        "options": ["Time-variant data", "Integration of sources", "Volatile data", "Nonvolatile data"],
-                        "answer": 2
-                    },
-                    {
-                        "question": "What is Dimensional Modeling used for?",
-                        "options": ["Data cleaning", "Enhancing OLTP databases", "Structuring data for BI analysis", "Reducing storage requirements"],
-                        "answer": 2
-                    },
-                    {
-                        "question": "In a dimensional model, a 'fact' represents:",
-                        "options": ["Historical records only", "Business measurements like sales or expenses", "A type of metadata", "Data structure only"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "Dimensions in a data warehouse:",
-                        "options": ["Define the context for facts", "Are numerical measurements only", "Cannot be organized hierarchically", "Are temporary data only"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "Which component of the ETL process reads data from various sources?",
-                        "options": ["Extraction", "Transformation", "Load", "Cleansing"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "In a data warehouse, 'granularity' refers to:",
-                        "options": ["Data type restrictions", "The level of detail in data", "Database size", "Update frequency"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "A fact table typically consists of:",
-                        "options": ["Only primary keys", "Keys and measurements", "Metadata only", "Hierarchical dimensions"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "True or False: A data warehouse can change or update data once it is stored.",
-                        "options": ["True", "False"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "True or False: Dimensional modeling is a logical design technique for organizing data in BI.",
-                        "options": ["True", "False"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "True or False: Operational Data Stores (ODS) are used for short-term decision-making.",
-                        "options": ["True", "False"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "True or False: Metadata in a data warehouse is unimportant for business intelligence applications.",
-                        "options": ["True", "False"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "True or False: ETL stands for Extraction, Transaction, and Loading.",
-                        "options": ["True", "False"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "True or False: A data mart is smaller than an enterprise data warehouse and focuses on a single subject.",
-                        "options": ["True", "False"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "True or False: A nonvolatile data warehouse means data cannot be overwritten or changed after being added.",
-                        "options": ["True", "False"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "True or False: An independent data mart is created from an existing enterprise data warehouse.",
-                        "options": ["True", "False"],
-                        "answer": 1
-                    },
-                    {
-                        "question": "True or False: Data granularity is the degree to which data can be aggregated.",
-                        "options": ["True", "False"],
-                        "answer": 0
-                    },
-                    {
-                        "question": "True or False: Real-time data processing is a characteristic of all data warehouses.",
-                        "options": ["True", "False"],
-                        "answer": 1
-                    }
-                
+
+            [
+                {
+                    "question": "What is a primary purpose of a data warehouse?",
+                    "options": ["Real-time processing", "Decision support", "Web browsing", "Transaction processing"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which term describes data structured for analysis in data warehousing?",
+                    "options": ["OLTP", "Metadata", "OLAP", "E-commerce"],
+                    "answer": 2
+                },
+                {
+                    "question": "A data warehouse’s 'subject-oriented' nature primarily refers to:",
+                    "options": ["Storing daily transactions", "Organizing data by topics like sales and customers", "Enabling frequent data updates", "Supporting marketing activities only"],
+                    "answer": 1
+                },
+                {
+                    "question": "In a data warehouse, integration ensures that:",
+                    "options": ["All data is in real-time", "Data is updated hourly", "Data from different sources have a consistent format", "All data is anonymized"],
+                    "answer": 2
+                },
+                {
+                    "question": "Time-variant data in a warehouse means:",
+                    "options": ["Data is always current", "Data shows historical trends", "Data changes every week", "Only current year data is stored"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which of the following is a characteristic of data warehousing?",
+                    "options": ["Nonvolatile data", "Real-time processing only", "High update frequency", "Unstructured data collection"],
+                    "answer": 0
+                },
+                {
+                    "question": "What is a dependent data mart?",
+                    "options": ["A data source external to the data warehouse", "A subset of the warehouse derived directly from it", "A data storage for real-time analytics", "A non-integrated collection of reports"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which ETL process involves converting data to fit the warehouse structure?",
+                    "options": ["Extraction", "Transformation", "Load", "Integration"],
+                    "answer": 1
+                },
+                {
+                    "question": "A key benefit of a data warehouse is:",
+                    "options": ["Increased data entry speeds", "Real-time data modifications", "Centralized data for decision-making", "Personalized data storage for each department"],
+                    "answer": 2
+                },
+                {
+                    "question": "Data in an Operational Data Store (ODS) is typically:",
+                    "options": ["Historical", "Updated in real-time", "Subject to regular archiving", "Deleted frequently"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which is a main component of a data warehouse?",
+                    "options": ["Database logs", "Middleware tools", "Social media plugins", "Data tables only"],
+                    "answer": 3
+                },
+                {
+                    "question": "Metadata in a data warehouse is used to:",
+                    "options": ["Store transaction data", "Describe the structure and rules for data use", "Automatically update all data", "Store unrelated information"],
+                    "answer": 1
+                },
+                {
+                    "question": "In ETL, the process of loading means:",
+                    "options": ["Gathering new data", "Storing transformed data in the warehouse", "Editing raw data", "Validating data changes"],
+                    "answer": 1
+                },
+                {
+                    "question": "Which is NOT a characteristic of a data warehouse?",
+                    "options": ["Time-variant data", "Integration of sources", "Volatile data", "Nonvolatile data"],
+                    "answer": 2
+                },
+                {
+                    "question": "What is Dimensional Modeling used for?",
+                    "options": ["Data cleaning", "Enhancing OLTP databases", "Structuring data for BI analysis", "Reducing storage requirements"],
+                    "answer": 2
+                },
+                {
+                    "question": "In a dimensional model, a 'fact' represents:",
+                    "options": ["Historical records only", "Business measurements like sales or expenses", "A type of metadata", "Data structure only"],
+                    "answer": 1
+                },
+                {
+                    "question": "Dimensions in a data warehouse:",
+                    "options": ["Define the context for facts", "Are numerical measurements only", "Cannot be organized hierarchically", "Are temporary data only"],
+                    "answer": 0
+                },
+                {
+                    "question": "Which component of the ETL process reads data from various sources?",
+                    "options": ["Extraction", "Transformation", "Load", "Cleansing"],
+                    "answer": 0
+                },
+                {
+                    "question": "In a data warehouse, 'granularity' refers to:",
+                    "options": ["Data type restrictions", "The level of detail in data", "Database size", "Update frequency"],
+                    "answer": 1
+                },
+                {
+                    "question": "A fact table typically consists of:",
+                    "options": ["Only primary keys", "Keys and measurements", "Metadata only", "Hierarchical dimensions"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: A data warehouse can change or update data once it is stored.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: Dimensional modeling is a logical design technique for organizing data in BI.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: Operational Data Stores (ODS) are used for short-term decision-making.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: Metadata in a data warehouse is unimportant for business intelligence applications.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: ETL stands for Extraction, Transaction, and Loading.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: A data mart is smaller than an enterprise data warehouse and focuses on a single subject.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: A nonvolatile data warehouse means data cannot be overwritten or changed after being added.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: An independent data mart is created from an existing enterprise data warehouse.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                },
+                {
+                    "question": "True or False: Data granularity is the degree to which data can be aggregated.",
+                    "options": ["True", "False"],
+                    "answer": 0
+                },
+                {
+                    "question": "True or False: Real-time data processing is a characteristic of all data warehouses.",
+                    "options": ["True", "False"],
+                    "answer": 1
+                }
+
             ]
 
 
@@ -5710,6 +6479,206 @@ checkbox.addEventListener("change", function () {
                     "question": "True or False: Accumulating fact tables are often used to analyze processes with clear stages or milestones.",
                     "options": ["True", "False"],
                     "answer": 0
+                },
+                {
+                    "question": "Which SQL function is used to get the current date and time?",
+                    "options": [
+                        "GETDATE()",
+                        "NOW()",
+                        "CURDATE()",
+                        "SYSDATE()"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of the SQL UPDATE statement?",
+                    "options": [
+                        "To delete data from a table",
+                        "To modify existing data in a table",
+                        "To add new data to a table",
+                        "To retrieve data from a table"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the default sorting order used in the ORDER BY clause?",
+                    "options": [
+                        "Descending",
+                        "Ascending",
+                        "Alphabetical",
+                        "Random"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which of the following is true about a SQL Primary Key?",
+                    "options": [
+                        "It can contain NULL values",
+                        "It uniquely identifies each row in a table",
+                        "It can contain duplicate values",
+                        "It is an optional constraint"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the SQL HAVING clause do?",
+                    "options": [
+                        "Filters rows before grouping",
+                        "Groups rows based on a specified condition",
+                        "Filters groups after aggregation",
+                        "Sorts the rows"
+                    ],
+                    "answer": 2
+                },
+                {
+                    "question": "Which SQL command is used to add a new row of data to a table?",
+                    "options": [
+                        "INSERT",
+                        "ADD",
+                        "INSERT INTO",
+                        "PUT"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of the SQL BETWEEN operator?",
+                    "options": [
+                        "Filters the result set by matching a pattern",
+                        "Checks if a value falls within a given range",
+                        "Combines results from two queries",
+                        "Specifies conditions for joining tables"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "Which data type is used in SQL to store variable-length strings?",
+                    "options": [
+                        "CHAR",
+                        "VARCHAR",
+                        "TEXT",
+                        "STRING"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What is a subquery in SQL?",
+                    "options": [
+                        "A query that is embedded inside another query",
+                        "A query that runs in parallel to another query",
+                        "A query that returns only one column",
+                        "A query that modifies data in multiple tables"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL LIMIT clause do?",
+                    "options": [
+                        "Limits the number of rows returned in a query",
+                        "Limits the range of values returned in a column",
+                        "Limits the size of the database",
+                        "Limits the execution time of a query"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL function is used to return the total sum of a numeric column?",
+                    "options": [
+                        "SUM()",
+                        "TOTAL()",
+                        "COUNT()",
+                        "AVG()"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of the following SQL clauses is used to filter results after the GROUP BY operation?",
+                    "options": [
+                        "WHERE",
+                        "HAVING",
+                        "FILTER",
+                        "GROUP BY"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What does the SQL LIKE operator do?",
+                    "options": [
+                        "Matches exact values",
+                        "Matches patterns in a column",
+                        "Filters results by range",
+                        "Joins tables based on a condition"
+                    ],
+                    "answer": 1
+                },
+                {
+                    "question": "What is the function of the SQL DISTINCT keyword?",
+                    "options": [
+                        "Removes duplicate values from the result set",
+                        "Joins multiple tables",
+                        "Groups data by unique values",
+                        "Sorts results in ascending order"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of the following is a valid way to declare a column as a foreign key in SQL?",
+                    "options": [
+                        "FOREIGN KEY (column_name) REFERENCES table_name",
+                        "REFERENCES table_name (column_name)",
+                        "PRIMARY KEY (column_name)",
+                        "CONSTRAINT FOREIGN KEY table_name"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which of these SQL commands is used to remove a table from a database?",
+                    "options": [
+                        "DROP TABLE",
+                        "DELETE TABLE",
+                        "REMOVE TABLE",
+                        "CLEAR TABLE"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "Which SQL command is used to modify the structure of an existing table?",
+                    "options": [
+                        "ALTER TABLE",
+                        "MODIFY TABLE",
+                        "UPDATE TABLE",
+                        "CHANGE TABLE"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL UNION operator do?",
+                    "options": [
+                        "Combines the results of two queries, removing duplicates",
+                        "Combines results from two queries, keeping duplicates",
+                        "Joins tables based on a common column",
+                        "Filters results by multiple conditions"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What is the purpose of an index in a SQL database?",
+                    "options": [
+                        "To speed up query execution",
+                        "To ensure data integrity",
+                        "To store duplicate data",
+                        "To manage database backups"
+                    ],
+                    "answer": 0
+                },
+                {
+                    "question": "What does the SQL SELECT INTO statement do?",
+                    "options": [
+                        "Creates a new table and inserts selected data into it",
+                        "Retrieves data from a table",
+                        "Updates an existing table with new data",
+                        "Joins multiple tables together"
+                    ],
+                    "answer": 0
                 }
             ]
 
@@ -5777,6 +6746,7 @@ checkbox.addEventListener("change", function () {
             if (databaseQuizVariant === 2) return databaseQuestions2;
             if (databaseQuizVariant === 3) return databaseQuestions3;
             if (databaseQuizVariant === 4) return databaseQuestions4;
+            if (databaseQuizVariant === 5) return databaseQuestion5;
 
         }
 
