@@ -1,24 +1,42 @@
 <!DOCTYPE html>
-<html lang="ar">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materialx | AI Department</title>
-    <link rel="icon" type="image/png" href="img/photo_2024-10-01_00-48-56.jpg">
+    <title>Materialx | AI</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-11-16_17-45-40.jpg">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.0/scrollreveal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+</head>
+
+<style>
+   body {
             margin: 0;
             padding: 0;
-            background-color: #eef2f3;
-            color: #333;
-            scroll-behavior: smooth;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         header {
-            background-color: #186762;
+            background-color: #060b2b;
             color: white;
             padding: 15px 0;
             text-align: center;
@@ -54,7 +72,7 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            background-color: #0d1f22;
+            background-color: #072b56;
         }
 
         nav ul li {
@@ -81,7 +99,7 @@
             cursor: pointer;
             padding: 15px;
             color: white;
-            background-color: #0d1f22;
+            background-color: #072b56;
         }
 
         @media (max-width: 768px) {
@@ -102,163 +120,57 @@
                 margin-bottom: 10px;
             }
         }
-
-        .content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .available-properties {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .available-properties h2 {
-            color: #007BFF;
-            margin-bottom: 20px;
-        }
-
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        @media (max-width: 1200px) {
-            .properties-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .properties-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .properties-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-        }
-
-        .property img {
-            width: 100%;
-            height: auto;
-            max-height: 180px;
-            object-fit: cover;
-        }
-
-        @media (min-width: 1200px) {
-            .properties-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            .property img {
-                max-height: 200px;
-            }
-        }
+   
 
 
-        .property {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    section {
+        padding: 40px 20px;
+        margin: 20px auto;
+        max-width: 1200px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .property:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+    .section-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #007BFF;
+    }
 
-        .property a {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
+    .course-item {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        transition: transform 0.3s ease;
+    }
 
-        .property-info {
-            padding: 15px;
-        }
+    .course-item:hover {
+        transform: scale(1.05);
+        background-color: #e2e2e2;
+    }
 
-        .property-info h2 {
-            margin-top: 0;
-            color: #007BFF;
-            font-size: 18px;
-        }
+    .gallery {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 
-        .property-info p {
-            margin: 5px 0;
-            color: #555;
-        }
+    .gallery img {
+        width: 48%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
 
-        .property-info hr {
-            border: none;
-            border-top: 1px solid #ddd;
-            margin: 10px 0;
-        }
+    .gallery img:hover {
+        transform: scale(1.05);
+    }
 
-        .details {
-            margin-top: 10px;
-        }
-
-        .details p {
-            margin: 5px 0;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .details .icon {
-            font-size: 18px;
-        }
-
-        .contact-buttons {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .contact-buttons a {
-            text-decoration: none;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-        }
-
-        .contact-buttons a.whatsapp {
-            background-color: #ee0808;
-        }
-
-        .contact-buttons a.whatsapp:hover {
-            background-color: #991a1a;
-        }
-
-        .contact-buttons a.favorite {
-            background-color: #0bd60f;
-        }
-
-        .contact-buttons a.favorite:hover {
-            background-color: #2db412;
-        }
-
-        footer {
-            background-color: #0f2f2d;
+      footer {
+            background-color: #011239;
             color: white;
             padding: 20px;
             text-align: center;
@@ -297,7 +209,6 @@
         footer p {
             margin-top: 10px;
         }
-
         .scroll-to-top {
             position: fixed;
             bottom: 20px;
@@ -324,209 +235,89 @@
         .scroll-to-top i {
             font-size: 24px;
         }
-
-        .favorite.liked i {
-            color: rgb(11, 46, 204);
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-
-        li:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-menu li {
-            padding: 10px;
-        }
-
-        .dropdown-menu li a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        .dropdown-menu li a:hover {
-            background-color: #0d1f22;
-            color: white;
-        }
-
-        @media (max-width: 600px) {
-            nav ul li a {
-                padding: 10px;
-                font-size: 16px;
-            }
-
-            .property-info h2 {
-                font-size: 16px;
-            }
-
-            .property-info .price {
-                font-size: 18px;
-            }
-
-            .scroll-to-top {
-                width: 50px;
-                height: 50px;
-                line-height: 50px;
-                font-size: 20px;
-            }
-        }
-    </style>
-</head>
+</style>
 
 <body>
     <header>
-        <img src="img/photo_2024-10-01_00-48-56.png" alt="Logo">
+        <img src="img/WhatsApp_Image_2024-11-16_at_11.34.png" alt="Logo">
     </header>
 
     <nav>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
         <ul id="nav-menu">
-            <li><a href="Entertainment.html" target="_blank"><i class="fas fa-gamepad"></i> Fun</a></li>
-            <li><a href="quiz.html" target="_blank"><i class="fas fa-question-circle"></i> Quizzes</a></li>
+            <li><a href="Entertainment.html" target="_blank"><i class="fas fa-gamepad"></i> Entertainment</a></li>
+            <li><a href="play.html" target="_blank"><i class="fas fa-gamepad"></i> Game</a></li>
             <li><a href="code.html" target="_blank"><i class="fas fa-code"></i> Coding </a></li>
-            <li><a href="draw.html"><i class="fas fa-pencil-alt"></i> Draw Notes</a></li>
-            <li><a href="Learning_Progress.html" target="_blank"><i class="fas fa-book-open"></i> Learning Progress</a>
-                <li><a href="chat.html"><i class="fas fa-robot"></i> Chatbot</a></li>
-            </li>
-            <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
-            <li>
-                <a href="#" class="dropdown-toggle"><i class="fas fa-chart-line"></i> Level</a>
-                <ul class="dropdown-menu">
-                    <li><a href="courses_level_1.html">Level 1</a></li>
-                    <li><a href="courses_level_2.html">Level 2</a></li>
-                    <li><a href="courses_level_3.html">Level 3</a></li>
-                </ul>
-            </li>
-            <li><a href="Materialx.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="quiz.html" target="_blank"><i class="fas fa-question-circle"></i> Quizzes</a></li>
+            <li><a href="Learning_Progress.html" target="_blank"><i class="fas fa-book-open"></i> Learning Progress</a></li>
+            <li><a href="chat.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
         </ul>
     </nav>
 
-    <div class="available-properties">
-        <h2>Level 3 AI Department</h2>
-        <div class="properties-grid" id="latest-properties">
 
-            <div class="property">
-                <a href="Convex.html">
-                    <img src="img/Convex.png" alt="">
-                    <div class="property-info">
-                        <h2>Convex</h2>
-                        <hr>
-                        <div class="contact-buttons">
-                            <i class="fab fa-youtube"></i>
-                </a>
-                <a href="#" class="favorite" title="like" data-id="18">
-                    <i class="fas fa-thumbs-up"></i>
-                </a>
-                <span id="like-count-18">0</span>
-            </div>
+    <section id="about">
+        <div class="section-title">About the Department</div>
+        <p>The AI department focuses on developing intelligent systems capable of mimicking human-like thinking, reasoning, and learning. We provide students with cutting-edge tools, methodologies, and theories in artificial intelligence, machine learning, and neural networks to prepare them for the AI-driven future.</p>
+        <p>Our curriculum blends theory with hands-on experience, ensuring that students gain practical knowledge of algorithms, AI models, and the latest advancements in the field. Graduates will be well-equipped to design, analyze, and implement AI solutions in diverse industries.</p>
+    </section>
+
+    <section id="focus">
+        <div class="section-title">Focus Areas & Courses</div>
+        <ul>
+            <li class="course-item">
+                <strong>Introduction to Artificial Intelligence:</strong> Learn the basics of AI, including history, key concepts, and applications of AI in the real world.
+            </li>
+            <li class="course-item">
+                <strong>Machine Learning:</strong> Explore supervised and unsupervised learning techniques, and their real-world applications in business, finance, healthcare, and more.
+            </li>
+            <li class="course-item">
+                <strong>Deep Learning:</strong> Delve into neural networks, convolutional networks, and reinforcement learning techniques to create intelligent systems.
+            </li>
+            <li class="course-item">
+                <strong>Natural Language Processing (NLP):</strong> Study how machines understand, interpret, and generate human language, enabling technologies like chatbots and voice assistants.
+            </li>
+            <li class="course-item">
+                <strong>Robotics:</strong> Learn about the integration of AI into robotic systems, enabling machines to perform tasks autonomously.
+            </li>
+            <li class="course-item">
+                <strong>AI Ethics:</strong> Understand the social, ethical, and legal challenges of AI, and learn how to build responsible AI systems.
+            </li>
+        </ul>
+    </section>
+
+    <section id="careers">
+        <div class="section-title">Career Opportunities</div>
+        <p>AI professionals are highly sought after across a variety of industries, including healthcare, finance, automotive, and entertainment. Career opportunities include:</p>
+        <ul>
+            <li>AI Research Scientist</li>
+            <li>Machine Learning Engineer</li>
+            <li>Data Scientist</li>
+            <li>Robotics Engineer</li>
+            <li>Natural Language Processing Engineer</li>
+            <li>AI Consultant</li>
+        </ul>
+        <p>AI job demand is projected to grow by 20% over the next decade, with competitive salaries starting from $80,000 annually for entry-level roles in machine learning and data science.</p>
+    </section>
+
+
+    <section id="gallery">
+        <div class="section-title">Gallery</div>
+        <div class="gallery">
+            <img src="img/Robotics-Engineer-1024x576.png" alt="AI Lab 1">
+            <img src="img/original-4581c314d88fca52301e948f5c18dcd9.png" alt="AI Lab 2">
+            <img src="img/AI-page-header.webp" alt="AI Research">
+            <img src="img/Deep-Learning-Training.png" alt="AI Conference">
         </div>
-        </a>
-    </div>
-
-    <div class="property">
-        <a href="database-2.html">
-            <img src="img/database.webp" alt="">
-            <div class="property-info">
-                <h2>Database-2</h2>
-                <hr>
-                <div class="contact-buttons">
-                    <i class="fab fa-youtube"></i>
-        </a>
-        <a href="#" class="favorite" title="like" data-id="19">
-            <i class="fas fa-thumbs-up"></i>
-        </a>
-        <span id="like-count-19">0</span>
-    </div>
-    </div>
-    </a>
-    </div>
-
-    <div class="property">
-        <a href="AI_is.html">
-            <img src="img/AI.jpg" alt="">
-            <div class="property-info">
-                <h2>AI</h2>
-                <hr>
-                <div class="contact-buttons">
-                    <i class="fab fa-youtube"></i>
-        </a>
-        <a href="#" class="favorite" title="like" data-id="20">
-            <i class="fas fa-thumbs-up"></i>
-        </a>
-        <span id="like-count-20">0</span>
-    </div>
-    </div>
-    </a>
-    </div>
-
-    <div class="property">
-        <a href="Big_data.html">
-            <img src="img/big.avif" alt="">
-            <div class="property-info">
-                <h2>Big Data</h2>
-                <hr>
-                <div class="contact-buttons">
-                    <i class="fab fa-youtube"></i>
-        </a>
-        <a href="#" class="favorite" title="like" data-id="21">
-            <i class="fas fa-thumbs-up"></i>
-        </a>
-        <span id="like-count-21">0</span>
-    </div>
-    </div>
-    </a>
-    </div>
-
-    <div class="property">
-        <a href="Machine_learning.html">
-            <img src="img/Machine learning.jpg" alt="">
-            <div class="property-info">
-                <h2>Machine learning</h2>
-                <hr>
-                <div class="contact-buttons">
-                    <i class="fab fa-youtube"></i>
-        </a>
-        <a href="#" class="favorite" title="like" data-id="22">
-            <i class="fas fa-thumbs-up"></i>
-        </a>
-        <span id="like-count-22">0</span>
-    </div>
-    </div>
-    </a>
-    </div>
-
-    <div class="property">
-        <a href="Parallel Processing.html">
-            <img src="img/Parallel Processing.png" alt="">
-            <div class="property-info">
-                <h2>Parallel Processing</h2>
-                <hr>
-                <div class="contact-buttons">
-                    <i class="fab fa-youtube"></i>
-        </a>
-        <a href="#" class="favorite" title="like" data-id="23">
-            <i class="fas fa-thumbs-up"></i>
-        </a>
-        <span id="like-count-23">0</span>
-    </div>
-    </div>
-    </a>
-    </div>
-
-    </div>
-    </div>
-
-
+    </section>
 
     <header>
-        <img src="img/photo_2024-10-01_00-48-56.png" alt="Logo">
+        <img src="img/WhatsApp_Image_2024-11-16_at_11.34.png" alt="Logo">
     </header>
+
+
+
+
 
     <footer>
         <div class="footer-container">
@@ -541,86 +332,57 @@
         </div>
     </footer>
 
-    <div class="scroll-to-top" onclick="scrollToTop()" style="display:none;">
+    <div class="scroll-to-top" onclick="scrollToTop()">
         <i class="fas fa-chevron-up"></i>
     </div>
 
-
     <script>
 
-
-function updateLikeButton(button, countSpan, id) {
-        const today = new Date();
-        const startOfYear = new Date(today.getFullYear(), 0, 0);
-        const diff = today - startOfYear;
-        const oneDay = 1000 * 60 * 60 * 24;
-        const dayOfYear = Math.floor(diff / oneDay);
-
-        let likeCount = parseInt(localStorage.getItem(`likeCount-${id}`) || '0', 10);
-
-        if (localStorage.getItem(`lastUpdated-${id}`) !== dayOfYear.toString()) {
-            const randomIncrement = Math.floor(Math.random() * 10) + 1;
-            likeCount += randomIncrement;
-            localStorage.setItem(`likeCount-${id}`, likeCount.toString());
-            localStorage.setItem(`lastUpdated-${id}`, dayOfYear.toString());
-        }
-
-        countSpan.textContent = likeCount;
-
-        if (localStorage.getItem(`liked-${id}`) === 'true') {
-            button.classList.add('liked');
-        } else {
-            button.classList.remove('liked');
-        }
-
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            button.classList.toggle('liked');
-
-            if (button.classList.contains('liked')) {
-                likeCount++;
-            } else {
-                likeCount--;
+function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             }
 
-            countSpan.textContent = likeCount;
+            window.addEventListener('scroll', function () {
+                const scrollToTopBtn = document.querySelector('.scroll-to-top');
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.style.display = 'block';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
 
-            localStorage.setItem(`likeCount-${id}`, likeCount.toString());
-            localStorage.setItem(`liked-${id}`, button.classList.contains('liked').toString());
+
+        ScrollReveal().reveal('.section-title', { 
+            delay: 200,
+            duration: 1500,
+            distance: '50px',
+            easing: 'ease-in-out'
         });
-    }
 
-    document.querySelectorAll('.favorite').forEach(button => {
-        const id = button.dataset.id;
-        const countSpan = document.getElementById(`like-count-${id}`);
-
-        if (countSpan) {
-            updateLikeButton(button, countSpan, id);
-        }
-    });
-
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        ScrollReveal().reveal('.course-item', { 
+            delay: 300,
+            duration: 1500,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 200
         });
-    }
 
-    window.addEventListener('scroll', function () {
-        const scrollToTopBtn = document.querySelector('.scroll-to-top');
-        if (window.scrollY > 300) {
-            scrollToTopBtn.style.display = 'block';
-        } else {
-            scrollToTopBtn.style.display = 'none';
-        }
-    });
-
-    function toggleMenu() {
-            var menu = document.getElementById("nav-menu");
-            menu.classList.toggle("active");
-        }
-        
+        ScrollReveal().reveal('.gallery img', { 
+            delay: 300,
+            duration: 1500,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 200
+        });
+        function toggleMenu() {
+                var menu = document.getElementById("nav-menu");
+                menu.classList.toggle("active");
+            }
     </script>
 </body>
-
 </html>
