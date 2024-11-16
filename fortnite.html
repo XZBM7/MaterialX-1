@@ -21,7 +21,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
             position: relative;
         }
@@ -34,29 +34,29 @@
 
         .container {
             display: flex;
-            width: 80%;
-            height: 80%;
+            flex-direction: column;
+            width: 90%;
+            max-width: 1200px;
+            height: auto;
+            gap: 20px;
         }
 
         .thumbnail-container {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            width: 20%;
-            gap: 20px;
-            padding-right: 20px;
-            border-right: 3px solid #02001c;
-            background: linear-gradient(120deg, #02001c, #3a4a89, #1e2a47);
-            position: relative;
-            right: 100px;
+            gap: 10px;
+            padding: 10px;
             border-radius: 10px;
+            background: rgba(32, 32, 64, 0.8);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .thumbnail {
-            width: 100px;
-            height: 100px;
+            width: calc(25% - 10px);
+            max-width: 150px;
+            height: auto;
+            aspect-ratio: 1/1;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s, box-shadow 0.3s;
@@ -90,7 +90,7 @@
             justify-content: center;
             border-radius: 10px;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1);
@@ -98,38 +98,19 @@
             opacity: 0;
             pointer-events: none;
             z-index: 100;
-            animation: fadeIn 0.5s ease-in-out, scaleUp 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes scaleUp {
-            from {
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-            to {
-                transform: translate(-50%, -50%) scale(1);
-            }
         }
 
         .selected-character.show {
             opacity: 1;
             pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1.2);
+            transform: translate(-50%, -50%) scale(1.1);
             box-shadow: 0 0 30px rgba(240, 165, 0, 0.5), 0 0 60px rgba(240, 165, 0, 0.2);
         }
 
         .selected-character img {
-            width: 100%;
+            width: 90%;
+            max-width: 400px;
             height: auto;
-            max-height: 80%;
             border-radius: 10px;
             transition: transform 0.3s ease-in-out;
             object-fit: cover;
@@ -142,16 +123,17 @@
 
         .info {
             color: #f0a500;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             margin-top: 20px;
             text-align: center;
         }
 
         .description {
-            font-size: 16px;
+            font-size: 14px;
             color: #e0e0e0;
             margin-top: 10px;
+            text-align: center;
         }
 
         .close-button {
@@ -195,6 +177,34 @@
         @keyframes rain {
             to {
                 transform: translateY(100%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .thumbnail {
+                width: calc(33.33% - 10px);
+            }
+
+            .selected-character img {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thumbnail {
+                width: calc(50% - 10px);
+            }
+
+            .selected-character img {
+                max-width: 250px;
+            }
+
+            .info {
+                font-size: 16px;
+            }
+
+            .description {
+                font-size: 12px;
             }
         }
     </style>
