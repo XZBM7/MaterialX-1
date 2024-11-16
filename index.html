@@ -41,8 +41,8 @@
             z-index: 10;
             font-size: 5vw;
             font-weight: bold;
-            bottom: 10%; 
-            transform: translateY(100vh);
+            top: 10%; 
+            transform: translateY(-100vh); 
             animation: textFlyIn 2s 0.5s ease-out forwards, floatText 2s 3s infinite ease-in-out;
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5);
         }
@@ -54,8 +54,8 @@
         }
 
         @keyframes textFlyIn {
-            0% { transform: translateY(100vh); }
-            70% { transform: translateY(-10px); }
+            0% { transform: translateY(-100vh); } 
+            70% { transform: translateY(10px); }
             100% { transform: translateY(0); }
         }
 
