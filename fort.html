@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialx | Fortnite</title>
+    <link rel="icon" type="image/png" href="img/photo_2024-11-16_17-45-40.jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, #4b0082, #8a2be2, #4b0082);
+    background-size: 400% 400%;
+    animation: background-glow 5s infinite alternate;
+    color: white;
+    overflow-x: hidden;
+}
+
+@keyframes background-glow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 0;
+    background: linear-gradient(45deg, #4b0082, #8a2be2, #4b0082);
+    background-size: 400% 400%;
+    animation: background-glow 5s infinite alternate;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+nav .auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+nav .auth-buttons button {
+    background-color: #401491;
+    color: white;
+    border: 2px solid rgb(1, 13, 41);
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+nav .auth-buttons button:hover {
+    background-color: #030735;
+    transform: scale(1.1);
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.hero img {
+    width: 400px;
+    height: auto;
+    border-radius: 15px;
+    animation: slide-in 1s ease-out;
+}
+
+.hero-content {
+    max-width: 600px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 60px;
+    margin: 10px 0;
+    font-family: "Times New Roman", serif;
+    animation: fade-in 1s ease-in-out;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    animation: fade-in 1.2s ease-in-out;
+}
+
+.hero .buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero .buttons button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.hero .buttons button:first-child {
+    background-color: #007bff;
+    border: 2px solid #0056b3;
+    border-radius: 10px;
+}
+
+.hero .buttons button:first-child:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
+.hero .buttons button:last-child {
+    background-color: #28a745;
+    border: 2px solid #1e7e34;
+    border-radius: 10px;
+}
+
+.hero .buttons button:last-child:hover {
+    background-color: #1e7e34;
+    transform: translateY(-5px);
+}
+
+.share {
+    margin-top: 30px;
+}
+
+.share i {
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.share i:hover {
+    transform: scale(1.2);
+    color: #ffcc00;
+}
+
+.hot-deals {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.hot-deals img {
+    width: 200px;
+    height: 120px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.hot-deals img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.5);
+}
+
+#character-name {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero {
+        flex-direction: column;
+    }
+
+    .hero img {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .hero .buttons button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    .hot-deals img {
+        width: 45%;
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .hero img {
+        width: 50%;
+        max-width: 300px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .hot-deals img {
+        width: 22%;
+        max-width: 200px;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <div><img src="img/Fantasticesportspurple.png" alt="Logo" style="height: 60px; width: auto;"></div>
+        <a target="_blank" href="homee.html">HOME</a>
+        <a  target="_blank" href="play.html">GAMES</a>
+        <a  target="_blank" href="Entertainment.html">Entertainment</a>
+        <a  target="_blank" href="fortnite.html">Discover</a>
+        <div class="auth-buttons">
+            <button>Sign in</button>
+            <button>Log in</button>
+        </div>
+    </nav>
+    <div class="hero">
+        <img id="main-image" src="img/[CITYPNG.COM]HD Catalyst Fortnite Female Player Character PNG - 2000x2000.png" alt="Character Image">
+        <div class="hero-content">
+            <h1>Fortnite</h1>
+            <p>Where evaluate the biggest characters in the world of the game</p>
+            <div class="buttons">
+                <button>Shop Now</button>
+                <a href="fortnite.html">
+                    <button>Discover</button>
+                </a>
+            </div>
+            <div class="share">
+                <p>Share Your Experience</p>
+                <i class="fab fa-facebook fa-2x"></i>
+                <i class="fab fa-twitter fa-2x"></i>
+                <i class="fab fa-linkedin fa-2x"></i>
+                <i class="fab fa-instagram fa-2x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="hot-deals">
+        <img src="img/a8e758ecdc2d19670166c3e022660f98.jpg" alt="Game 1" data-name="Character 1">
+        <img src="img/53697fbdf33bb7bae39ad3ac88cc1bc2.jpg" alt="Game 2" data-name="Character 2">
+        <img src="img/259d45f42bb3054b2c0b3eb190bdf948.jpg" alt="Game 3" data-name="Character 3">
+        <img src="img/maxresdefault.jpg" alt="Game 4" data-name="Character 4">
+    </div>
+    <script>
+        const mainImage = document.getElementById('main-image');
+        const characterName = document.getElementById('character-name');
+        const hotDealsImages = document.querySelectorAll('.hot-deals img');
+
+        hotDealsImages.forEach(img => {
+            img.addEventListener('click', () => {
+                mainImage.src = img.src;
+                characterName.textContent = img.getAttribute('data-name');
+            });
+        });
+    </script>
+</body>
+</html>
