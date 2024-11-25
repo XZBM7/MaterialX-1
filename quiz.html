@@ -377,6 +377,7 @@
             <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database-1 Quiz 2</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database-1 Quiz 3</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(4)">Database-1 LEC 1,2,3</button>
+            <button class="time-option" onclick="chooseDatabaseQuiz(6)">Database-1 (DDL)</button>
             <button class="time-option" onclick="chooseDatabaseQuiz(5)">Database-1 (SQL Server)</button>
 
 
@@ -2446,6 +2447,385 @@
                 }
 
             ];
+
+
+        const databaseQuestion6 = [
+            {
+                question: "What does DDL stand for?",
+                options: [
+                    "Data Definition Language",
+                    "Data Dynamic Language",
+                    "Data Description Language",
+                    "Data Deployment Language"
+                ],
+                answer: 0
+            },
+            {
+                question: "Which of the following is not a DDL command?",
+                options: ["CREATE", "SELECT", "ALTER", "DROP"],
+                answer: 1
+            },
+            {
+                question: "What does the CREATE command do in SQL Server?",
+                options: [
+                    "Modifies an existing table",
+                    "Deletes a table",
+                    "Creates a new table or database",
+                    "Retrieves data"
+                ],
+                answer: 2
+            },
+            {
+                question: "How do you create a table in SQL Server?",
+                options: [
+                    "CREATE DATABASE myTable;",
+                    "CREATE TABLE myTable (Column1 INT, Column2 VARCHAR(50));",
+                    "ADD TABLE myTable;",
+                    "INSERT INTO myTable;"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does the ALTER command do?",
+                options: [
+                    "Adds or removes columns from a table",
+                    "Changes data in a table",
+                    "Deletes a database",
+                    "Creates a backup"
+                ],
+                answer: 0
+            },
+            {
+                question: "What is the syntax to rename a column using ALTER?",
+                options: [
+                    "ALTER TABLE table_name RENAME COLUMN old_name TO new_name;",
+                    "ALTER TABLE table_name ALTER COLUMN old_name new_name;",
+                    "ALTER TABLE table_name RENAME new_name TO old_name;",
+                    "None of the above"
+                ],
+                answer: 0
+            },
+            {
+                question: "Which command deletes a table from the database?",
+                options: ["ERASE", "REMOVE", "DROP", "DELETE"],
+                answer: 2
+            },
+            {
+                question: "What happens when a table is dropped?",
+                options: [
+                    "Only the data is deleted",
+                    "The table structure is preserved",
+                    "Both table structure and data are removed",
+                    "Nothing happens"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which command is used to delete all data from a table but keep the structure?",
+                options: ["TRUNCATE", "DROP", "DELETE", "REMOVE"],
+                answer: 0
+            },
+            {
+                question: "Which command is used to modify the structure of an existing table?",
+                options: ["CREATE", "UPDATE", "ALTER", "MODIFY"],
+                answer: 2
+            },
+            {
+                question: "What does the DROP DATABASE command do?",
+                options: [
+                    "Deletes all tables in the database",
+                    "Deletes the database and all its contents",
+                    "Deletes only the schema",
+                    "Only deletes empty databases"
+                ],
+                answer: 1
+            },
+            {
+                question: "How can you change the data type of a column in SQL Server?",
+                options: [
+                    "MODIFY COLUMN",
+                    "ALTER TABLE table_name ALTER COLUMN column_name new_data_type;",
+                    "CHANGE DATA TYPE",
+                    "ALTER TYPE column_name new_data_type;"
+                ],
+                answer: 1
+            },
+            {
+                question: "Which of the following is not true about the TRUNCATE command?",
+                options: [
+                    "It resets the identity column",
+                    "It removes all rows in a table",
+                    "It preserves table structure",
+                    "It can be rolled back"
+                ],
+                answer: 3
+            },
+            {
+                question: "What is a primary key in SQL Server?",
+                options: [
+                    "A column that holds unique values",
+                    "A column that allows duplicate values",
+                    "A column that can be NULL",
+                    "A foreign key column"
+                ],
+                answer: 0
+            },
+            {
+                question: "Which command is used to add a new primary key?",
+                options: [
+                    "ALTER TABLE table_name ADD PRIMARY KEY (column_name);",
+                    "ADD PRIMARY KEY (column_name);",
+                    "MODIFY PRIMARY KEY;",
+                    "UPDATE PRIMARY KEY;"
+                ],
+                answer: 0
+            },
+            {
+                question: "What does the UNIQUE constraint do?",
+                options: [
+                    "Prevents duplicate values in a column",
+                    "Ensures that all rows are unique",
+                    "Allows NULL values in a primary key",
+                    "Prevents updates to the column"
+                ],
+                answer: 0
+            },
+            {
+                question: "What is the default constraint in SQL Server?",
+                options: [
+                    "Allows duplicate values",
+                    "Provides a default value if none is specified",
+                    "Automatically updates values",
+                    "Prevents NULL values"
+                ],
+                answer: 1
+            },
+            {
+                question: "How do you remove a column from a table?",
+                options: [
+                    "DROP COLUMN column_name;",
+                    "ALTER TABLE table_name DROP COLUMN column_name;",
+                    "DELETE column_name FROM table_name;",
+                    "REMOVE COLUMN column_name;"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does the CHECK constraint do?",
+                options: [
+                    "Ensures column values meet a specific condition",
+                    "Checks for NULL values",
+                    "Ensures only unique values are allowed",
+                    "Prevents data from being updated"
+                ],
+                answer: 0
+            },
+            {
+                question: "How do you create a foreign key?",
+                options: [
+                    "ALTER TABLE table_name ADD FOREIGN KEY (column_name) REFERENCES parent_table (parent_column);",
+                    "CREATE FOREIGN KEY column_name;",
+                    "ADD FOREIGN KEY TO table_name;",
+                    "INSERT FOREIGN KEY;"],
+
+                answer: 0
+            },
+            {
+                question: "Which statement about the PRIMARY KEY is true?",
+                options: [
+                    "It allows NULL values",
+                    "A table can have multiple primary keys",
+                    "It ensures unique and non-null values",
+                    "It is optional in every table"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is a schema in SQL Server?",
+                options: [
+                    "A backup file",
+                    "A logical grouping of database objects",
+                    "A table data type",
+                    "A query result set"
+                ],
+                answer: 1
+            },
+            {
+                question: "How do you create a schema?",
+                options: [
+                    "CREATE TABLE schema_name;",
+                    "CREATE SCHEMA schema_name;",
+                    "ADD SCHEMA schema_name;",
+                    "INSERT INTO schema_name;"
+                ],
+                answer: 1
+            },
+            {
+                question: "Which command is used to rename a table?",
+                options: [
+                    "RENAME TABLE old_name TO new_name;",
+                    "ALTER TABLE old_name RENAME TO new_name;",
+                    "EXEC sp_rename 'old_name', 'new_name';",
+                    "MODIFY TABLE old_name TO new_name;"
+                ],
+                answer: 2
+            },
+            {
+                question: "Can the TRUNCATE command be rolled back?",
+                options: [
+                    "Yes, always",
+                    "No, never",
+                    "Yes, if inside a transaction",
+                    "No, but only for specific cases"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which statement about indexes is true?",
+                options: [
+                    "They are part of DDL commands",
+                    "Indexes cannot be created on primary keys",
+                    "Indexes improve query performance",
+                    "Indexes are mandatory for all tables"
+                ],
+                answer: 2
+            },
+            {
+                question: "How do you delete a constraint?",
+                options: [
+                    "ALTER TABLE table_name DROP CONSTRAINT constraint_name;",
+                    "REMOVE CONSTRAINT constraint_name;",
+                    "DELETE CONSTRAINT constraint_name;",
+                    "ALTER TABLE DROP PRIMARY KEY constraint_name;"
+                ],
+                answer: 0
+            },
+            {
+                question: "What is the difference between DROP and TRUNCATE?",
+                options: [
+                    "DROP removes only data, TRUNCATE removes structure",
+                    "DROP deletes structure, TRUNCATE deletes data only",
+                    "Both are identical",
+                    "DROP is slower than TRUNCATE"
+                ],
+                answer: 1
+            },
+            {
+                question: "How do you set a column as NOT NULL?",
+                options: [
+                    "ALTER TABLE table_name MODIFY COLUMN column_name NOT NULL;",
+                    "CREATE COLUMN column_name NOT NULL;",
+                    "ALTER TABLE table_name ALTER COLUMN column_name NOT NULL;",
+                    "UPDATE table_name SET NOT NULL;"
+                ],
+                answer: 2
+            },
+            {
+                question: "How do you create an index?",
+                options: [
+                    "CREATE INDEX index_name ON table_name(column_name);",
+                    "ADD INDEX ON table_name(column_name);",
+                    "INSERT INDEX table_name(column_name);",
+                    "INDEX column_name table_name;"
+                ],
+                answer: 0
+            },
+            {
+                question: "Can you rename a constraint in SQL Server?",
+                options: [
+                    "Yes, using ALTER TABLE RENAME CONSTRAINT",
+                    "Yes, using sp_rename",
+                    "No, constraints cannot be renamed",
+                    "Yes, by updating system tables"
+                ],
+                answer: 1
+            },
+            {
+                question: "What happens when you drop a column with foreign key references?",
+                options: [
+                    "The column is dropped",
+                    "The drop fails unless references are removed",
+                    "The foreign key constraint is automatically dropped",
+                    "Nothing happens"
+                ],
+                answer: 1
+            },
+            {
+                question: "What is a composite key?",
+                options: [
+                    "A single primary key",
+                    "A combination of multiple foreign keys",
+                    "A primary key consisting of two or more columns",
+                    "A backup for the primary key"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is the default schema in SQL Server?",
+                options: ["System", "dbo", "master", "default_schema"],
+                answer: 1
+            },
+            {
+                question: "Which command creates a new database?",
+                options: [
+                    "CREATE DATABASE database_name;",
+                    "ADD DATABASE database_name;",
+                    "INSERT DATABASE database_name;",
+                    "ALTER DATABASE database_name;"
+                ],
+                answer: 0
+            },
+            {
+                question: "How do you delete a schema?",
+                options: [
+                    "DROP SCHEMA schema_name;",
+                    "DELETE SCHEMA schema_name;",
+                    "REMOVE SCHEMA schema_name;",
+                    "ALTER SCHEMA schema_name DELETE;"
+                ],
+                answer: 0
+            },
+            {
+                question: "Can a primary key column have duplicate values?",
+                options: [
+                    "Yes, always",
+                    "No, never",
+                    "Yes, if combined with UNIQUE constraint",
+                    "Yes, in some databases"
+                ],
+                answer: 1
+            },
+            {
+                question: "How do you list all tables in a schema?",
+                options: [
+                    "SELECT * FROM schema_name;",
+                    "SHOW TABLES;",
+                    "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'schema_name';",
+                    "EXEC SHOW TABLES;"
+                ],
+                answer: 2
+            },
+            {
+                question: "What is a clustered index?",
+                options: [
+                    "An index that allows duplicate values",
+                    "An index where rows are stored in physical order",
+                    "An index that exists only for primary keys",
+                    "A secondary index"
+                ],
+                answer: 1
+            },
+            {
+                question: "What does INFORMATION_SCHEMA store?",
+                options: [
+                    "Database metadata",
+                    "User data",
+                    "Index data",
+                    "Backup logs"
+                ],
+                answer: 0
+            }
+        ];
 
 
 
@@ -6747,6 +7127,7 @@
             if (databaseQuizVariant === 3) return databaseQuestions3;
             if (databaseQuizVariant === 4) return databaseQuestions4;
             if (databaseQuizVariant === 5) return databaseQuestion5;
+            if (databaseQuizVariant === 6) return databaseQuestion6;
 
         }
 
