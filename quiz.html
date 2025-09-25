@@ -6,511 +6,1017 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Materialx | Quizzes</title>
     <link rel="icon" type="image/png" href="img/photo_2024-11-16_17-45-40.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #040732;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #4895ef;
+            --primary-dark: #4361ee;
+            --secondary: #b5179e;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #121212;
+            --dark: #f8f9fa;
+            --gray: #adb5bd;
+            --gray-light: #2d2d2d;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
             margin: 0;
-            padding: 10px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            transition: var(--transition);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-text {
+            font-weight: 500;
+        }
+
+        .custom-checkbox {
+            position: relative;
+        }
+
+        .custom-checkbox input {
+            display: none;
+        }
+
+        .status-switch {
+            width: 60px;
+            height: 30px;
+            background-color: var(--gray-light);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .status-switch:before {
+            content: attr(data-unchecked);
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .status-switch:after {
+            content: '';
+            width: 26px;
+            height: 26px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-checkbox input:checked+label .status-switch {
+            background-color: var(--primary);
+        }
+
+        .custom-checkbox input:checked+label .status-switch:before {
+            content: attr(data-checked);
+            left: 10px;
+            color: white;
+        }
+
+        .custom-checkbox input:checked+label .status-switch:after {
+            left: 32px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .stats-card h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .stat-value {
+            font-weight: 600;
         }
 
         .quiz-container {
-            background-color: #050538;
-            color: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .quiz-title {
             text-align: center;
-            width: 100%;
-            max-width: 450px;
-            transition: transform 0.3s ease-in-out;
-            overflow: hidden;
-        }
-
-
-        .question {
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-
-        h1 {
-            font-size: 26px;
-            color: #cccccc;
             margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 2rem;
         }
 
-        .options {
+        .quiz-selection,
+        .time-options,
+        .time-input,
+        .question-box {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin: 25px 0;
+            gap: 15px;
         }
 
-        .option {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 14px 22px;
-            border-radius: 6px;
+        .quiz-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .category-card {
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            transition: var(--transition);
+            border: 2px solid transparent;
         }
 
-        .option:hover {
-            background-color: #0056b3;
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--box-shadow);
         }
 
-        @media (max-width: 600px) {
-            .quiz-container {
-                width: 90%;
-                padding: 20px;
-            }
-
-            .option {
-                padding: 12px;
-                font-size: 14px;
-            }
-
-            #timer,
-            #result {
-                font-size: 16px;
-            }
-
-            #review-answers {
-                max-height: 300px;
-            }
+        .category-card i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
         }
 
-        .correct {
-            background-color: #28a745 !important;
-            color: white;
+        .category-card h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
         }
 
-        .wrong {
-            background-color: #dc3545 !important;
-            color: white;
+        .category-card p {
+            font-size: 0.9rem;
+            color: var(--gray);
         }
 
-        .hidden {
-            display: none;
-        }
-
-        #result {
-            margin-top: 30px;
-            font-size: 20px;
-            color: #a6a6a6;
-            max-width: 100%;
-            overflow-wrap: break-word;
-        }
-
-        #result div {
-            padding: 10px;
-        }
-
-        #next-btn,
-        #finish-btn,
-        #review-btn,
-        #back-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
+        .time-option,
+        .option,
+        .action-btn {
             padding: 12px 20px;
-            border-radius: 6px;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: var(--primary);
+            color: white;
+            font-size: 1rem;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            transition: var(--transition);
+            text-align: center;
         }
 
-        #next-btn:hover,
-        #finish-btn:hover,
-        #review-btn:hover,
-        #back-btn:hover {
-            background-color: #218838;
-        }
-
-        #timer {
-            font-size: 18px;
-            margin-top: 10px;
-            visibility: hidden;
-        }
-
-        #review-btn,
-        #back-btn {
-            display: none;
-        }
-
-        #question-info {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #a7a7a7;
+        .time-option:hover,
+        .option:hover,
+        .action-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
         .time-input-container {
             display: flex;
+            gap: 10px;
             align-items: center;
-            justify-content: center;
-            margin-top: 15px;
         }
 
-        input[type="number"] {
-            width: 70px;
-            padding: 10px;
-            margin-right: 10px;
-            font-size: 16px;
-            border: 2px solid #007bff;
-            border-radius: 6px;
-            transition: border-color 0.3s ease;
+        .time-input-container input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
         }
 
-        input[type="number"]:focus {
-            border-color: #0056b3;
-            outline: none;
+        .hidden {
+            display: none !important;
         }
 
-        .time-option {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            margin: 5px 0;
-            width: 100%;
-        }
-
-        .time-option:hover {
-            background-color: #0056b3;
-        }
-
-        .statistics {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-
-        #start-new-quiz {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 15px 32px;
+        #timer {
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            visibility: hidden;
         }
 
-        #start-new-quiz:hover {
-            background-color: #218838;
+        #question-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
         }
 
-        h2 {
-            font-size: 1.5em;
+        #question-box {
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 22px;
-            }
-
-            h2 {
-                font-size: 1.3em;
-            }
-        }
-
-        hr {
-            border: 1px solid #ccc;
-            margin: 10px 0;
-        }
-
-        #review-answers {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f1f3f5;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .review-question {
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-
-        .review-question p {
-            margin: 10px 0;
-            font-size: 16px;
+        #question {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
             line-height: 1.5;
         }
 
-        .review-question strong {
-            color: #007bff;
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
         }
 
-        .review-question em {
-            color: #dc3545;
+        .option {
+            text-align: left;
+            padding: 15px;
+            background-color: var(--gray-light);
+            color: var(--dark);
+            border: 2px solid transparent;
         }
 
+        .option:hover {
+            background-color: var(--gray-light);
+            border-color: var(--primary);
+        }
 
-        .custom-checkbox {
-            width: 120px;
-            height: 40px;
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option.wrong {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+        }
+
+        .result-details {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .result-card {
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .result-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .result-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .result-card .label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .review-container {
+            margin-top: 20px;
+        }
+
+        .review-question {
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .review-question p {
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--gray-light);
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-categories {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .time-input-container {
+                flex-direction: column;
+            }
+        }
+
+        .confirmation-modal {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 1000;
         }
 
-        .custom-checkbox input#status {
-            display: none;
+        .modal-content {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
         }
 
-        .custom-checkbox input#status+label {
-            height: 100%;
-            width: 100%;
-        }
-
-        .custom-checkbox input#status+label>.status-switch {
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            background-color: #5879fa;
-            color: white;
-            transition: all 0.5s ease;
-            padding: 2px;
-            border-radius: 10px;
-            border: 1px solid white;
-            left: -80px;
-        }
-
-        .custom-checkbox input#status+label>.status-switch:before,
-        .custom-checkbox input#status+label>.status-switch:after {
-            border-radius: 2px;
-            height: calc(100% - 4px);
-            width: calc(50% - 2px);
+        .modal-buttons {
             display: flex;
-            align-items: center;
-            position: absolute;
+            gap: 15px;
             justify-content: center;
-            transition: all 0.3s ease;
+            margin-top: 20px;
         }
 
-        .custom-checkbox input#status+label>.status-switch:before {
-            background-color: white;
-            color: #355e9c;
-            box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
-            left: 2px;
-            z-index: 10;
-            content: attr(data-unchecked);
-            border-radius: 10px;
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        .custom-checkbox input#status+label>.status-switch:after {
-            right: 0;
-            content: attr(data-checked);
+        .confirm-btn {
+            background-color: var(--danger);
+            color: white;
         }
 
-        .custom-checkbox input#status:checked+label>.status-switch {
-            background-color: #5879fa;
+        .cancel-btn {
+            background-color: var(--gray-light);
+            color: var(--dark);
         }
 
-        .custom-checkbox input#status:checked+label>.status-switch:after {
+        .stats-modal {
+            position: fixed;
+            top: 0;
             left: 0;
-            content: attr(data-unchecked);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
         }
 
-        .custom-checkbox input#status:checked+label>.status-switch:before {
-            color: #355e9c;
-            left: 50%;
-            content: attr(data-checked);
+        .stats-modal-content {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--box-shadow);
         }
 
-        body.dark-mode {
-            background-color: #9e9e9e;
-            color: #fff;
+        .stats-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .stats-modal-header h2 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            padding: 5px;
+        }
+
+        .close-btn:hover {
+            color: var(--danger);
+        }
+
+        .quiz-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .quiz-history-table th,
+        .quiz-history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .quiz-history-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .quiz-history-table tr:hover {
+            background-color: var(--gray-light);
+        }
+
+        .score-excellent {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .score-good {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .score-poor {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .summary-card .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .summary-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
     </style>
 </head>
 
 <body>
-    <div class="custom-checkbox">
-        <input id="status" type="checkbox" name="status">
-        <label for="status">
-            <div class="status-switch" data-unchecked="DarkOn" data-checked="DarkOff"></div>
-        </label>
-    </div>
-    <div class="quiz-container">
-        <h1 id="quiz-title">Select Quiz</h1>
-        <div id="quiz-selection">
-            <button class="time-option" onclick="selectQuiz('database')">Database-1</button>
-            <button class="time-option" onclick="selectQuiz('datastructures')">Data Structures</button>
-            <button class="time-option" onclick="selectQuiz('dc')">DC</button>
-            <button class="time-option" onclick="selectQuiz('bigdata')">Big Data</button>
-            <button class="time-option" onclick="selectQuiz('dm')">DM</button>
-            <button class="time-option" onclick="selectQuiz('db2')">DataBase-2</button>
-            <button class="time-option" onclick="selectQuiz('ir')">IR</button>
-            <button class="time-option" onclick="selectQuiz('bi')">BI</button>
-        </div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span> Quizzes</span>
+            </div>
+            <div class="theme-toggle">
+                <span class="toggle-text">Dark Mode</span>
+                <div class="custom-checkbox">
+                    <input id="status" type="checkbox" name="status">
+                    <label for="status">
+                        <div class="status-switch" data-unchecked="Off" data-checked="On"></div>
+                    </label>
+                </div>
+                <button class="action-btn" onclick="confirmResetStats()" style="margin-left: 15px;">
+                    <i class="fas fa-trash-alt"></i> Reset Statistics
+                </button>
+            </div>
+        </header>
 
-        <div id="database-quiz-selection" class="hidden">
-            <h3>Select Database Quiz:</h3>
-            <button class="time-option" onclick="chooseDatabaseQuiz(1)">Database-1 Quiz 1</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(2)">Database-1 Quiz 2</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(3)">Database-1 Quiz 3</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(4)">Database-1 LEC 1,2,3</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(6)">Database-1 (DDL)</button>
-            <button class="time-option" onclick="chooseDatabaseQuiz(5)">Database-1 (SQL Server)</button>
+        <div class="dashboard">
+            <div class="stats-card">
+                <h2><i class="fas fa-chart-line"></i> Your Statistics</h2>
+                <div class="stat-item">
+                    <span>Total Quizzes Taken:</span>
+                    <span class="stat-value" id="total-quizzes">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Average Score:</span>
+                    <span class="stat-value" id="average-score">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span>Best Score:</span>
+                    <span class="stat-value" id="best-score">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span>Total Time Spent:</span>
+                    <span class="stat-value" id="total-time">0m 0s</span>
+                </div>
+            </div>
 
-
-
-
-
-        </div>
-
-        <div id="data-structure-quiz-selection" class="hidden">
-            <h3>Select Data Structures Quiz:</h3>
-            <button class="time-option" onclick="chooseDataStructuresQuiz(1)">Data Structures Quiz 1</button>
-            <!-- <button class="time-option" onclick="chooseDataStructuresQuiz(2)">Data Structures Quiz 2</button>
-            <button class="time-option" onclick="chooseDataStructuresQuiz(3)">Data Structures Quiz 3</button> -->
-        </div>
-
-
-        <div id="datacommunction-quiz-selection" class="hidden">
-            <h3>Select DC Quiz:</h3>
-            <button class="time-option" onclick="chooseDCQuiz(1)">DC Quiz 1</button>
-            <button class="time-option" onclick="chooseDCQuiz(2)">DC Quiz 2</button>
-            <!-- <button class="time-option" onclick="chooseDatabaseQuiz(3)">DC Quiz 3</button>  -->
-        </div>
-
-        <div id="bigdata-quiz-selection" class="hidden">
-            <h3>Select Big Data Quiz:</h3>
-            <button class="time-option" onclick="choosebigdataQuiz(1)">Big Data LEC 2</button>
-            <button class="time-option" onclick="choosebigdataQuiz(2)">Big Data LEC 3</button>
-            <button class="time-option" onclick="choosebigdataQuiz(3)">Big Data LEC 4</button>
-            <button class="time-option" onclick="choosebigdataQuiz(4)">Big Data LEC 5</button>
-            <button class="time-option" onclick="choosebigdataQuiz(5)">Big Data LEC 6</button>
-
-        </div>
-
-        <div id="dm-quiz-selection" class="hidden">
-            <h3>Select DM Quiz:</h3>
-            <button class="time-option" onclick="choosedmQuiz(1)">DM Quiz 1</button>
-            <button class="time-option" onclick="choosedmQuiz(2)">DM Quiz 2</button>
-            <button class="time-option" onclick="choosedmQuiz(3)">DM Quiz 3</button>
-        </div>
-
-
-        <div id="db2-quiz-selection" class="hidden">
-            <h3>Select DataBase-2 Quiz:</h3>
-            <button class="time-option" onclick="choosedb2Quiz(1)">Database-2 LEC-1</button>
-            <button class="time-option" onclick="choosedb2Quiz(2)">Database-2 LEC-2</button>
-            <button class="time-option" onclick="choosedb2Quiz(3)">Database-2 LEC-3</button>
-            <button class="time-option" onclick="choosedb2Quiz(4)">Database-2 LEC-1 new </button>
-            <button class="time-option" onclick="choosedb2Quiz(5)">Database-2 LEC-2 new</button>
-
-        </div>
-
-
-        <div id="ir-quiz-selection" class="hidden">
-            <h3>Select IR Quiz:</h3>
-            <button class="time-option" onclick="chooseirQuiz(1)">IR LEC 2</button>
-            <button class="time-option" onclick="chooseirQuiz(2)">IR LEC 3</button>
-            <button class="time-option" onclick="chooseirQuiz(3)">IR LEC 4</button>
-            <button class="time-option" onclick="chooseirQuiz(4)">IR LEC 1,2,3,4 </button>
-
-        </div>
-
-
-        <div id="bi-quiz-selection" class="hidden">
-            <h3>Select BI Quiz:</h3>
-            <button class="time-option" onclick="choosebiQuiz(1)">BI LEC 2</button>
-            <button class="time-option" onclick="choosebiQuiz(2)">BI LEC 3</button>
-            <button class="time-option" onclick="choosebiQuiz(3)">BI LEC 4</button>
-            <button class="time-option" onclick="choosebiQuiz(4)">BI LEC 5</button>
-
-        </div>
-
-
-        <div id="time-options" class="hidden">
-            <h3>Select Time Option:</h3>
-            <button class="time-option" onclick="startQuizWithoutTime()">Without Time Limit</button>
-            <button class="time-option" onclick="showTimeInput()">With Time Limit</button>
-        </div>
-        <div id="time-input" class="hidden">
-            <h3>Enter Time Limit (in minutes):</h3>
-            <div class="time-input-container">
-                <input type="number" max="120" id="time-limit" min="1" placeholder="Minutes" />
-                <button class="time-option" onclick="setTimeLimit()">Set Time</button>
+            <div class="stats-card">
+                <h2><i class="fas fa-trophy"></i> Recent Performance</h2>
+                <div id="recent-performance">
+                </div>
+                <button class="action-btn" onclick="showAllStatistics()" style="margin-top: 15px; width: 100%;">
+                    <i class="fas fa-chart-bar"></i> View All Statistics
+                </button>
             </div>
         </div>
-        <div id="timer">Time Remaining: <span id="time-left">00:00</span></div>
-        <div id="question-info" class="hidden">Question <span id="current-question"></span> of <span
-                id="total-questions"></span></div>
-        <div id="question-box" class="hidden">
-            <p id="question"></p>
-            <div class="options">
-                <button class="option" onclick="checkAnswer(0)"></button>
-                <button class="option" onclick="checkAnswer(1)"></button>
-                <button class="option" onclick="checkAnswer(2)"></button>
-                <button class="option" onclick="checkAnswer(3)"></button>
+
+        <div class="quiz-container">
+            <h1 class="quiz-title" id="quiz-title">Select Quiz Category</h1>
+
+            <div id="quiz-selection">
+                <div class="quiz-categories">
+                    <div class="category-card" onclick="selectQuiz('database')">
+                        <i class="fas fa-database"></i>
+                        <h3>Database</h3>
+                        <p>Test your database knowledge</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('datastructures')">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Data Structures</h3>
+                        <p>Algorithms and data structures</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('dc')">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Data Communication</h3>
+                        <p>Networking fundamentals</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('bigdata')">
+                        <i class="fas fa-server"></i>
+                        <h3>Big Data</h3>
+                        <p>Large-scale data processing</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('dm')">
+                        <i class="fas fa-cube"></i>
+                        <h3>Data Mining</h3>
+                        <p>Pattern discovery in data</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('db2')">
+                        <i class="fas fa-database"></i>
+                        <h3>Database 2</h3>
+                        <p>Advanced database concepts</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('ir')">
+                        <i class="fas fa-search"></i>
+                        <h3>Information Retrieval</h3>
+                        <p>Search and retrieval systems</p>
+                    </div>
+                    <div class="category-card" onclick="selectQuiz('bi')">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Business Intelligence</h3>
+                        <p>Data analysis for business</p>
+                    </div>
+                </div>
+            </div>
+
+         <!-- Database Quiz Selection -->
+<div id="database-quiz-selection" class="hidden">
+    <h3>Select Database Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="chooseDatabaseQuiz(1)">
+            <i class="fas fa-database"></i>
+            <h3>Database Quiz 1</h3>
+            <p>Fundamental concepts</p>
+        </div>
+        <div class="category-card" onclick="chooseDatabaseQuiz(2)">
+            <i class="fas fa-table"></i>
+            <h3>Database Quiz 2</h3>
+            <p>Advanced topics</p>
+        </div>
+        <div class="category-card" onclick="chooseDatabaseQuiz(3)">
+            <i class="fas fa-server"></i>
+            <h3>Database Quiz 3</h3>
+            <p>Server management</p>
+        </div>
+        <div class="category-card" onclick="chooseDatabaseQuiz(4)">
+            <i class="fas fa-book"></i>
+            <h3>LEC 1,2,3</h3>
+            <p>Lectures 1-3 review</p>
+        </div>
+        <div class="category-card" onclick="chooseDatabaseQuiz(6)">
+            <i class="fas fa-code"></i>
+            <h3>DDL</h3>
+            <p>Data Definition Language</p>
+        </div>
+        <div class="category-card" onclick="chooseDatabaseQuiz(5)">
+            <i class="fas fa-database"></i>
+            <h3>SQL Server</h3>
+            <p>Microsoft SQL Server</p>
+        </div>
+    </div>
+</div>
+
+<!-- Data Structures -->
+<div id="data-structure-quiz-selection" class="hidden">
+    <h3>Select Data Structures Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="chooseDataStructuresQuiz(1)">
+            <i class="fas fa-sitemap"></i>
+            <h3>Data Structures Quiz 1</h3>
+            <p>Basics & Fundamentals</p>
+        </div>
+    </div>
+</div>
+
+<!-- Data Communication -->
+<div id="datacommunction-quiz-selection" class="hidden">
+    <h3>Select DC Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="chooseDCQuiz(1)">
+            <i class="fas fa-network-wired"></i>
+            <h3>DC Quiz 1</h3>
+            <p>Introduction</p>
+        </div>
+        <div class="category-card" onclick="chooseDCQuiz(2)">
+            <i class="fas fa-broadcast-tower"></i>
+            <h3>DC Quiz 2</h3>
+            <p>Advanced concepts</p>
+        </div>
+    </div>
+</div>
+
+<!-- Big Data -->
+<div id="bigdata-quiz-selection" class="hidden">
+    <h3>Select Big Data Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="choosebigdataQuiz(1)">
+            <i class="fas fa-database"></i>
+            <h3>Big Data LEC 2</h3>
+            <p>Lecture 2 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebigdataQuiz(2)">
+            <i class="fas fa-database"></i>
+            <h3>Big Data LEC 3</h3>
+            <p>Lecture 3 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebigdataQuiz(3)">
+            <i class="fas fa-database"></i>
+            <h3>Big Data LEC 4</h3>
+            <p>Lecture 4 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebigdataQuiz(4)">
+            <i class="fas fa-database"></i>
+            <h3>Big Data LEC 5</h3>
+            <p>Lecture 5 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebigdataQuiz(5)">
+            <i class="fas fa-database"></i>
+            <h3>Big Data LEC 6</h3>
+            <p>Lecture 6 concepts</p>
+        </div>
+    </div>
+</div>
+
+<!-- DM -->
+<div id="dm-quiz-selection" class="hidden">
+    <h3>Select DM Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="choosedmQuiz(1)">
+            <i class="fas fa-chart-bar"></i>
+            <h3>DM Quiz 1</h3>
+            <p>Basics</p>
+        </div>
+        <div class="category-card" onclick="choosedmQuiz(2)">
+            <i class="fas fa-chart-pie"></i>
+            <h3>DM Quiz 2</h3>
+            <p>Intermediate</p>
+        </div>
+        <div class="category-card" onclick="choosedmQuiz(3)">
+            <i class="fas fa-project-diagram"></i>
+            <h3>DM Quiz 3</h3>
+            <p>Advanced</p>
+        </div>
+    </div>
+</div>
+
+<!-- Database 2 -->
+<div id="db2-quiz-selection" class="hidden">
+    <h3>Select Database-2 Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="choosedb2Quiz(1)">
+            <i class="fas fa-database"></i>
+            <h3>Database-2 LEC-1</h3>
+            <p>Lecture 1 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosedb2Quiz(2)">
+            <i class="fas fa-database"></i>
+            <h3>Database-2 LEC-2</h3>
+            <p>Lecture 2 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosedb2Quiz(3)">
+            <i class="fas fa-database"></i>
+            <h3>Database-2 LEC-3</h3>
+            <p>Lecture 3 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosedb2Quiz(4)">
+            <i class="fas fa-database"></i>
+            <h3>Database-2 LEC-1 New</h3>
+            <p>Updated Lecture 1</p>
+        </div>
+        <div class="category-card" onclick="choosedb2Quiz(5)">
+            <i class="fas fa-database"></i>
+            <h3>Database-2 LEC-2 New</h3>
+            <p>Updated Lecture 2</p>
+        </div>
+    </div>
+</div>
+
+<!-- IR -->
+<div id="ir-quiz-selection" class="hidden">
+    <h3>Select IR Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="chooseirQuiz(1)">
+            <i class="fas fa-search"></i>
+            <h3>IR LEC 2</h3>
+            <p>Lecture 2 concepts</p>
+        </div>
+        <div class="category-card" onclick="chooseirQuiz(2)">
+            <i class="fas fa-search"></i>
+            <h3>IR LEC 3</h3>
+            <p>Lecture 3 concepts</p>
+        </div>
+        <div class="category-card" onclick="chooseirQuiz(3)">
+            <i class="fas fa-search"></i>
+            <h3>IR LEC 4</h3>
+            <p>Lecture 4 concepts</p>
+        </div>
+        <div class="category-card" onclick="chooseirQuiz(4)">
+            <i class="fas fa-search"></i>
+            <h3>IR LEC 1-4</h3>
+            <p>Combined review</p>
+        </div>
+    </div>
+</div>
+
+<!-- BI -->
+<div id="bi-quiz-selection" class="hidden">
+    <h3>Select BI Quiz:</h3>
+    <div class="quiz-categories">
+        <div class="category-card" onclick="choosebiQuiz(1)">
+            <i class="fas fa-lightbulb"></i>
+            <h3>BI LEC 2</h3>
+            <p>Lecture 2 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebiQuiz(2)">
+            <i class="fas fa-lightbulb"></i>
+            <h3>BI LEC 3</h3>
+            <p>Lecture 3 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebiQuiz(3)">
+            <i class="fas fa-lightbulb"></i>
+            <h3>BI LEC 4</h3>
+            <p>Lecture 4 concepts</p>
+        </div>
+        <div class="category-card" onclick="choosebiQuiz(4)">
+            <i class="fas fa-lightbulb"></i>
+            <h3>BI LEC 5</h3>
+            <p>Lecture 5 concepts</p>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+            <div id="time-options" class="hidden">
+                <h3>Select Time Option:</h3>
+                <div class="time-options">
+                    <button class="time-option" onclick="startQuizWithoutTime()">
+                        <i class="far fa-clock"></i> Without Time Limit
+                    </button>
+                    <button class="time-option" onclick="showTimeInput()">
+                        <i class="fas fa-stopwatch"></i> With Time Limit
+                    </button>
+                </div>
+            </div>
+
+            <div id="time-input" class="hidden">
+                <h3>Enter Time Limit (in minutes):</h3>
+                <div class="time-input-container">
+                    <input type="number" max="120" id="time-limit" min="1" placeholder="Minutes" />
+                    <button class="time-option" onclick="setTimeLimit()">Set Time</button>
+                </div>
+            </div>
+
+            <div id="timer">Time Remaining: <span id="time-left">00:00</span></div>
+
+            <div id="question-info" class="hidden">
+                Question <span id="current-question">1</span> of <span id="total-questions">10</span>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div id="question-box" class="hidden">
+                <p id="question">Question text will appear here</p>
+                <div class="options">
+                    <button class="option" onclick="checkAnswer(0)">Option 1</button>
+                    <button class="option" onclick="checkAnswer(1)">Option 2</button>
+                    <button class="option" onclick="checkAnswer(2)">Option 3</button>
+                    <button class="option" onclick="checkAnswer(3)">Option 4</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="prev-btn" onclick="prevQuestion()" class="action-btn hidden">
+                    <i class="fas fa-arrow-left"></i> Previous Question
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="action-btn hidden">
+                    <i class="fas fa-arrow-right"></i> Next Question
+                </button>
+                <button id="finish-btn" onclick="showResult()" class="action-btn hidden">
+                    <i class="fas fa-flag-checkered"></i> Finish Quiz
+                </button>
+            </div>
+
+            <div id="result" class="hidden"></div>
+            <div id="time-taken" class="hidden"></div>
+
+            <div class="result-details hidden" id="result-details">
+                <div class="result-card">
+                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                    <div class="value" id="correct-answers">0</div>
+                    <div class="label">Correct Answers</div>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                    <div class="value" id="wrong-answers">0</div>
+                    <div class="label">Wrong Answers</div>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-percentage" style="color: var(--info);"></i>
+                    <div class="value" id="score-percentage">0%</div>
+                    <div class="label">Score Percentage</div>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-stopwatch" style="color: var(--warning);"></i>
+                    <div class="value" id="time-taken-value">0m 0s</div>
+                    <div class="label">Time Taken</div>
+                </div>
+            </div>
+
+            <div class="action-buttons hidden" id="post-quiz-buttons">
+                <button id="start-new-quiz" class="action-btn" onclick="startNewQuiz()">
+                    <i class="fas fa-redo"></i> Start New Quiz
+                </button>
+                <button id="review-btn" class="action-btn" onclick="reviewAnswers()">
+                    <i class="fas fa-eye"></i> Review Answers
+                </button>
             </div>
         </div>
-        <button id="next-btn" onclick="nextQuestion()" class="hidden">Next</button>
-        <button id="finish-btn" onclick="showResult()" class="hidden">Finish</button>
-        <div id="result" class="hidden"></div>
-        <div id="time-taken" class="hidden"></div>
-        <button id="start-new-quiz" style="display:none;" onclick="startNewQuiz()">Start New Quiz</button>
-        <button id="review-btn" class="hidden" onclick="reviewAnswers()">Review Answers</button>
+
+        <div id="review-answers" class="hidden"></div>
     </div>
-
-
-    <div id="review-answers" style="display:none;"></div>
 
     <script>
 
-        const checkbox = document.getElementById("status");
-
-        if (localStorage.getItem("darkMode") === "enabled") {
-            document.body.classList.add("dark-mode");
-            checkbox.checked = true;
-        }
-
-        checkbox.addEventListener("change", function () {
-            if (checkbox.checked) {
-                document.body.classList.add("dark-mode");
-                localStorage.setItem("darkMode", "enabled");
-            } else {
-                document.body.classList.remove("dark-mode");
-                localStorage.setItem("darkMode", "disabled");
-            }
-        });
-        let score = 0;
-        let totalQuestions;
-        let currentQuestionIndex = 0;
-        let timeLimit;
-        let timerInterval;
-        let userAnswers = [];
-        let startTime;
-        let selectedQuiz;
+        // إضافة هذه المتغيرات بعد سطر userStats وقبل الدوال
+        let selectedQuiz = '';
         let databaseQuizVariant = 1;
         let dataStructureQuizVariant = 1;
         let dcQuizVariant = 1;
@@ -520,7 +1026,95 @@
         let irQuizVariant = 1;
         let biQuizVariant = 1;
 
+        let currentQuestionIndex = 0;
+        let totalQuestions = 0;
+        let score = 0;
+        let userAnswers = [];
+        let timeLimit = 0;
+        let startTime;
+        let timerInterval;
 
+        // إحصائيات المستخدم
+        let userStats = JSON.parse(localStorage.getItem('userStats')) || {
+            totalQuizzes: 0,
+            totalScore: 0,
+            bestScore: 0,
+            totalTime: 0,
+            recentQuizzes: []
+        };
+
+        // تحديث الإحصائيات المعروضة
+        function updateStatsDisplay() {
+            document.getElementById('total-quizzes').textContent = userStats.totalQuizzes;
+            document.getElementById('average-score').textContent = userStats.totalQuizzes > 0 ?
+                Math.round(userStats.totalScore / userStats.totalQuizzes) + '%' : '0%';
+            document.getElementById('best-score').textContent = userStats.bestScore + '%';
+
+            const totalMinutes = Math.floor(userStats.totalTime / 60);
+            const totalSeconds = userStats.totalTime % 60;
+            document.getElementById('total-time').textContent = `${totalMinutes}m ${totalSeconds}s`;
+
+            // تحديث الأداء الأخير
+            const recentPerformance = document.getElementById('recent-performance');
+            recentPerformance.innerHTML = '';
+
+            if (userStats.recentQuizzes.length === 0) {
+                recentPerformance.innerHTML = '<p>No quizzes taken yet</p>';
+            } else {
+                userStats.recentQuizzes.slice(0, 3).forEach(quiz => {
+                    const quizElement = document.createElement('div');
+                    quizElement.className = 'stat-item';
+                    quizElement.innerHTML = `
+                        <span>${quiz.name}</span>
+                        <span class="stat-value">${quiz.score}%</span>
+                    `;
+                    recentPerformance.appendChild(quizElement);
+                });
+            }
+        }
+
+        // تحديث الإحصائيات عند إنهاء الاختبار
+        function updateUserStats(quizName, score, timeTaken) {
+            userStats.totalQuizzes++;
+            userStats.totalScore += score;
+            userStats.bestScore = Math.max(userStats.bestScore, score);
+            userStats.totalTime += timeTaken;
+
+            userStats.recentQuizzes.unshift({
+                name: quizName,
+                score: score,
+                date: new Date().toLocaleDateString()
+            });
+
+            if (userStats.recentQuizzes.length > 5) {
+                userStats.recentQuizzes.pop();
+            }
+
+            localStorage.setItem('userStats', JSON.stringify(userStats));
+            updateStatsDisplay();
+        }
+
+        // تهيئة الإحصائيات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function () {
+            updateStatsDisplay();
+
+            // تهيئة وضع الظلام
+            const checkbox = document.getElementById("status");
+            if (localStorage.getItem("darkMode") === "enabled") {
+                document.body.classList.add("dark-mode");
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener("change", function () {
+                if (checkbox.checked) {
+                    document.body.classList.add("dark-mode");
+                    localStorage.setItem("darkMode", "enabled");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    localStorage.setItem("darkMode", "disabled");
+                }
+            });
+        });
 
 
 
@@ -544,128 +1138,10 @@
                 options: ["Text editing", "Defining the database", "Printing documents", "Browsing the internet"],
                 answer: 1
             },
-            {
-                question: "What is the primary purpose of a Database Management System (DBMS)?",
-                options: ["To create images", "To manage data efficiently", "To play music", "To manage emails"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is a disadvantage of file-based systems?",
-                options: ["Easy data sharing", "High data integrity", "Data duplication", "Automatic backup"],
-                answer: 2
-            },
-            {
-                question: "What does data consistency in a database imply?",
-                options: ["Data stored in different formats", "Data is consistent across different files", "Any update is performed once and is available to all users", "Multiple copies of data exist"],
-                answer: 2
-            },
-            {
-                question: "What does a database catalog contain?",
-                options: ["List of all employees", "Metadata", "User passwords", "System logs"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is not a DBMS function?",
-                options: ["Manipulating data", "Sharing the database", "Protecting the database", "Compiling code"],
-                answer: 3
-            },
-            {
-                question: "What is atomicity in the context of databases?",
-                options: ["The ability to store large files", "The ability to process transactions entirely or not at all", "The ability to share data among users", "The ability to create backups"],
-                answer: 1
-            },
-            {
-                question: "What type of language is used to specify the structure of a database?",
-                options: ["Data Manipulation Language (DML)", "Data Definition Language (DDL)", "Data Query Language (DQL)", "Procedural Language"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is a disadvantage of using a database?",
-                options: ["High performance", "Complexity", "Ease of use", "Small size"],
-                answer: 1
-            },
-            {
-                question: "Which users primarily interact with the database to satisfy their data needs?",
-                options: ["Database Designers", "End Users", "Database Administrators", "Systems Analysts"],
-                answer: 1
-            },
-            {
-                question: "Which of the following is an advantage of a database system?",
-                options: ["Data redundancy", "Limited data sharing", "Improved data integrity", "Atomicity problems"],
-                answer: 2
-            },
-            {
-                question: "What is a 'view' in the context of databases?",
-                options: ["A different program", "A subset of the database", "A backup of the database", "A query language"],
-                answer: 1
-            },
-            {
-                question: "Which of the following tasks is not typically handled by a Database Administrator (DBA)?",
-                options: ["Authorizing access to the database", "Designing the database", "Monitoring database use", "Developing applications"],
-                answer: 3
-            },
-            {
-                question: "When is it more desirable to use regular files instead of a database?",
-                options: ["For complex, ever-changing applications", "For embedded systems with limited storage capacity", "For large multi-user environments", "For systems requiring high security"],
-                answer: 1
-            },
-            {
-                question: "Data is always consistent in a file-based system.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A DBMS allows multiple users to access data simultaneously.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "A database application is a program that interacts with the database.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "The physical structure of data is independent of application programs in a DBMS.",
-                options: ["True", "False"],
-                answer: 0
-            },
-            {
-                question: "In a database, data redundancy is increased to improve performance.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A file-based system is more efficient than a database in handling complex data relationships.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "A DBMS does not provide any security mechanisms to protect data.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "Sharing a database can only be done by a single user at a time.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "The cost of implementing a DBMS is usually lower than using a file-based system.",
-                options: ["True", "False"],
-                answer: 1
-            },
-            {
-                question: "Data integrity in a database is easier to achieve than in a file-based system.",
-                options: ["True", "False"],
-                answer: 0
-            },
 
         ];
 
-
-
-
-        const databaseQuestions2 = [
+          const databaseQuestions2 = [
 
             {
                 question: "What is the primary purpose of data abstraction in database systems?",
@@ -7070,6 +7546,20 @@
 
 
 
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        
+
+
+
+
+
+
+
         function selectQuiz(quiz) {
             selectedQuiz = quiz;
             if (quiz === 'database') {
@@ -7340,16 +7830,18 @@
             startTime = new Date();
             timerInterval = setInterval(updateTimer, 1000);
         }
-
         function startQuiz() {
             document.getElementById('time-options').classList.add('hidden');
             document.getElementById('time-input').classList.add('hidden');
             document.getElementById('question-info').classList.remove('hidden');
             document.getElementById('question-box').classList.remove('hidden');
+            document.getElementById('timer').classList.remove('hidden');
+
+            userAnswers = new Array(totalQuestions).fill(-1);
+            score = 0; // Reset score when starting new quiz
+
             loadQuestion();
         }
-
-
 
 
 
@@ -7360,6 +7852,9 @@
 
 
         function loadQuestion() {
+            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+
             let quiz;
             if (selectedQuiz === 'database') {
                 quiz = getDatabaseQuestions();
@@ -7389,13 +7884,15 @@
             document.getElementById('current-question').innerText = currentQuestionIndex + 1;
             document.getElementById('total-questions').innerText = totalQuestions;
             document.getElementById('question').innerText = quiz[currentQuestionIndex].question;
+
             const options = document.querySelectorAll('.option');
             options.forEach((option, index) => {
                 option.innerText = quiz[currentQuestionIndex].options[index];
                 option.classList.remove('correct', 'wrong');
+                option.disabled = false; // Enable all options initially
             });
-            document.getElementById('next-btn').classList.add('hidden');
-            document.getElementById('finish-btn').classList.add('hidden');
+
+            showCurrentAnswer();
         }
 
 
@@ -7475,30 +7972,146 @@
             loadQuestion();
         }
 
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+                // Show the answer if already answered
+                showCurrentAnswer();
+            }
+        }
+
+  function showCurrentAnswer() {
+    if (userAnswers[currentQuestionIndex] !== -1) {
+        let quiz;
+
+        if (selectedQuiz === 'database') {
+            quiz = getDatabaseQuestions();
+        } else if (selectedQuiz === 'datastructures') {
+            quiz = getDataStructureQuestions();
+        } else if (selectedQuiz === 'dc') {
+            quiz = getDCQuestions();
+        } else if (selectedQuiz === 'bigdata') {
+            quiz = getbigdataQuestions(); // ✅ تعديل الاسم
+        } else if (selectedQuiz === 'dm') {
+            quiz = getdmQuestions(); // ✅ تعديل الاسم
+        } else if (selectedQuiz === 'db2') {
+            quiz = getdb2Questions(); // ✅ تعديل الاسم
+        } else if (selectedQuiz === 'ir') {
+            quiz = getirQuestions(); // ✅ تعديل الاسم
+        } else if (selectedQuiz === 'bi') {
+            quiz = getbiQuestions(); // ✅ تعديل الاسم
+        }
+
+                const correctIndex = quiz[currentQuestionIndex].answer;
+                const userAnswerIndex = userAnswers[currentQuestionIndex];
+
+                const options = document.querySelectorAll('.option');
+                options.forEach((option, index) => {
+                    option.classList.remove('correct', 'wrong');
+                    if (index === correctIndex) {
+                        option.classList.add('correct');
+                    } else if (index === userAnswerIndex && userAnswerIndex !== correctIndex) {
+                        option.classList.add('wrong');
+                    }
+                });
+
+                // Disable options for already answered questions
+                options.forEach(option => {
+                    option.disabled = true;
+                });
+            } else {
+                // Enable options for unanswered questions
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.disabled = false;
+                    option.classList.remove('correct', 'wrong');
+                });
+            }
+
+            // Update button visibility
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').classList.toggle('hidden', currentQuestionIndex === 0);
+            document.getElementById('next-btn').classList.toggle('hidden', currentQuestionIndex === totalQuestions - 1);
+            document.getElementById('finish-btn').classList.toggle('hidden', currentQuestionIndex !== totalQuestions - 1);
+        }
+
         function showResult() {
+            clearInterval(timerInterval);
+
             document.getElementById('question-info').classList.add('hidden');
             document.getElementById('question-box').classList.add('hidden');
             document.getElementById('result').classList.remove('hidden');
 
-            const percentage = Math.round((score / totalQuestions) * 100);
-            document.getElementById('result').innerText = `Your Score: ${score} out of ${totalQuestions} (${percentage}%)`;
-
+            // إخفاء زر إنهاء الاختبار
             document.getElementById('finish-btn').classList.add('hidden');
+            document.getElementById('prev-btn').classList.add('hidden');
 
-            if (timeLimit) {
-                const timeTaken = Math.floor((new Date() - startTime) / 1000);
-                const minutes = Math.floor(timeTaken / 60);
-                const seconds = timeTaken % 60;
-                document.getElementById('time-taken').style.display = 'block';
-                document.getElementById('time-taken').innerText = `Time Taken: ${minutes}m ${seconds}s`;
-                clearInterval(timerInterval);
-            }
 
-            document.getElementById('start-new-quiz').style.display = 'block';
-            document.getElementById('review-btn').style.display = 'block';
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('result').innerHTML = `<h3>Your Score: ${score} out of ${totalQuestions} (${percentage}%)</h3>`;
+
+            // تحديث تفاصيل النتائج
+            document.getElementById('correct-answers').textContent = score;
+            document.getElementById('wrong-answers').textContent = totalQuestions - score;
+            document.getElementById('score-percentage').textContent = percentage + '%';
+
+            // حساب الوقت المستغرق
+            const timeTaken = timeLimit ? Math.floor((new Date() - startTime) / 1000) : 0;
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            document.getElementById('time-taken-value').textContent = `${minutes}m ${seconds}s`;
+
+            // إظهار تفاصيل النتائج
+            document.getElementById('result-details').classList.remove('hidden');
+            document.getElementById('post-quiz-buttons').classList.remove('hidden');
+
+            // تحديث إحصائيات المستخدم
+            let quizName = `${selectedQuiz} Quiz ${getQuizVariant()}`;
+            updateUserStats(quizName, percentage, timeTaken);
+        }
+        // دالة مساعدة للحصول على نوع الكويز
+        function getQuizVariant() {
+            if (selectedQuiz === 'database') return databaseQuizVariant;
+            if (selectedQuiz === 'datastructures') return dataStructureQuizVariant;
+            if (selectedQuiz === 'dc') return dcQuizVariant;
+            if (selectedQuiz === 'bigdata') return bigdataQuizVariant;
+            if (selectedQuiz === 'dm') return dmQuizVariant;
+            if (selectedQuiz === 'db2') return db2QuizVariant;
+            if (selectedQuiz === 'ir') return irQuizVariant;
+            if (selectedQuiz === 'bi') return biQuizVariant;
+            return 1;
         }
 
 
+
+
+
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         function startNewQuiz() {
             location.reload();
         }
@@ -7570,15 +8183,201 @@
                 reviewMessage += `
             <div class="review-question">
                 <p><strong>Question ${i + 1}:</strong> ${quiz[i].question}</p>
-                <p><strong>Your Answer:</strong> ${quiz[i].options[userAnswerIndex] || '<em>No answer</em>'}</p>
+                <p><strong>Your Answer:</strong> ${userAnswerIndex !== -1 ? quiz[i].options[userAnswerIndex] : '<em>No answer</em>'}</p>
                 <p><strong>Correct Answer:</strong> ${quiz[i].options[correctAnswerIndex]}</p>
+                <p><strong>Status:</strong> ${userAnswerIndex === correctAnswerIndex ? '✅ Correct' : '❌ Wrong'}</p>
             </div>
         `;
             }
 
             reviewMessage += '</div>';
+
+            // إخفاء النتائج وإظهار المراجعة
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('result-details').classList.add('hidden');
+            document.getElementById('post-quiz-buttons').classList.add('hidden');
+
+            // إظهار قسم المراجعة
             document.getElementById('review-answers').innerHTML = reviewMessage;
-            document.getElementById('review-answers').style.display = 'block';
+            document.getElementById('review-answers').classList.remove('hidden');
+
+            // إضافة زر للعودة إلى النتائج
+            const backButton = '<button class="action-btn" onclick="backToResults()" style="margin: 20px auto; display: block;"><i class="fas fa-arrow-left"></i> Back to Results</button>';
+            document.getElementById('review-answers').innerHTML += backButton;
+        }
+
+        // أضف هذه الدالة للعودة إلى النتائج
+        function backToResults() {
+            document.getElementById('review-answers').classList.add('hidden');
+            document.getElementById('review-answers').innerHTML = '';
+
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('result-details').classList.remove('hidden');
+            document.getElementById('post-quiz-buttons').classList.remove('hidden');
+        }
+
+
+
+
+        function confirmResetStats() {
+            // إنشاء نافذة التأكيد
+            const modal = document.createElement('div');
+            modal.className = 'confirmation-modal';
+            modal.innerHTML = `
+        <div class="modal-content">
+            <h3>Confirm Reset</h3>
+            <p>Are you sure you want to delete all statistics? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="confirm-btn" onclick="resetStats()">Yes, Delete All</button>
+                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    `;
+
+            document.body.appendChild(modal);
+        }
+
+
+
+
+
+        function closeModal() {
+            const modal = document.querySelector('.confirmation-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function resetStats() {
+            // إعادة تعيين الإحصائيات
+            userStats = {
+                totalQuizzes: 0,
+                totalScore: 0,
+                bestScore: 0,
+                totalTime: 0,
+                recentQuizzes: []
+            };
+
+            // حفظ في localStorage
+            localStorage.setItem('userStats', JSON.stringify(userStats));
+
+            // تحديث العرض
+            updateStatsDisplay();
+
+            // إغلاق النافذة
+            closeModal();
+
+            // رسالة تأكيد
+            alert('All statistics have been reset successfully!');
+        }
+
+        function showAllStatistics() {
+            const modal = document.createElement('div');
+            modal.className = 'stats-modal';
+            modal.innerHTML = `
+        <div class="stats-modal-content">
+            <div class="stats-modal-header">
+                <h2><i class="fas fa-chart-line"></i> Complete Quiz History</h2>
+                <button class="close-btn" onclick="closeStatsModal()">&times;</button>
+            </div>
+            ${generateStatsContent()}
+        </div>
+    `;
+
+            document.body.appendChild(modal);
+
+            // منع التمرير خلف النافذة
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStatsModal() {
+            const modal = document.querySelector('.stats-modal');
+            if (modal) {
+                modal.remove();
+            }
+            document.body.style.overflow = 'auto';
+        }
+
+        function generateStatsContent() {
+            if (userStats.recentQuizzes.length === 0) {
+                return '<div class="no-data"><i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 15px;"></i><p>No quiz data available yet. Start taking quizzes to see your statistics!</p></div>';
+            }
+
+            let html = `
+        <div class="stats-summary">
+            <div class="summary-card">
+                <div class="label">Total Quizzes</div>
+                <div class="value">${userStats.totalQuizzes}</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Average Score</div>
+                <div class="value">${userStats.totalQuizzes > 0 ? Math.round(userStats.totalScore / userStats.totalQuizzes) : 0}%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Best Score</div>
+                <div class="value">${userStats.bestScore}%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Total Time</div>
+                <div class="value">${Math.floor(userStats.totalTime / 60)}m ${userStats.totalTime % 60}s</div>
+            </div>
+        </div>
+        
+        <h3><i class="fas fa-history"></i> Quiz History</h3>
+        <table class="quiz-history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Quiz Name</th>
+                    <th>Score</th>
+                    <th>Time Taken</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+            userStats.recentQuizzes.forEach(quiz => {
+                const scoreClass = quiz.score >= 80 ? 'score-excellent' :
+                    quiz.score >= 60 ? 'score-good' : 'score-poor';
+
+                html += `
+            <tr>
+                <td>${quiz.date}</td>
+                <td>${quiz.name}</td>
+                <td class="${scoreClass}">${quiz.score}%</td>
+                <td>${quiz.timeTaken ? `${Math.floor(quiz.timeTaken / 60)}m ${quiz.timeTaken % 60}s` : 'N/A'}</td>
+            </tr>
+        `;
+            });
+
+            html += `
+            </tbody>
+        </table>
+    `;
+
+            return html;
+        }
+
+        // تعديل دالة updateUserStats لتخزين الوقت المستغرق
+        function updateUserStats(quizName, score, timeTaken) {
+            userStats.totalQuizzes++;
+            userStats.totalScore += score;
+            userStats.bestScore = Math.max(userStats.bestScore, score);
+            userStats.totalTime += timeTaken;
+
+            userStats.recentQuizzes.unshift({
+                name: quizName,
+                score: score,
+                date: new Date().toLocaleDateString(),
+                timeTaken: timeTaken // إضافة الوقت المستغرق
+            });
+
+            if (userStats.recentQuizzes.length > 50) { // زيادة السعة إلى 50 اختبار
+                userStats.recentQuizzes.pop();
+            }
+
+            localStorage.setItem('userStats', JSON.stringify(userStats));
+            updateStatsDisplay();
         }
     </script>
 </body>

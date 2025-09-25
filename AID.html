@@ -3,386 +3,905 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materialx | AI</title>
-    <link rel="icon" type="image/png" href="img/photo_2024-11-16_17-45-40.jpg">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.0/scrollreveal.min.js"></script>
+    <title>MaterialX | AI Department</title>
+    <link rel="icon" type="image/png" href="img/ai-icon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.0/scrollreveal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 
 <style>
-   body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-            box-sizing: border-box;
-        }
+    :root {
+        --primary: #2A0A5E;
+        --secondary: #6C1BDB;
+        --accent: #00D4FF;
+        --light: #F5F7FF;
+        --dark: #0A041C;
+        --text: #333333;
+        --white: #FFFFFF;
+        --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        --gradient-light: linear-gradient(135deg, var(--accent) 0%, #8A2BE2 100%);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: inherit;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.7;
+        background-color: var(--light);
+        color: var(--text);
+        overflow-x: hidden;
+    }
 
-        header {
-            background-color: #060b2b;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
 
-        header img {
-            width: 20%;
-            height: auto;
-            max-height: 150px;
-            object-fit: cover;
-            display: block;
-            margin: 0 auto;
-        }
+    .container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
 
-        @media (max-width: 768px) {
-            header img {
-                width: 30%;
-            }
-        }
+    /* Header Styles */
+    header {
+        background: var(--gradient);
+        color: var(--white);
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        @media (max-width: 480px) {
-            header img {
-                width: 40%;
-            }
-        }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
 
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            background-color: #072b56;
-        }
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
 
-        nav ul li {
-            margin: 0;
-        }
+    .logo-icon {
+        font-size: 2.5rem;
+        color: var(--accent);
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 10px;
+    }
 
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 30px;
-            display: block;
-            transition: background-color 0.3s ease;
-            font-size: 18px;
-        }
+    .logo-text {
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
 
-        nav ul li a:hover {
-            background-color: #003d7a;
-            border-radius: 5px;
-        }
+    .logo-text span {
+        color: var(--accent);
+    }
 
-        .hamburger {
-            display: none;
-            font-size: 30px;
-            cursor: pointer;
-            padding: 15px;
-            color: white;
-            background-color: #072b56;
-        }
+    nav ul {
+        display: flex;
+        list-style: none;
+        gap: 10px;
+    }
 
-        @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                flex-direction: column;
-            }
+    nav ul li a {
+        color: var(--white);
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        transition: var(--transition);
+        font-weight: 500;
+    }
 
-            nav ul.active {
-                display: flex;
-            }
+    nav ul li a:hover, nav ul li a.active {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
 
-            .hamburger {
-                display: block;
-            }
+    .hamburger {
+        display: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--white);
+    }
 
-            nav ul li {
-                margin-bottom: 10px;
-            }
-        }
-   
+    /* Hero Section */
+    .hero {
+        background: var(--gradient);
+        color: var(--white);
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
 
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+        background-size: cover;
+    }
 
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--dark);
+        padding: 15px 35px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 212, 255, 0.6);
+    }
+
+    /* Section Styles */
     section {
-        padding: 40px 20px;
-        margin: 20px auto;
-        max-width: 1200px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 80px 0;
     }
 
     .section-title {
-        font-size: 2em;
-        margin-bottom: 20px;
         text-align: center;
-        color: #007BFF;
+        margin-bottom: 50px;
+        position: relative;
     }
 
-    .course-item {
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        transition: transform 0.3s ease;
+    .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        display: inline-block;
     }
 
-    .course-item:hover {
-        transform: scale(1.05);
-        background-color: #e2e2e2;
+    .section-title h2::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: var(--gradient-light);
+        margin: 10px auto;
+        border-radius: 2px;
     }
 
-    .gallery {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    /* About Section */
+    .about-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
     }
 
-    .gallery img {
-        width: 48%;
-        border-radius: 10px;
+    .about-text p {
         margin-bottom: 20px;
-        transition: transform 0.3s ease;
+        font-size: 1.1rem;
     }
 
-    .gallery img:hover {
-        transform: scale(1.05);
+    .about-image {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
     }
 
-      footer {
-            background-color: #011239;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    .about-image:hover {
+        transform: translateY(-10px);
+    }
 
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .about-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
 
-        .social-media {
-            margin-bottom: 10px;
-        }
+    /* Features Section */
+    .features {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 50px;
+        box-shadow: var(--shadow);
+    }
 
-        .social-icon {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-            font-size: 1.5em;
-        }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
 
-        .footer-links {
-            margin-bottom: 10px;
-        }
+    .feature-card {
+        background: var(--light);
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        transition: var(--transition);
+        border-left: 4px solid var(--accent);
+    }
 
-        .footer-link {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-        }
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow);
+    }
 
-        .footer-link:hover {
-            text-decoration: underline;
-        }
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--secondary);
+        margin-bottom: 20px;
+    }
 
-        footer p {
-            margin-top: 10px;
+    .feature-card h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    /* Courses Section */
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+    }
+
+    .course-card {
+        background: var(--white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+
+    .course-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .course-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+
+    .course-card:hover .course-image img {
+        transform: scale(1.1);
+    }
+
+    .course-content {
+        padding: 25px;
+    }
+
+    .course-content h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+
+    .course-duration {
+        color: var(--secondary);
+        font-weight: 500;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* Careers Section */
+    .careers {
+        background: var(--gradient);
+        color: var(--white);
+    }
+
+    .careers .section-title h2 {
+        color: var(--white);
+    }
+
+    .careers .section-title h2::after {
+        background: var(--accent);
+    }
+
+    .career-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        transition: var(--transition);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--accent);
+    }
+
+    .career-roles {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .role-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+    }
+
+    .role-item:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(10px);
+    }
+
+    /* Gallery Section */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .gallery-item {
+        border-radius: 15px;
+        overflow: hidden;
+        height: 250px;
+        position: relative;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-10px);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(42, 10, 94, 0.8);
+        color: var(--white);
+        padding: 15px;
+        transform: translateY(100%);
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+    }
+
+    /* Faculty Section */
+    .faculty-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .faculty-card {
+        background: var(--white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        text-align: center;
+    }
+
+    .faculty-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .faculty-image {
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .faculty-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+
+    .faculty-card:hover .faculty-image img {
+        transform: scale(1.1);
+    }
+
+    .faculty-info {
+        padding: 25px;
+    }
+
+    .faculty-info h3 {
+        color: var(--primary);
+        margin-bottom: 5px;
+    }
+
+    .faculty-title {
+        color: var(--secondary);
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    /* Footer */
+    footer {
+        background: var(--dark);
+        color: var(--white);
+        padding: 60px 0 20px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+        color: var(--accent);
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+    }
+
+    .footer-column p {
+        margin-bottom: 20px;
+        opacity: 0.8;
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: var(--white);
+        text-decoration: none;
+        opacity: 0.8;
+        transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+        opacity: 1;
+        color: var(--accent);
+        padding-left: 5px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: var(--white);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .social-link:hover {
+        background: var(--accent);
+        color: var(--dark);
+        transform: translateY(-5px);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0.7;
+    }
+
+    /* Scroll to Top Button */
+    .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--gradient);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 1000;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .scroll-to-top.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+        .about-content {
+            grid-template-columns: 1fr;
         }
-        .scroll-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #007BFF;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        
+        .hero h1 {
+            font-size: 2.8rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav ul {
             display: none;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            line-height: 60px;
-            font-size: 24px;
-            transition: all 0.3s ease;
-            z-index: 1000;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--gradient);
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .scroll-to-top:hover {
-            background-color: #0056b3;
+        nav ul.active {
+            display: flex;
         }
 
-        .scroll-to-top i {
-            font-size: 24px;
+        .hamburger {
+            display: block;
         }
+
+        .hero h1 {
+            font-size: 2.2rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero {
+            padding: 80px 0;
+        }
+        
+        .hero h1 {
+            font-size: 1.8rem;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        .features, .course-content, .faculty-info {
+            padding: 25px;
+        }
+    }
 </style>
 
 <body>
+    <!-- Header -->
     <header>
-        <img src="img/WhatsApp_Image_2024-11-16_at_11.34.png" alt="Logo">
-    </header>
-
-    <nav>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-        <ul id="nav-menu">
-            <li><a href="Entertainment.html" target="_blank"><i class="fas fa-gamepad"></i> Entertainment</a></li>
-            <li><a href="play.html" target="_blank"><i class="fas fa-gamepad"></i> Game</a></li>
-            <li><a href="code.html" target="_blank"><i class="fas fa-code"></i> Coding </a></li>
-            <li><a href="quiz.html" target="_blank"><i class="fas fa-question-circle"></i> Quizzes</a></li>
-            <li><a href="Learning_Progress.html" target="_blank"><i class="fas fa-book-open"></i> Learning Progress</a></li>
-            <li><a href="chat.html"><i class="fas fa-robot"></i> Chatbot</a></li>
-            <li><a href="homee.html"><i class="fas fa-home"></i> Home</a></li>
-        </ul>
-    </nav>
-
-
-    <section id="about">
-        <div class="section-title">About the Department</div>
-        <p>The AI department focuses on developing intelligent systems capable of mimicking human-like thinking, reasoning, and learning. We provide students with cutting-edge tools, methodologies, and theories in artificial intelligence, machine learning, and neural networks to prepare them for the AI-driven future.</p>
-        <p>Our curriculum blends theory with hands-on experience, ensuring that students gain practical knowledge of algorithms, AI models, and the latest advancements in the field. Graduates will be well-equipped to design, analyze, and implement AI solutions in diverse industries.</p>
-    </section>
-
-    <section id="focus">
-        <div class="section-title">Focus Areas & Courses</div>
-        <ul>
-            <li class="course-item">
-                <strong>Introduction to Artificial Intelligence:</strong> Learn the basics of AI, including history, key concepts, and applications of AI in the real world.
-            </li>
-            <li class="course-item">
-                <strong>Machine Learning:</strong> Explore supervised and unsupervised learning techniques, and their real-world applications in business, finance, healthcare, and more.
-            </li>
-            <li class="course-item">
-                <strong>Deep Learning:</strong> Delve into neural networks, convolutional networks, and reinforcement learning techniques to create intelligent systems.
-            </li>
-            <li class="course-item">
-                <strong>Natural Language Processing (NLP):</strong> Study how machines understand, interpret, and generate human language, enabling technologies like chatbots and voice assistants.
-            </li>
-            <li class="course-item">
-                <strong>Robotics:</strong> Learn about the integration of AI into robotic systems, enabling machines to perform tasks autonomously.
-            </li>
-            <li class="course-item">
-                <strong>AI Ethics:</strong> Understand the social, ethical, and legal challenges of AI, and learn how to build responsible AI systems.
-            </li>
-        </ul>
-    </section>
-
-    <section id="careers">
-        <div class="section-title">Career Opportunities</div>
-        <p>AI professionals are highly sought after across a variety of industries, including healthcare, finance, automotive, and entertainment. Career opportunities include:</p>
-        <ul>
-            <li>AI Research Scientist</li>
-            <li>Machine Learning Engineer</li>
-            <li>Data Scientist</li>
-            <li>Robotics Engineer</li>
-            <li>Natural Language Processing Engineer</li>
-            <li>AI Consultant</li>
-        </ul>
-        <p>AI job demand is projected to grow by 20% over the next decade, with competitive salaries starting from $80,000 annually for entry-level roles in machine learning and data science.</p>
-    </section>
-
-
-    <section id="gallery">
-        <div class="section-title">Gallery</div>
-        <div class="gallery">
-            <img src="img/Robotics-Engineer-1024x576.png" alt="AI Lab 1">
-            <img src="img/original-4581c314d88fca52301e948f5c18dcd9.png" alt="AI Lab 2">
-            <img src="img/AI-page-header.webp" alt="AI Research">
-            <img src="img/Deep-Learning-Training.png" alt="AI Conference">
-        </div>
-    </section>
-
-    <header>
-        <img src="img/WhatsApp_Image_2024-11-16_at_11.34.png" alt="Logo">
-    </header>
-
-
-
-
-
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 Materialx. All rights reserved</p>
-            <hr>
-            <div class="footer-links">
-                <a href="contact.html" class="footer-link">Contact Us</a>
-                <a href="disclaimer.html" class="footer-link">Disclaimer</a>
-                <a href="terms.html" class="footer-link">Terms </a>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                </div>
+                <nav>
+                    <div class="hamburger" onclick="toggleMenu()">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <ul id="nav-menu">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                    </ul>
+                </nav>
             </div>
-            <hr>
         </div>
-    </footer>
+    </header>
 
-    <div class="scroll-to-top" onclick="scrollToTop()">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Shaping the Future with Artificial Intelligence</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About AI Department</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>The AI Department at NeuraTech is at the forefront of artificial intelligence education and research. We are committed to developing the next generation of AI innovators who will solve complex problems and create intelligent systems that benefit society.</p>
+                    <p>Our curriculum combines theoretical foundations with practical applications, ensuring students gain expertise in machine learning, deep learning, natural language processing, computer vision, and robotics. Through our industry partnerships and research initiatives, students work on real-world projects that prepare them for successful careers in AI.</p>
+                    <p>Our faculty includes leading researchers and industry experts who are pushing the boundaries of what's possible with AI. With state-of-the-art laboratories and computing resources, we provide an environment where innovation thrives.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="AI Research Lab">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2> Courses</h2>
+            </div>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Machine Learning">
+                    </div>
+                    <div class="course-content">
+                        <h3>Machine Learning Fundamentals</h3>
+                        <span class="course-duration">12 Weeks | Intermediate</span>
+                        <p>Explore supervised and unsupervised learning algorithms, model evaluation, and practical applications in various domains.</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Deep Learning">
+                    </div>
+                    <div class="course-content">
+                        <h3>Deep Learning & Neural Networks</h3>
+                        <span class="course-duration">16 Weeks | Advanced</span>
+                        <p>Dive into convolutional networks, recurrent networks, transformers, and their applications in computer vision and NLP.</p>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Natural Language Processing">
+                    </div>
+                    <div class="course-content">
+                        <h3>Natural Language Processing</h3>
+                        <span class="course-duration">14 Weeks | Intermediate</span>
+                        <p>Learn how machines understand, interpret, and generate human language for applications like chatbots and translation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section class="careers" id="careers">
+        <div class="container">
+            <div class="section-title">
+                <h2>Career Opportunities</h2>
+            </div>
+            <div class="career-stats">
+                <div class="stat-card">
+                    <div class="stat-number">94%</div>
+                    <p>Employment Rate Within 6 Months</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$110K</div>
+                    <p>Average Starting Salary</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <p>Projected Job Growth by 2025</p>
+                </div>
+            </div>
+            <div class="career-roles">
+                <div class="role-item">Machine Learning Engineer</div>
+                <div class="role-item">AI Research Scientist</div>
+                <div class="role-item">Data Scientist</div>
+                <div class="role-item">Computer Vision Engineer</div>
+                <div class="role-item">NLP Specialist</div>
+                <div class="role-item">AI Product Manager</div>
+                <div class="role-item">Robotics Engineer</div>
+                <div class="role-item">AI Ethics Consultant</div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="AI Lab">
+                    <div class="gallery-overlay">
+                        <h3>Advanced AI Laboratory</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Student Project">
+                    <div class="gallery-overlay">
+                        <h3>Student Robotics Project</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Research Presentation">
+                    <div class="gallery-overlay">
+                        <h3>AI Research Symposium</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Industry Collaboration">
+                    <div class="gallery-overlay">
+                        <h3>Industry Collaboration Day</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">
         <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
 
-function scrollToTop() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('active');
+            } else {
+                scrollToTopBtn.classList.remove('active');
             }
+        });
 
-            window.addEventListener('scroll', function () {
-                const scrollToTopBtn = document.querySelector('.scroll-to-top');
-                if (window.scrollY > 300) {
-                    scrollToTopBtn.style.display = 'block';
-                } else {
-                    scrollToTopBtn.style.display = 'none';
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu after clicking a link
+                    const menu = document.getElementById('nav-menu');
+                    menu.classList.remove('active');
                 }
             });
+        });
 
+        // ScrollReveal animations
+        ScrollReveal().reveal('.hero-content', { 
+            delay: 200,
+            duration: 1000,
+            distance: '50px',
+            origin: 'bottom'
+        });
+
+        ScrollReveal().reveal('.about-content, .features-grid, .courses-grid, .faculty-grid, .gallery-grid', { 
+            delay: 300,
+            duration: 1000,
+            distance: '50px',
+            origin: 'bottom',
+            interval: 200
+        });
 
         ScrollReveal().reveal('.section-title', { 
             delay: 200,
-            duration: 1500,
+            duration: 1000,
             distance: '50px',
-            easing: 'ease-in-out'
+            origin: 'top'
         });
 
-        ScrollReveal().reveal('.course-item', { 
+        ScrollReveal().reveal('.career-stats, .career-roles', { 
             delay: 300,
-            duration: 1500,
+            duration: 1000,
             distance: '50px',
             origin: 'bottom',
-            easing: 'ease-in-out',
             interval: 200
         });
-
-        ScrollReveal().reveal('.gallery img', { 
-            delay: 300,
-            duration: 1500,
-            distance: '50px',
-            origin: 'bottom',
-            easing: 'ease-in-out',
-            interval: 200
-        });
-        function toggleMenu() {
-                var menu = document.getElementById("nav-menu");
-                menu.classList.toggle("active");
-            }
     </script>
 </body>
 </html>
